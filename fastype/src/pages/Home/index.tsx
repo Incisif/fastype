@@ -1,5 +1,7 @@
+import Main from "../../components/MainContent";
+
 const Home: React.FunctionComponent = () => {
-  return <div>Home</div>;
+  return <Main>Home</Main>;
 };
 
 export default Home;
