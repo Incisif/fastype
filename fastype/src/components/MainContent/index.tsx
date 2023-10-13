@@ -5,7 +5,7 @@ const MainContent = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  max-width: 1440px;
+  max-width: 1228px;
   font-family: "Roboto", sans-serif;
   margin: 0 auto;
 `;
