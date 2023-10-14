@@ -1,5 +1,3 @@
-
-
 const About: React.FunctionComponent = () => {
   return <div>About//</div>;
 };
