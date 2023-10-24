@@ -4,6 +4,7 @@ import logo from "../../assets/fastype_Logo.png";
 import LoginModal from "../LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { Link } from "react-router-dom";
 import Select, {
   StylesConfig,
   OptionProps,
@@ -13,16 +14,15 @@ import Select, {
 import frenchFlag from "../../assets/france.png";
 import englishFlag from "../../assets/united-kingdom.png";
 
-const Header__Content = styled.div`
+const HeaderContent = styled.div`
   display: flex;
   width: 100vw;
   height: 80px;
   background-color: #4f5458;
   padding: 0 20px;
-  
 `;
 
-const Header__Wrapper = styled.div`
+const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 1228px;
@@ -38,7 +38,7 @@ const Logo = styled.img`
   margin-bottom: 15px;
 `;
 
-const Header__Title = styled.h1`
+const HeaderTitle = styled.h1`
   font-family: "Roboto", sans-serif;
   font-size: 2rem;
   font-weight: 700;
@@ -67,29 +67,25 @@ const NavBarLeft = styled.div`
     text-decoration: none;
     position: relative;
     padding-bottom: 5px;
-    transition: all 0.3s ease-in-out;  // Ajoute une transition
+    transition: all 0.3s ease-in-out; // Ajoute une transition
 
     &:hover::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
       border-bottom: 2px solid #ffffff;
     }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      border-bottom: 2px solid transparent;  
-      transition:  0.3s ease; 
+      border-bottom: 2px solid transparent;
+      transition: 0.3s ease;
     }
   }
 `;
-
+const StyledLinks = styled(Link)`
+`;
 const NavBarRight = styled.div`
   display: flex;
   gap: 40px;
@@ -101,6 +97,25 @@ const ButtonConnexion = styled.button`
   border: 1px solid #b3b6b7;
   padding: 0 10px;
   font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #404344;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  &:hover::after {
+    opacity: 1;
+  }
 `;
 interface OptionType {
   value: string;
@@ -132,10 +147,10 @@ const customStyles: StylesConfig<OptionType, false> = {
   }),
   singleValue: (base) => ({
     ...base,
-    color: "#ffffff", 
+    color: "#ffffff",
   }),
   indicatorSeparator: () => ({
-    display: 'none',
+    display: "none",
   }),
 };
 const languageOptions: OptionType[] = [
@@ -151,18 +166,19 @@ const Header: React.FC = () => {
 
   const isLoggedIn = useSelector((state: RootState) => state.login.isLoggedIn);
   return (
-    <Header__Content>
-      <Header__Wrapper>
-        <Logo src={logo} alt="logo" />
+    <HeaderContent>
+      <HeaderWrapper>
+        <Logo src={logo} alt="Fastype logo" />
 
-        <Header__Title>Fastype</Header__Title>
+        <HeaderTitle>Fastype</HeaderTitle>
         <NavBar>
           <NavBarLeft>
-            <a href="#">Accueil</a>
-            <a href="#">Résultats</a>
+            <StyledLinks to="/">Accueil</StyledLinks>
+            <StyledLinks to="/results">Résultats</StyledLinks>
           </NavBarLeft>
           <NavBarRight>
             <Select
+              aria-label="Langue"
               options={languageOptions}
               styles={customStyles}
               defaultValue={languageOptions[0]}
@@ -173,8 +189,8 @@ const Header: React.FC = () => {
           </NavBarRight>
           {isModalOpen && <LoginModal onClose={handleModalToggle} />}
         </NavBar>
-      </Header__Wrapper>
-    </Header__Content>
+      </HeaderWrapper>
+    </HeaderContent>
   );
 };
 

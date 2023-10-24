@@ -1,5 +1,7 @@
-const About: React.FunctionComponent = () => {
-  return <div>About//</div>;
+import Main from "../../components/MainContent";
+const About: React.FC = () => {
+  return <Main>About</Main>;
+  
 };
 
 export default About;

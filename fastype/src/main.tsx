@@ -7,6 +7,7 @@ import App from "./App";
 import "./styles/main.css";
 import "./styles/reset.css";
 
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>

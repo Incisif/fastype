@@ -1,6 +1,6 @@
 import Main from "../../components/MainContent";
 
-const Home: React.FunctionComponent = () => {
+const Home: React.FC = () => {
   return <Main>Home</Main>;
 };
 
