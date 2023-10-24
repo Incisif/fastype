@@ -1,4 +1,4 @@
-import Main from "../../components/MainContent";
+import Main from "../../layouts/MainContent";
 const Results: React.FC = () => {
   return <Main>Resultats/</Main>;
 };

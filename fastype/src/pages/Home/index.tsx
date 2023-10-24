@@ -1,7 +1,12 @@
-import Main from "../../components/MainContent";
+import Main from "../../layouts/MainContent";
+import TypingBox from "../../components/TypingBox";
 
 const Home: React.FC = () => {
-  return <Main>Home</Main>;
+  return (
+    <Main>
+      <TypingBox/>
+    </Main>
+  );
 };
 
 export default Home;
