@@ -1,7 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import logo from "../../assets/fastype_Logo.png";
 import LoginModal from "../LoginModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import Select, {
+  StylesConfig,
+  OptionProps,
+  GroupBase,
+  CSSObjectWithLabel,
+} from "react-select";
+import frenchFlag from "../../assets/france.png";
+import englishFlag from "../../assets/united-kingdom.png";
 
 const Header__Content = styled.div`
   display: flex;
@@ -9,6 +19,7 @@ const Header__Content = styled.div`
   height: 80px;
   background-color: #4f5458;
   padding: 0 20px;
+  
 `;
 
 const Header__Wrapper = styled.div`
@@ -17,6 +28,7 @@ const Header__Wrapper = styled.div`
   width: 1228px;
   height: 100%;
   margin: 0 auto;
+  align-items: center;
 `;
 
 const Logo = styled.img`
@@ -32,9 +44,6 @@ const Header__Title = styled.h1`
   font-weight: 700;
   font-style: italic;
   color: #ffffff;
-  align-self: flex-end;
-  margin-left: 10px;
-  margin-bottom: 15px;
 `;
 
 const NavBar = styled.nav`
@@ -46,13 +55,39 @@ const NavBar = styled.nav`
   font-size: 1.2rem;
   align-self: flex-end;
   margin-left: 40px;
-  margin-bottom: 13px;
   align-items: center;
+  align-self: center;
 `;
 
 const NavBarLeft = styled.div`
   display: flex;
   gap: 40px;
+  margin-top: 7px;
+  a {
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 5px;
+    transition: all 0.3s ease-in-out;  // Ajoute une transition
+
+    &:hover::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-bottom: 2px solid #ffffff;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-bottom: 2px solid transparent;  
+      transition:  0.3s ease; 
+    }
+  }
 `;
 
 const NavBarRight = styled.div`
@@ -60,23 +95,61 @@ const NavBarRight = styled.div`
   gap: 40px;
   align-items: center;
 `;
-const StyledSelect = styled.select`
-  background: transparent;
-  color: #ffffff;
-  font-family: "Roboto", sans-serif;
+const ButtonConnexion = styled.button`
+  border-radius: 15px;
+  height: 30px;
+  border: 1px solid #b3b6b7;
+  padding: 0 10px;
   font-size: 1.2rem;
-  border: none;
-  outline: none;
-  appearance: none;
 `;
+interface OptionType {
+  value: string;
+  label: string;
+}
+const customStyles: StylesConfig<OptionType, false> = {
+  option: (
+    base: CSSObjectWithLabel,
+    props: OptionProps<OptionType, false, GroupBase<OptionType>>
+  ) => ({
+    ...base,
+    paddingLeft: 30,
+    backgroundImage:
+      props.data.value === "fr" ? `url(${frenchFlag})` : `url(${englishFlag})`,
+    backgroundSize: "20px",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "5px center",
+    color: "#000000",
+  }),
+  control: (base) => ({
+    ...base,
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    boxShadow: "none",
+    cursor: "pointer",
+    "&:hover": {
+      borderColor: "transparent",
+    },
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: "#ffffff", 
+  }),
+  indicatorSeparator: () => ({
+    display: 'none',
+  }),
+};
+const languageOptions: OptionType[] = [
+  { value: "fr", label: "Français" },
+  { value: "en", label: "English" },
+];
 const Header: React.FC = () => {
-
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleModalToggle = () => {
     setModalOpen(!isModalOpen);
-
   };
+
+  const isLoggedIn = useSelector((state: RootState) => state.login.isLoggedIn);
   return (
     <Header__Content>
       <Header__Wrapper>
@@ -89,11 +162,14 @@ const Header: React.FC = () => {
             <a href="#">Résultats</a>
           </NavBarLeft>
           <NavBarRight>
-            <StyledSelect>
-              <option value="fr">Français</option>
-              <option value="en">English</option>
-            </StyledSelect>
-            <a href="#" onClick={handleModalToggle}>Se connecter</a>
+            <Select
+              options={languageOptions}
+              styles={customStyles}
+              defaultValue={languageOptions[0]}
+            />
+            <ButtonConnexion onClick={handleModalToggle}>
+              {!isLoggedIn ? "Se connecter" : "Déconnexion"}
+            </ButtonConnexion>
           </NavBarRight>
           {isModalOpen && <LoginModal onClose={handleModalToggle} />}
         </NavBar>

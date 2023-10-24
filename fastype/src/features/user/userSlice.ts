@@ -34,7 +34,7 @@ export const loginSlice = createSlice({
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.isLoggedIn = false;
-        state.message = action.payload ?? "Échec de la connexion"; 
+        state.message = typeof action.payload === 'string' ? action.payload : "Échec de la connexion";
       });
   },
 });
