@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/store";
 import { fetchTexts } from "../../features/text/textThunk";
 import { selectText } from "../../features/text/textSlice";
+
 interface CharBoxProps {
   $status: string | null;
   $lineIndex: number;
@@ -103,6 +104,8 @@ const TypingBox: React.FC = () => {
   const charMargin = 1;
   const charWidth = 18 + 2 * charMargin;
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const [translateY, setTranslateY] = useState(0);
+  const lineHeight = 49;
 
   const numberOfCharsPossibleInLine = useMemo(() => {
     const paddingRem = 1.2 * 16;
@@ -110,8 +113,6 @@ const TypingBox: React.FC = () => {
     return Math.floor(usableTypingBoxWidth / charWidth);
   }, [containerWidth, charWidth]);
 
-  const [translateY, setTranslateY] = useState(0);
-  const lineHeight = 49;
 
   useEffect(() => {
     if (loadingStatus === "succeeded" && typingBoxRef.current) {
@@ -232,7 +233,7 @@ const TypingBox: React.FC = () => {
    
     const nextCharBox = typingBoxRef.current?.querySelector(`[data-charindex="${currentCharPosition + 1}"]`);
     if (nextCharBox && nextCharBox.getAttribute('data-firstchar') === 'true') {
-      setTranslateY(prevTranslateY => prevTranslateY + lineHeight); // Augmentez translateY de 49px
+      setTranslateY(prevTranslateY => prevTranslateY + lineHeight); 
     }
   };
 
@@ -253,7 +254,7 @@ const TypingBox: React.FC = () => {
     const chars = word.split("").map((char, charIndex) => {
       const absoluteCharIndex = startIndex + charIndex;
       const charStatus = getCharStatus(absoluteCharIndex);
-      const isFirstChar = lineIndex >= 6 && lineIndex < lines.length - 2&& wordIndex === 0 && charIndex === 0;
+      const isFirstChar = lineIndex >= 6 && lineIndex < lines.length - 2 && wordIndex === 0 && charIndex === 0;
   
       return (
         <CharBox
@@ -270,6 +271,7 @@ const TypingBox: React.FC = () => {
       );
     });
   
+    // Ajout de l'espace avec un index
     if (!isLastWordInText) {
       chars.push(
         <CharBox
@@ -278,10 +280,13 @@ const TypingBox: React.FC = () => {
           $wordIndex={wordIndex}
           $charIndex={word.length}
           $status={getCharStatus(startIndex + word.length)}
-        />
+          data-charindex={startIndex + word.length} 
+        >
+          {" "}
+        </CharBox>
       );
     }
-
+  
     return chars;
   };
 
@@ -306,7 +311,7 @@ const TypingBox: React.FC = () => {
                   wordIndex,
                   lineIndex,
                   lineArrayIndex === linesArray.length - 1 &&
-                    wordIndex === wordArray.length - 1 // Ajoutez ce paramètre ici
+                    wordIndex === wordArray.length - 1 
                 )}
               </WordContainer>
             ))}
