@@ -18,8 +18,9 @@ const HeaderContent = styled.div`
   display: flex;
   width: 100vw;
   height: 80px;
-  background-color: #4f5458;
+  background-color: var(--white-color));
   padding: 0 20px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const HeaderWrapper = styled.div`
@@ -43,6 +44,9 @@ const HeaderTitle = styled.h1`
   font-size: 2rem;
   font-weight: 700;
   font-style: italic;
+  background: -webkit-linear-gradient(#6C95FF, #0E50FA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: #ffffff;
 `;
 
@@ -50,7 +54,7 @@ const NavBar = styled.nav`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  color: #ffffff;
+  color: var(--grey-color);
   font-family: "Roboto", sans-serif;
   font-size: 1.2rem;
   align-self: flex-end;
@@ -94,11 +98,12 @@ const NavBarRight = styled.div`
 const ButtonConnexion = styled.button`
   border-radius: 15px;
   height: 30px;
-  border: 1px solid #b3b6b7;
   padding: 0 10px;
   font-size: 1.2rem;
   position: relative;
   z-index: 1;
+  background-color: var(--orange-gold-color);
+  color: var(--white-color);
   &::after {
     content: "";
     position: absolute;

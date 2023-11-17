@@ -1,5 +1,17 @@
 :root {
-    --primary-color: #4f5458;
-    --font-color: #ffffff;
-    /* Ajoutez d'autres couleurs ici */
-  }
+  --primary-color: #4f5458;
+  --font-color: #ffffff;
+  --violet-color: #a661ff;
+  --dark-violet-color: #5914b1;
+  --orange-gold-color: #FF9A02;
+
+  /*Dial colors*/
+  --timing-stroke-color: #8a3cee;
+
+  /*Fonts colors*/
+  --white-color: #ffffff;
+  --grey-color: #505050;
+
+  /*Buttons colors*/
+  --Next-button-color: #52AC4B;
+}

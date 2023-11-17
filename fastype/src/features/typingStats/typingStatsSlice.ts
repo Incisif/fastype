@@ -40,6 +40,21 @@ export const TypingStatsSlice = createSlice({
     updateProgressPercentage: (state, action: PayloadAction<number>) => {
       state.progressPercentage = action.payload;
     },
+    setTotalChars: (state, action: PayloadAction<number>) => {
+        state.totalChars = action.payload;
+    },
+    updateCorrectChars: (state, action: PayloadAction<number>) => {
+        state.correctChars += action.payload;
+    },
+    updateCharsTyped: (state, action: PayloadAction<number>) => {
+      state.charsTyped = action.payload;
+    },
+    setStartTime: (state, action: PayloadAction<number>) => {
+        state.startTime = action.payload;
+    },
+    setEndingTime: (state, action: PayloadAction<number>) => {
+        state.endingTime = action.payload;
+    },
     updateTypingStats: (
       state,
       action: PayloadAction<Partial<TypingStatsState>>
@@ -56,21 +71,6 @@ export const TypingStatsSlice = createSlice({
         state.correctChars = action.payload.correctChars;
       if (action.payload.charsTyped !== undefined)
         state.charsTyped = action.payload.charsTyped;
-    },
-    setTotalChars: (state, action: PayloadAction<number>) => {
-      state.totalChars = action.payload;
-    },
-    updateCorrectChars: (state, action: PayloadAction<number>) => {
-      state.correctChars = action.payload;
-    },
-    updateCharsTyped: (state, action: PayloadAction<number>) => {
-      state.charsTyped = action.payload;
-    },
-    setStartTime: (state, action: PayloadAction<number>) => {
-      state.startTime = action.payload;
-    },
-    setEndingTime: (state, action: PayloadAction<number>) => {
-      state.endingTime = action.payload;
     },
   },
 });

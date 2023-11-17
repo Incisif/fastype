@@ -11,6 +11,14 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/store";
 import { fetchTexts } from "../../features/text/textThunk";
 import { selectText } from "../../features/text/textSlice";
+import {
+  setTotalChars,
+  updateCorrectChars,
+  updateCharsTyped,
+  setStartTime,
+  setEndingTime,
+} from "../../features/typingStats/typingStatsSlice";
+import TypingResultDisplay from "../TypingResultDisplay";
 
 interface CharBoxProps {
   $status: string | null;
@@ -36,6 +44,7 @@ interface TextContainerProps {
   $translateY: number;
 }
 const TypingBoxContainer = styled.div`
+position: relative;
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   display: flex;
@@ -45,7 +54,6 @@ const TypingBoxContainer = styled.div`
   background-color: #faf8f8;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
   margin: 2rem 0 1rem 0;
-  padding: 1.2rem;
   overflow: hidden;
   outline: none;
   border-radius: 15px;
@@ -54,6 +62,8 @@ const TextContainer = styled.div<TextContainerProps>`
   width: 100%;
   transform: translateY(-${(props) => props.$translateY}px);
   transition: transform 0.3s ease; // Ajoutez une transition pour un effet de défilement fluide
+  
+  padding: 1.2rem;
 `;
 
 const LineContainer = styled.span`
@@ -95,8 +105,11 @@ const TypingBox: React.FC = () => {
   const [charStatuses, setCharStatuses] = useState<CharStatus>({});
   const [containerWidth, setContainerWidth] = useState(0);
   const [lines, setLines] = useState<LineType[]>([]);
-  const loadingStatus = useSelector((state: RootState) => state.texts.status);
+  const [isFirstChar, setIsFirstChar] = useState(true);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
 
+
+  const loadingStatus = useSelector((state: RootState) => state.texts.status);
   const dispatch = useAppDispatch();
   const text = useSelector(selectText);
   const typingBoxRef = useRef<HTMLDivElement>(null);
@@ -106,6 +119,10 @@ const TypingBox: React.FC = () => {
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [translateY, setTranslateY] = useState(0);
   const lineHeight = 49;
+  const typingStats = useSelector((state: RootState) => state.stats);
+  const endTime = typingStats.endingTime ?? (isFirstChar ? null : Date.now());
+  const showTypingResult = isTypingComplete && endTime !== null;
+
 
   const numberOfCharsPossibleInLine = useMemo(() => {
     const paddingRem = 1.2 * 16;
@@ -122,6 +139,13 @@ const TypingBox: React.FC = () => {
   useEffect(() => {
     dispatch(fetchTexts());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (text) {
+      const totalChars = text.length;
+      dispatch(setTotalChars(totalChars));
+    }
+  }, [text, dispatch]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -185,42 +209,70 @@ const TypingBox: React.FC = () => {
     }
   }, [words, numberOfCharsPossibleInLine, lines, createLinesAndStartIndices]);
 
-  const handleKeyPress = (event: React.KeyboardEvent) => {
-    event.preventDefault();
-    if (event.key === "Dead") {
+  const handleSpecialKeys = (key: string) => {
+    if (key === "Dead") {
       if (isDeadKey) {
-        setDeadKeyChar((prevChar) => prevChar + event.key);
+        setDeadKeyChar((prevChar) => prevChar + key);
       } else {
         setIsDeadKey(true);
-        setDeadKeyChar(event.key);
+        setDeadKeyChar(key);
       }
+      return true;
+    }
+
+    return (
+      key === "Shift" ||
+      key === "CapsLock" ||
+      key === "AltGraph" ||
+      key === "Control"
+    );
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    event.preventDefault();
+
+    if (isFirstChar) {
+      dispatch(setStartTime(Date.now()));
+      setIsFirstChar(false);
+    }
+
+    if (currentCharPosition + 1 === text.length) {
+      dispatch(setEndingTime(Date.now()));
+    }
+
+    if (handleSpecialKeys(event.key)) {
       return;
     }
 
+    if (currentCharPosition + 1 === text.length) {
+      dispatch(setEndingTime(Date.now()));
+      setIsTypingComplete(true);
+    }
+    
     const char = text.charAt(currentCharPosition);
-    let expectedKey = char;
     let newStatus = "incorrect";
 
-    if (event.ctrlKey || event.altKey || event.key === "AltGraph") {
-      return;
-    }
+    dispatch(updateCharsTyped(currentCharPosition + 1));
 
+    let isCorrectChar = false;
     if (event.key === char || event.key === char.toUpperCase()) {
       newStatus = "correct";
+      isCorrectChar = true;
     }
+
     if (isDeadKey) {
       const combinedChar = deadKeyChar + event.key;
-      expectedKey = combinedChar;
+      if (combinedChar === char) {
+        newStatus = "correct";
+        isCorrectChar = true;
+      }
       setIsDeadKey(false);
       setDeadKeyChar("");
     }
 
-    if (event.key === "Shift" || event.key === "CapsLock") {
-      return;
-    }
-
-    if (event.key === expectedKey) {
-      newStatus = "correct";
+    if (isCorrectChar) {
+      // Mettre à jour le nombre de caractères corrects
+      dispatch(updateCorrectChars(1));
     }
 
     setCharStatuses({
@@ -297,28 +349,37 @@ const TypingBox: React.FC = () => {
       onKeyDown={handleKeyPress}
       tabIndex={0}
     >
-      <TextContainer $translateY={translateY}>
-        {lines.map(({ line, lineIndex }, lineArrayIndex, linesArray) => (
-          <LineContainer
-            className="line"
-            key={`line-${lineIndex}`}
-            ref={(el) => (lineRefs.current[lineIndex] = el)}
-          >
-            {line.map(({ word, startIndex }, wordIndex, wordArray) => (
-              <WordContainer key={`word-${lineIndex}-${wordIndex}`}>
-                {wordSplitter(
-                  word,
-                  startIndex,
-                  wordIndex,
-                  lineIndex,
-                  lineArrayIndex === linesArray.length - 1 &&
-                    wordIndex === wordArray.length - 1
-                )}
-              </WordContainer>
-            ))}
-          </LineContainer>
-        ))}
-      </TextContainer>
+      {showTypingResult ? (
+        <TypingResultDisplay
+          totalChars={typingStats.totalChars}
+          correctChars={typingStats.correctChars}
+          startTime={typingStats.startTime}
+          endTime={endTime}
+        />
+      ) : (
+        <TextContainer $translateY={translateY}>
+          {lines.map(({ line, lineIndex }, lineArrayIndex, linesArray) => (
+            <LineContainer
+              className="line"
+              key={`line-${lineIndex}`}
+              ref={(el) => (lineRefs.current[lineIndex] = el)}
+            >
+              {line.map(({ word, startIndex }, wordIndex, wordArray) => (
+                <WordContainer key={`word-${lineIndex}-${wordIndex}`}>
+                  {wordSplitter(
+                    word,
+                    startIndex,
+                    wordIndex,
+                    lineIndex,
+                    lineArrayIndex === linesArray.length - 1 &&
+                      wordIndex === wordArray.length - 1
+                  )}
+                </WordContainer>
+              ))}
+            </LineContainer>
+          ))}
+        </TextContainer>
+      )}
     </TypingBoxContainer>
   );
 };
