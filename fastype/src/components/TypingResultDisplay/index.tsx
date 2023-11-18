@@ -7,6 +7,7 @@ import {
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForward } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 
 interface DisplayProps {
   totalChars: number;
@@ -223,12 +224,45 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
     endTime
   );
   const wpm = calculateWPM(totalChars, durationInSeconds);
+  const [wpmAnimated, setWpmAnimated] = useState(0);
+  const [accuracyAnimated, setAccuracyAnimated] = useState(0);
+  
+  useEffect(() => {
+    const wpmInterval = setInterval(() => {
+      setWpmAnimated(prevWpm => {
+        if (prevWpm < wpm) {
+          return prevWpm + 1;
+        } else {
+          clearInterval(wpmInterval);
+          return prevWpm;
+        }
+      });
+    }, 10);
+  
+    const accuracyInterval = setInterval(() => {
+      setAccuracyAnimated(prevAccuracy => {
+        if (prevAccuracy < accuracy) {
+          return prevAccuracy + 1;
+        } else {
+          clearInterval(accuracyInterval);
+          return prevAccuracy;
+        }
+      });
+    }, 10);
+  
+    // Nettoyage des intervalles
+    return () => {
+      clearInterval(wpmInterval);
+      clearInterval(accuracyInterval);
+    };
+  }, [accuracy, wpm]);
+  
 
   return (
     <DisplayContainer>
       <DialWrapper>
         <PrecisionDial>
-          <DialValue>{accuracy}</DialValue>
+          <DialValue>{accuracyAnimated}</DialValue>
           <DialUnity>%</DialUnity>
           <DialText>précision</DialText>
         </PrecisionDial>
@@ -247,7 +281,7 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
             <BigGraduation></BigGraduation>
             <SmallGraduation></SmallGraduation>
           </GraduationsContainer>
-          <DialValue>{wpm}</DialValue>
+          <DialValue>{wpmAnimated}</DialValue>
           <DialUnity>wpm</DialUnity>
           <DialText>vitesse</DialText>
         </SpeedDial>
