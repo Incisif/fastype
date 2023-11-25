@@ -3,15 +3,16 @@
   --font-color: #ffffff;
   --violet-color: #a661ff;
   --dark-violet-color: #5914b1;
-  --orange-gold-color: #FF9A02;
-
+  
   /*Dial colors*/
   --timing-stroke-color: #8a3cee;
-
+  
   /*Fonts colors*/
   --white-color: #ffffff;
   --grey-color: #505050;
-
+  
   /*Buttons colors*/
   --Next-button-color: #52AC4B;
+  --connexion-button: hsl(35, 100%, 50%);
+  --shadow-connexion-button: hsl(35, 15%, 54%);
 }

@@ -5,19 +5,19 @@ import LoginModal from "../LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
+import ThreeDButton from "../ThreeDButton/index";
 
 const HeaderContent = styled.div`
-  display: flex;
   width: 100vw;
   height: 80px;
   background-color: var(--white-color));
-  padding: 0 20px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  align-items: center;
 `;
 
 const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
   width: 1228px;
   height: 100%;
   margin: 0 auto;
@@ -36,7 +36,7 @@ const HeaderTitle = styled.h1`
   font-size: 2rem;
   font-weight: 700;
   font-style: italic;
-  background: -webkit-linear-gradient(#6C95FF, #0E50FA);
+  background: -webkit-linear-gradient(#6c95ff, #0e50fa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #ffffff;
@@ -44,67 +44,54 @@ const HeaderTitle = styled.h1`
 
 const NavBar = styled.nav`
   display: flex;
-  justify-content: space-between;
   width: 100%;
+  height: 100%;
+  justify-content: space-between;
   color: var(--grey-color);
   font-family: "Roboto", sans-serif;
   font-size: 1.2rem;
-  align-self: flex-end;
-  margin-left: 40px;
-  align-items: center;
-  align-self: center;
 `;
 
-const NavBarLeft = styled.div`
+const LinksContainer = styled.div`
   display: flex;
-  gap: 40px;
-  margin-top: 7px;
-  a {
-    text-decoration: none;
-    position: relative;
-    padding-bottom: 5px;
-    transition: all 0.3s ease-in-out; // Ajoute une transition
-
-    &:hover::after {
-      border-bottom: 2px solid #ffffff;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      border-bottom: 2px solid transparent;
-      transition: 0.3s ease;
-    }
-  }
+  gap: 3rem;
+  height: 100%;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
 `;
+
 const StyledLinks = styled(Link)`
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1.2rem;
+  transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 0 var(--shadow-connexion-button),
+      0 0 0 1px var(--shadow-connexion-button);
+  }
+
+  &:active {
+    transform: translateY(0px);
+    box-shadow: none;
+  }
 `;
 const NavBarRight = styled.div`
   display: flex;
-  gap: 40px;
   align-items: center;
 `;
-const ButtonConnexion = styled.button`
-z-index: 1;
-  border-radius: 5px;
-  height: 30px;
-  padding: 0 10px;
-  font-size: 1.2rem;
-  position: relative;
-  background-color: var(--orange-gold-color);
-  color: var(--white-color);
-  &:hover {
-    border: 1px solid #9b8c77;
-    transform: translateY(-2px);
-    box-shadow: 0 3px 0 #9b8c77; /* Ajout de l'ombre au survol */
-  }
-  &:active {
-    transform: translateY(0px);
-    box-shadow: 0 0px 0 #9b8c77; /* Retrait de l'ombre au clic */
-  }
+const LeftContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const MiddleContainer = styled.div``;
+const RightContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const Header: React.FC = () => {
@@ -118,22 +105,31 @@ const Header: React.FC = () => {
 
   return (
     <HeaderContent>
-      <HeaderWrapper>
-        <Logo src={logo} alt="Fastype logo" />
-
-        <HeaderTitle>Fastype</HeaderTitle>
+      <HeaderWrapper className="HeadWrapper">
+        <LeftContainer>
+          <Logo src={logo} alt="Fastype logo" />
+          <HeaderTitle>Fastype</HeaderTitle>
+        </LeftContainer>
+        <MiddleContainer>
         <NavBar>
-          <NavBarLeft>
+          <LinksContainer className="linksContainer">
             <StyledLinks to="/">Accueil</StyledLinks>
             <StyledLinks to="/results">Résultats</StyledLinks>
-          </NavBarLeft>
-          <NavBarRight>
-            <ButtonConnexion onClick={handleModalToggle}>
-              {!isLoggedIn ? "Se connecter" : "Déconnexion"}
-            </ButtonConnexion>
-          </NavBarRight>
+          </LinksContainer>
+          <NavBarRight></NavBarRight>
           {isModalOpen && <LoginModal onClose={handleModalToggle} />}
         </NavBar>
+        </MiddleContainer>
+        <RightContainer>
+        <ThreeDButton
+          onClick={handleModalToggle}
+          color={"white"}
+          $backgroundColor={"var(--connexion-button)"}
+          $shadowColor={"var(--shadow-connexion-button)"}
+        >
+          {!isLoggedIn ? "Se connecter" : "Déconnexion"}
+        </ThreeDButton>
+        </RightContainer>
       </HeaderWrapper>
     </HeaderContent>
   );
