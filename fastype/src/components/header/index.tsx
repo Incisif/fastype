@@ -5,14 +5,6 @@ import LoginModal from "../LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
-import Select, {
-  StylesConfig,
-  OptionProps,
-  GroupBase,
-  CSSObjectWithLabel,
-} from "react-select";
-import frenchFlag from "../../assets/france.png";
-import englishFlag from "../../assets/united-kingdom.png";
 
 const HeaderContent = styled.div`
   display: flex;
@@ -96,80 +88,34 @@ const NavBarRight = styled.div`
   align-items: center;
 `;
 const ButtonConnexion = styled.button`
-  border-radius: 15px;
+z-index: 1;
+  border-radius: 5px;
   height: 30px;
   padding: 0 10px;
   font-size: 1.2rem;
   position: relative;
-  z-index: 1;
   background-color: var(--orange-gold-color);
   color: var(--white-color);
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #404344;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
+  &:hover {
+    border: 1px solid #9b8c77;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 0 #9b8c77; /* Ajout de l'ombre au survol */
   }
-  &:hover::after {
-    opacity: 1;
+  &:active {
+    transform: translateY(0px);
+    box-shadow: 0 0px 0 #9b8c77; /* Retrait de l'ombre au clic */
   }
 `;
-interface OptionType {
-  value: string;
-  label: string;
-}
-const customStyles: StylesConfig<OptionType, false> = {
-  option: (
-    base: CSSObjectWithLabel,
-    props: OptionProps<OptionType, false, GroupBase<OptionType>>
-  ) => ({
-    ...base,
-    paddingLeft: 30,
-    backgroundImage:
-      props.data.value === "fr" ? `url(${frenchFlag})` : `url(${englishFlag})`,
-    backgroundSize: "20px",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "5px center",
-    color: "#000000",
-  }),
-  control: (base) => ({
-    ...base,
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-    boxShadow: "none",
-    cursor: "pointer",
-    "&:hover": {
-      borderColor: "transparent",
-    },
-  }),
-  singleValue: (base) => ({
-    ...base,
-    color: "#ffffff",
-  }),
-  indicatorSeparator: () => ({
-    display: "none",
-  }),
-};
-const languageOptions: OptionType[] = [
-  { value: "fr", label: "Français" },
-  { value: "en", label: "English" },
-];
+
 const Header: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalToggle = () => {
-    setModalOpen(!isModalOpen);
+    setIsModalOpen(!isModalOpen);
   };
 
   const isLoggedIn = useSelector((state: RootState) => state.login.isLoggedIn);
+
   return (
     <HeaderContent>
       <HeaderWrapper>
@@ -182,12 +128,6 @@ const Header: React.FC = () => {
             <StyledLinks to="/results">Résultats</StyledLinks>
           </NavBarLeft>
           <NavBarRight>
-            <Select
-              aria-label="Langue"
-              options={languageOptions}
-              styles={customStyles}
-              defaultValue={languageOptions[0]}
-            />
             <ButtonConnexion onClick={handleModalToggle}>
               {!isLoggedIn ? "Se connecter" : "Déconnexion"}
             </ButtonConnexion>

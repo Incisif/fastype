@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForward } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import { Feedback } from "../Feedback/insex";
 
 interface DisplayProps {
   totalChars: number;
@@ -21,7 +22,7 @@ interface DialTextType {
 const DisplayContainer = styled.div`
   position: absolute;
   z-index: 1;
-  background-color: var(--violet-color);
+  background-color: var(--dark-violet-color);
   width: 100%;
   border-radius: 10px;
   height: 100%;
@@ -76,16 +77,16 @@ const PrecisionDial = styled.div`
   }
 `;
 const DurationDial = styled.div`
-  position: relative;
-  width: 6.37rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background-color: var(--dark-violet-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  position: relative;
+  width: 6.37rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--dark-violet-color);
   font-size: 2.2rem;
   font-weight: bold;
   line-height: 0.4;
@@ -105,18 +106,17 @@ const DurationDial = styled.div`
   }
 `;
 const SpeedDial = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
-  width: 12rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background-color: var(--dark-violet-color);
-  display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: var(--white-color);
+  width: 12rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--dark-violet-color);
   font-size: 6rem;
   &::before {
     z-index: -1;
@@ -132,63 +132,7 @@ const SpeedDial = styled.div`
     transform: translate(-50%, -50%);
   }
 `;
-const GraduationsContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
-const BaseGraduation = styled.div`
-  position: absolute;
-  z-index: 99;
-  background-color: var(--white-color);
-  left: 50%;
-  bottom: 100%;
-`;
-
-const SmallGraduation = styled(BaseGraduation)`
-  width: 0.1rem; /* Épaisseur des petits traits */
-  height: 0.7rem; /* Longueur des petits traits */
-  transform-origin: 50% calc(6rem + 0.7rem);
-  &:nth-child(2) {
-    transform: translateX(-50%) rotate(45deg);
-  }
-  &:nth-child(4) {
-    transform: translateX(-50%) rotate(135deg);
-  }
-  &:nth-child(6) {
-    transform: translateX(-50%) rotate(225deg);
-  }
-  &:nth-child(8) {
-    transform: translateX(-50%) rotate(315deg);
-  }
-`;
-
-const BigGraduation = styled(BaseGraduation)`
-  width: 0.2rem; /* Épaisseur des grands traits */
-  height: 1rem; /* Longueur des grands traits */
-  transform-origin: 50% calc(6rem + 1rem);
-  &:nth-child(1) {
-    transform: translateX(-50%) rotate(0deg);
-  }
-
-  &:nth-child(3) {
-    transform: translateX(-50%) rotate(90deg);
-  }
-
-  &:nth-child(5) {
-    transform: translateX(-50%) rotate(180deg);
-  }
-
-  &:nth-child(7) {
-    transform: translateX(-50%) rotate(270deg);
-  }
-`;
 const StyledButton = styled.button`
   position: absolute;
   bottom: 2.5rem;
@@ -199,6 +143,15 @@ const StyledButton = styled.button`
   height: 2.37rem;
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  &:hover {
+    border: 1px solid #5f3693;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 0 #5f3693;
+  }
+  &:active {
+    transform: translateY(0px);
+    box-shadow: 0 0px 0 #5f3693;
+  }
 `;
 const RetryButton = styled(StyledButton)`
   left: 2.5rem;
@@ -226,10 +179,10 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
   const wpm = calculateWPM(totalChars, durationInSeconds);
   const [wpmAnimated, setWpmAnimated] = useState(0);
   const [accuracyAnimated, setAccuracyAnimated] = useState(0);
-  
+
   useEffect(() => {
     const wpmInterval = setInterval(() => {
-      setWpmAnimated(prevWpm => {
+      setWpmAnimated((prevWpm) => {
         if (prevWpm < wpm) {
           return prevWpm + 1;
         } else {
@@ -238,9 +191,9 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
         }
       });
     }, 10);
-  
+
     const accuracyInterval = setInterval(() => {
-      setAccuracyAnimated(prevAccuracy => {
+      setAccuracyAnimated((prevAccuracy) => {
         if (prevAccuracy < accuracy) {
           return prevAccuracy + 1;
         } else {
@@ -249,14 +202,12 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
         }
       });
     }, 10);
-  
-    // Nettoyage des intervalles
+
     return () => {
       clearInterval(wpmInterval);
       clearInterval(accuracyInterval);
     };
   }, [accuracy, wpm]);
-  
 
   return (
     <DisplayContainer>
@@ -271,16 +222,6 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
           <DialText type="duration">min : sec</DialText>{" "}
         </DurationDial>
         <SpeedDial>
-          <GraduationsContainer>
-            <BigGraduation></BigGraduation>
-            <SmallGraduation></SmallGraduation>
-            <BigGraduation></BigGraduation>
-            <SmallGraduation></SmallGraduation>
-            <BigGraduation></BigGraduation>
-            <SmallGraduation></SmallGraduation>
-            <BigGraduation></BigGraduation>
-            <SmallGraduation></SmallGraduation>
-          </GraduationsContainer>
           <DialValue>{wpmAnimated}</DialValue>
           <DialUnity>wpm</DialUnity>
           <DialText>vitesse</DialText>
@@ -292,6 +233,7 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
       <NextButton>
         <FontAwesomeIcon icon={faForward} />
       </NextButton>
+      <Feedback accuracy={accuracy} wpm={wpm}></Feedback>
     </DisplayContainer>
   );
 };
