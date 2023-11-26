@@ -13,7 +13,7 @@ const ProgressBarContainer = styled.div`
   width: 100%;
   border-radius: 0px 0px 10px 10px;
   height: 0.8rem;
-  background: white;
+  background:  var(--typing-box-background-color);
 `;
 const Progress =
   styled.div <
@@ -25,6 +25,7 @@ const Progress =
       background: #328ffc;
       height: 100%;
       width: ${(props) => props.$progress}%;
+      transition: width 0.4s ease-out;
     `;
 
 const ProgressBar: React.FC<ProgressBarProps> = ({

@@ -31,18 +31,17 @@ const slideIn = keyframes`
   70% {
     transform: translateY(0%);
   }
-  78% {  // Approximativement 0.19 seconde après 70%
-    transform: translateY(-5%);  // Premier rebond à 5%
+  78% { 
+    transform: translateY(-5%);
   }
-  83% {  // Environ 0.13 seconde après 78%
+  83% { 
     transform: translateY(0%);
   }
-  89% {  // Second rebond, plus court
-    transform: translateY(-2.50%); // Deuxième rebond à 2.5%
+  89% { 
+    transform: translateY(-2.50%);
   }
   100% {
-    transform: translateY(0);  // Retour à la position finale
-  }
+    transform: translateY(0);  
 `;
 
 const DisplayContainer = styled.div`
@@ -169,15 +168,16 @@ const StyledButton = styled.button`
   width: 6rem;
   height: 2.37rem;
   border-radius: 5px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+ 
+  transition: all 0.2s ease;
   &:hover {
-    border: 1px solid #5f3693;
+    border: 1px solid #240849;
     transform: translateY(-2px);
-    box-shadow: 0 3px 0 #5f3693;
+    box-shadow: 0 3px 0 #240849;
   }
   &:active {
     transform: translateY(0px);
-    box-shadow: 0 0px 0 #5f3693;
+    box-shadow: none;
   }
 `;
 const RetryButton = styled(StyledButton)`
@@ -208,31 +208,37 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
   const [accuracyAnimated, setAccuracyAnimated] = useState(0);
 
   useEffect(() => {
-    const wpmInterval = setInterval(() => {
-      setWpmAnimated((prevWpm) => {
-        if (prevWpm < wpm) {
-          return prevWpm + 1;
-        } else {
-          clearInterval(wpmInterval);
-          return prevWpm;
-        }
-      });
-    }, 10);
+    // Délai avant de commencer l'animation
+    const animationDelay = 1000; // 1 seconde
 
-    const accuracyInterval = setInterval(() => {
-      setAccuracyAnimated((prevAccuracy) => {
-        if (prevAccuracy < accuracy) {
-          return prevAccuracy + 1;
-        } else {
-          clearInterval(accuracyInterval);
-          return prevAccuracy;
-        }
-      });
-    }, 10);
+    const startAnimation = () => {
+      const wpmInterval = setInterval(() => {
+        setWpmAnimated((prevWpm) => {
+          if (prevWpm < wpm) {
+            return prevWpm + 1;
+          } else {
+            clearInterval(wpmInterval);
+            return prevWpm;
+          }
+        });
+      }, 10);
+
+      const accuracyInterval = setInterval(() => {
+        setAccuracyAnimated((prevAccuracy) => {
+          if (prevAccuracy < accuracy) {
+            return prevAccuracy + 1;
+          } else {
+            clearInterval(accuracyInterval);
+            return prevAccuracy;
+          }
+        });
+      }, 10);
+    };
+
+    const animationTimer = setTimeout(startAnimation, animationDelay);
 
     return () => {
-      clearInterval(wpmInterval);
-      clearInterval(accuracyInterval);
+      clearInterval(animationTimer);
     };
   }, [accuracy, wpm]);
 
