@@ -4,7 +4,7 @@ import {
   calculateDurationInSeconds,
   calculateDurationInMinutesAndSeconds,
 } from "../../features/typingStats/calculateTypingStats";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForward } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -19,6 +19,32 @@ interface DisplayProps {
 interface DialTextType {
   type?: string;
 }
+
+const slideIn = keyframes`
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(0%);
+  }
+  78% {  // Approximativement 0.19 seconde après 70%
+    transform: translateY(-5%);  // Premier rebond à 5%
+  }
+  83% {  // Environ 0.13 seconde après 78%
+    transform: translateY(0%);
+  }
+  89% {  // Second rebond, plus court
+    transform: translateY(-2.50%); // Deuxième rebond à 2.5%
+  }
+  100% {
+    transform: translateY(0);  // Retour à la position finale
+  }
+`;
+
 const DisplayContainer = styled.div`
   position: absolute;
   z-index: 1;
@@ -26,6 +52,7 @@ const DisplayContainer = styled.div`
   width: 100%;
   border-radius: 10px;
   height: 100%;
+  animation: ${slideIn} 1s cubic-bezier(1,.36,.85,.8);
 `;
 const DialWrapper = styled.div`
   display: flex;
