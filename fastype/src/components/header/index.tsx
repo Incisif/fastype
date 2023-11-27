@@ -18,7 +18,7 @@ const HeaderContent = styled.div`
 const HeaderWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  width: 1228px;
+  max-width: 1228px;
   height: 100%;
   margin: 0 auto;
   align-items: center;
@@ -111,24 +111,24 @@ const Header: React.FC = () => {
           <HeaderTitle>Fastype</HeaderTitle>
         </LeftContainer>
         <MiddleContainer>
-        <NavBar>
-          <LinksContainer className="linksContainer">
-            <StyledLinks to="/">Accueil</StyledLinks>
-            <StyledLinks to="/results">Résultats</StyledLinks>
-          </LinksContainer>
-          <NavBarRight></NavBarRight>
-          {isModalOpen && <LoginModal onClose={handleModalToggle} />}
-        </NavBar>
+          <NavBar>
+            <LinksContainer className="linksContainer">
+              <StyledLinks to="/">Accueil</StyledLinks>
+              <StyledLinks to="/results">Résultats</StyledLinks>
+            </LinksContainer>
+            <NavBarRight></NavBarRight>
+            {isModalOpen && <LoginModal onClose={handleModalToggle} />}
+          </NavBar>
         </MiddleContainer>
         <RightContainer>
-        <ThreeDButton
-          onClick={handleModalToggle}
-          color={"white"}
-          $backgroundColor={"var(--connexion-button)"}
-          $shadowColor={"var(--shadow-connexion-button)"}
-        >
-          {!isLoggedIn ? "Se connecter" : "Déconnexion"}
-        </ThreeDButton>
+          <ThreeDButton
+            onClick={handleModalToggle}
+            color={"white"}
+            $backgroundColor={"var(--connexion-button)"}
+            $shadowColor={"var(--shadow-connexion-button)"}
+          >
+            {!isLoggedIn ? "Se connecter" : "Déconnexion"}
+          </ThreeDButton>
         </RightContainer>
       </HeaderWrapper>
     </HeaderContent>

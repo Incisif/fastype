@@ -12,7 +12,7 @@ const ProgressBarContainer = styled.div`
   z-index: 1;
   width: 100%;
   border-radius: 0px 0px 10px 10px;
-  height: 0.8rem;
+  height: 0.5rem;
   background:  var(--typing-box-background-color);
 `;
 const Progress =

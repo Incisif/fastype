@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 import React, {
   useEffect,
   useState,
@@ -20,7 +21,7 @@ import {
 } from "../../features/typingStats/typingStatsSlice";
 import TypingResultDisplay from "../TypingResultDisplay";
 import ProgressBar from "../ProgressBar";
-
+import StartTypingSignal from "../StartTypingSignal";
 
 interface CharBoxProps {
   $status: string | null;
@@ -45,14 +46,19 @@ interface CharStatus {
 interface TextContainerProps {
   $translateY: number;
 }
+
+const TypingBoxWrapper = styled.div`
+  position: relative;
+  width: 80%;
+`;
 const TypingBoxContainer = styled.div`
   position: relative;
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   display: flex;
   flex-wrap: wrap;
-  width: 80%;
-  height: 426px;
+
+  height: 420px;
   background-color: var(--typing-box-background-color);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
   margin: 2rem 0 1rem 0;
@@ -343,50 +349,52 @@ const TypingBox: React.FC = () => {
     }
     return chars;
   };
-console.log(currentCharPosition)
-console.log(totalChars)
+
   return (
-    <TypingBoxContainer
-      ref={typingBoxRef}
-      onKeyDown={handleKeyPress}
-      tabIndex={0}
-    >
-      {showTypingResult ? (
-        <TypingResultDisplay
-          totalChars={typingStats.totalChars}
-          correctChars={typingStats.correctChars}
-          startTime={typingStats.startTime}
-          endTime={endTime}
+    <TypingBoxWrapper>
+      <TypingBoxContainer
+        ref={typingBoxRef}
+        onKeyDown={handleKeyPress}
+        tabIndex={0}
+      >
+        {showTypingResult ? (
+          <TypingResultDisplay
+            totalChars={typingStats.totalChars}
+            correctChars={typingStats.correctChars}
+            startTime={typingStats.startTime}
+            endTime={endTime}
+          />
+        ) : (
+          <TextContainer $translateY={translateY}>
+            {lines.map(({ line, lineIndex }, lineArrayIndex, linesArray) => (
+              <LineContainer
+                className="line"
+                key={`line-${lineIndex}`}
+                ref={(el) => (lineRefs.current[lineIndex] = el)}
+              >
+                {line.map(({ word, startIndex }, wordIndex, wordArray) => (
+                  <WordContainer key={`word-${lineIndex}-${wordIndex}`}>
+                    {wordSplitter(
+                      word,
+                      startIndex,
+                      wordIndex,
+                      lineIndex,
+                      lineArrayIndex === linesArray.length - 1 &&
+                        wordIndex === wordArray.length - 1
+                    )}
+                  </WordContainer>
+                ))}
+              </LineContainer>
+            ))}
+          </TextContainer>
+        )}
+        <ProgressBar
+          totalChars={totalChars}
+          currentCharPosition={currentCharPosition}
         />
-      ) : (
-        <TextContainer $translateY={translateY}>
-          {lines.map(({ line, lineIndex }, lineArrayIndex, linesArray) => (
-            <LineContainer
-              className="line"
-              key={`line-${lineIndex}`}
-              ref={(el) => (lineRefs.current[lineIndex] = el)}
-            >
-              {line.map(({ word, startIndex }, wordIndex, wordArray) => (
-                <WordContainer key={`word-${lineIndex}-${wordIndex}`}>
-                  {wordSplitter(
-                    word,
-                    startIndex,
-                    wordIndex,
-                    lineIndex,
-                    lineArrayIndex === linesArray.length - 1 &&
-                      wordIndex === wordArray.length - 1
-                  )}
-                </WordContainer>
-              ))}
-            </LineContainer>
-          ))}
-        </TextContainer>
-      )}
-      <ProgressBar
-        totalChars={totalChars}
-        currentCharPosition={currentCharPosition}
-      />
-    </TypingBoxContainer>
+      </TypingBoxContainer>
+      <StartTypingSignal/>
+    </TypingBoxWrapper>
   );
 };
 

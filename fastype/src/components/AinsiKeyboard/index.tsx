@@ -3,7 +3,7 @@ import styled from "styled-components";
 const KeyboardContainer = styled.div`
   position: relative;
   width: 80%;
-margin-bottom: 2rem;
+  margin-bottom: 2rem;
 `;
 const LineContainer = styled.div`
   display: flex;
@@ -34,6 +34,7 @@ const StandartKeyboardKey = styled(Keys)`
   width: 62px;
   justify-content: center;
   align-items: center;
+  font-size: 1.5rem;
 `;
 
 const DoubleWidthKey = styled(Keys)`
@@ -54,8 +55,8 @@ const SemiLargeKey = styled(Keys)`
 `;
 
 const RightMajorKey = styled(Keys)`
-justify-content: center;
-align-items: center;
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
 `;
 const SpaceBar = styled(Keys)`
@@ -68,6 +69,11 @@ const EnterKey = styled.div`
   top: 66px;
   width: 80px;
   height: 128px;
+`;
+const EscacpeKey = styled(Keys)`
+  width: 62px;
+  justify-content: center;
+  align-items: center;
 `;
 const TopEnterKey = styled(Keys)`
   justify-content: center;
@@ -120,7 +126,7 @@ const Keyboard = () => {
   return (
     <KeyboardContainer>
       <FirstLineContainer>
-        <StandartKeyboardKey>ESC</StandartKeyboardKey>
+        <EscacpeKey>ESC</EscacpeKey>
         <DoubleSymbolKey>
           <StyledSymbol>1</StyledSymbol>
           <StyledSymbol>&</StyledSymbol>
@@ -224,7 +230,6 @@ const Keyboard = () => {
             <StyledSymbol>{"}"}</StyledSymbol>
           </TripleSymbolKeyBottom>
         </TripleSymbolKey>
-
         <DoubleWidthKey>BACK</DoubleWidthKey>
       </FirstLineContainer>
       <SecondLineContainer>
