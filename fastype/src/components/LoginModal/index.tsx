@@ -74,9 +74,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("About to dispatch loginUserThunk");
     const action = await dispatch(loginUserThunk({ email, password }));
-    console.log("Action:", action);
     if (loginUserThunk.fulfilled.match(action)) {
       setTimeout(() => {
         onClose();

@@ -35,7 +35,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   const calculateProgress = () => {
     return Math.trunc((currentCharPosition / totalChars) * 100);
   };
-console.log(calculateProgress())
   return (
     <ProgressBarContainer className="ProgressBar">
       <Progress $progress={calculateProgress()} />

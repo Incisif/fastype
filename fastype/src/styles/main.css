@@ -1,19 +1,22 @@
 :root {
   --primary-color: #4f5458;
-  --font-color: #ffffff;
+  --orange-color: hsl(35, 100%, 50%);
   --violet-color: #a661ff;
   --dark-violet-color: #5914b1;
   --typing-box-background-color: #faf8f8;
-  
-  /*Dial colors*/
-  --timing-stroke-color: #8a3cee;
-  
+
   /*Fonts colors*/
   --white-color: #ffffff;
   --grey-color: #505050;
-  
+
   /*Buttons colors*/
-  --Next-button-color: #52AC4B;
-  --connexion-button: hsl(35, 100%, 50%);
+  --Next-button-color: var(--dark-violet-color);
+  --Retry-button-color: var(--dark-violet-color);
+  --connexion-button: var(--orange-color);
   --shadow-connexion-button: hsl(35, 15%, 54%);
+
+  /*Dial colors*/
+  --timing-stroke-color: hsl(167, 78%, 47%);
+  --spedd-stroke-color: hsl(35, 100%, 50%);
+  --accuracy-stroke-color: hsl(35, 100%, 50%);
 }

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 import React, {
   useEffect,
   useState,
@@ -18,7 +17,14 @@ import {
   updateCharsTyped,
   setStartTime,
   setEndingTime,
+  setIsFirstChar
 } from "../../features/typingStats/typingStatsSlice";
+import {
+  setCharStatus,
+  setCurrentCharPosition,
+  setIsTypingComplete,
+  setTranslateY,
+} from "../../features/typingSession/typingSessionSlice";
 import TypingResultDisplay from "../TypingResultDisplay";
 import ProgressBar from "../ProgressBar";
 import StartTypingSignal from "../StartTypingSignal";
@@ -39,10 +45,6 @@ interface LineType {
   lineIndex: number;
 }
 
-interface CharStatus {
-  [key: number]: string;
-}
-
 interface TextContainerProps {
   $translateY: number;
 }
@@ -57,8 +59,7 @@ const TypingBoxContainer = styled.div`
   font-size: 1.5rem;
   display: flex;
   flex-wrap: wrap;
-
-  height: 420px;
+  height: 310px;
   background-color: var(--typing-box-background-color);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
   margin: 2rem 0 1rem 0;
@@ -69,7 +70,7 @@ const TypingBoxContainer = styled.div`
 const TextContainer = styled.div<TextContainerProps>`
   width: 100%;
   transform: translateY(-${(props) => props.$translateY}px);
-  transition: transform 0.3s ease; // Ajoutez une transition pour un effet de défilement fluide
+  transition: transform 0.3s ease;
 
   padding: 1.2rem;
 `;
@@ -107,14 +108,28 @@ const CharBox = styled.div<CharBoxProps>`
 `;
 
 const TypingBox: React.FC = () => {
+  const currentCharPosition = useSelector(
+    (state: RootState) => state.session.currentCharPosition
+  );
+  const charStatuses = useSelector(
+    (state: RootState) => state.session.charStatuses
+  );
+  const isTypingComplete = useSelector(
+    (state: RootState) => state.session.isTypingComplete
+  );
+  const translateY = useSelector(
+    (state: RootState) => state.session.translateY
+  );
+  const isFirstChar = useSelector(
+    (state: RootState) => state.stats.isFirstChar
+  );
+
+  const typingStats = useSelector((state: RootState) => state.stats);
+
   const [isDeadKey, setIsDeadKey] = useState<boolean>(false);
   const [deadKeyChar, setDeadKeyChar] = useState<string>("");
-  const [currentCharPosition, setCurrentCharPosition] = useState(0);
-  const [charStatuses, setCharStatuses] = useState<CharStatus>({});
   const [containerWidth, setContainerWidth] = useState(0);
   const [lines, setLines] = useState<LineType[]>([]);
-  const [isFirstChar, setIsFirstChar] = useState(true);
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   const loadingStatus = useSelector((state: RootState) => state.texts.status);
   const dispatch = useAppDispatch();
@@ -124,9 +139,7 @@ const TypingBox: React.FC = () => {
   const charMargin = 1;
   const charWidth = 18 + 2 * charMargin;
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const [translateY, setTranslateY] = useState(0);
   const lineHeight = 49;
-  const typingStats = useSelector((state: RootState) => state.stats);
   const endTime = typingStats.endingTime ?? (isFirstChar ? null : Date.now());
   const showTypingResult = isTypingComplete && endTime !== null;
   const totalChars = useSelector((state: RootState) => state.stats.totalChars);
@@ -240,7 +253,7 @@ const TypingBox: React.FC = () => {
 
     if (isFirstChar) {
       dispatch(setStartTime(Date.now()));
-      setIsFirstChar(false);
+      dispatch(setIsFirstChar(false));
     }
 
     if (currentCharPosition + 1 === text.length) {
@@ -253,7 +266,7 @@ const TypingBox: React.FC = () => {
 
     if (currentCharPosition + 1 === text.length) {
       dispatch(setEndingTime(Date.now()));
-      setIsTypingComplete(true);
+      dispatch(setIsTypingComplete(true));
     }
 
     const char = text.charAt(currentCharPosition);
@@ -282,17 +295,21 @@ const TypingBox: React.FC = () => {
       dispatch(updateCorrectChars(1));
     }
 
-    setCharStatuses({
-      ...charStatuses,
-      [currentCharPosition]: newStatus,
-    });
-    setCurrentCharPosition(currentCharPosition + 1);
+    dispatch(
+      setCharStatus({
+        ...charStatuses,
+        [currentCharPosition]: newStatus,
+      })
+    );
+
+    dispatch(setCurrentCharPosition(currentCharPosition + 1));
 
     const nextCharBox = typingBoxRef.current?.querySelector(
       `[data-charindex="${currentCharPosition + 1}"]`
     );
     if (nextCharBox && nextCharBox.getAttribute("data-firstchar") === "true") {
-      setTranslateY((prevTranslateY) => prevTranslateY + lineHeight);
+      const newTranslateY = translateY + lineHeight;
+      dispatch(setTranslateY(newTranslateY));
     }
   };
 
@@ -314,7 +331,7 @@ const TypingBox: React.FC = () => {
       const absoluteCharIndex = startIndex + charIndex;
       const charStatus = getCharStatus(absoluteCharIndex);
       const isFirstChar =
-        lineIndex >= 6 &&
+        lineIndex >= 4 &&
         lineIndex < lines.length - 2 &&
         wordIndex === 0 &&
         charIndex === 0;
@@ -363,6 +380,7 @@ const TypingBox: React.FC = () => {
             correctChars={typingStats.correctChars}
             startTime={typingStats.startTime}
             endTime={endTime}
+            typingBoxRef={typingBoxRef}
           />
         ) : (
           <TextContainer $translateY={translateY}>
@@ -393,7 +411,7 @@ const TypingBox: React.FC = () => {
           currentCharPosition={currentCharPosition}
         />
       </TypingBoxContainer>
-      <StartTypingSignal/>
+      <StartTypingSignal />
     </TypingBoxWrapper>
   );
 };

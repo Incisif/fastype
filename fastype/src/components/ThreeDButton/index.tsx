@@ -5,6 +5,7 @@ interface ThreeDButtonProps {
   $shadowColor: string;
   color: string;
   children: React.ReactNode;
+  fontSize?: string;
   onClick?: () => void;
 }
 
@@ -20,6 +21,7 @@ const Styled3DButton = styled.button<ThreeDButtonProps>`
   background-color: ${(props) => props.$backgroundColor};
   color: ${(props) => props.color};
   transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  font-size: ${(props) => props.fontSize ?? "none"};
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 3px 0 ${(props) => (props.$shadowColor)}, 0 0 0 1px ${(props) => (props.$shadowColor)}; 
@@ -35,11 +37,12 @@ const ThreeDButton: React.FC<ThreeDButtonProps> = ({
   color,
   $backgroundColor,
   $shadowColor,
+  fontSize,
   onClick,
 }) => {
   return (
     <Styled3DButton onClick={onClick} color={color} $backgroundColor={$backgroundColor}
-    $shadowColor={$shadowColor}>
+    $shadowColor={$shadowColor} fontSize={fontSize}>
       {children}
     </Styled3DButton>
   );
