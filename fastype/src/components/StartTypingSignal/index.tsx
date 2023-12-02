@@ -1,25 +1,53 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
+
+interface StartTypingSignalProps {
+  shouldExit: boolean;
+}
 //animation keyframes infinie qui fait bouger le signal de haut en bas
+
+const slideInTimingFunction = "ease";
+const slideOutTimingFunction = "cubic-bezier(0.6, 0.04, 0.98, 0.34)";
+
+
+
+const slideInFadeIn = keyframes`
+  from {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
 const bounce = keyframes`
-  0% {
+  0%, 100% {
     transform: translateY(0);
   }
   50% {
     transform: translateY(-0.5rem);
   }
-  100% {
-    transform: translateY(0);
-  }
 `;
-
-const StartTypingSignalContainer = styled.div`
+const slideOut = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%); 
+`;
+const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
   position: absolute;
   left: -11rem;
   top: 4rem;
   z-index: 2;
   background-color: var(--dark-violet-color);
   border-radius: 0.5rem 0 0.5rem 0.5rem;
-  animation: ${bounce} 2s ease-in-out infinite;
+  animation: ${(props) =>
+    props.shouldExit
+      ? css`${slideOut} 1s ${slideOutTimingFunction} forwards`
+      : css`${slideInFadeIn} 1s  ${slideInTimingFunction}   , ${bounce} 2s ease-in-out 1s infinite`};
 `;
 
 const StartTypingSignalBody = styled.div`
@@ -42,9 +70,9 @@ const StartTypingSignalPointer = styled.div`
   clip-path: polygon(24% 45%, 11% 68%, 0 100%, 0 1%, 100% 0, 67% 11%, 43% 26%);
 `;
 
-const StartTypingSignal: React.FC = () => {
+const StartTypingSignal: React.FC<StartTypingSignalProps> = ({ shouldExit }) => {
   return (
-    <StartTypingSignalContainer>
+    <StartTypingSignalContainer shouldExit={shouldExit}>
       <StartTypingSignalBody>
         <p>Commence à taper !</p>
       </StartTypingSignalBody>

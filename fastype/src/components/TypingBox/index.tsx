@@ -17,7 +17,7 @@ import {
   updateCharsTyped,
   setStartTime,
   setEndingTime,
-  setIsFirstChar
+  setIsFirstChar,
 } from "../../features/typingStats/typingStatsSlice";
 import {
   setCharStatus,
@@ -108,6 +108,11 @@ const CharBox = styled.div<CharBoxProps>`
 `;
 
 const TypingBox: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  //GLOBAL STATES
+  const text = useSelector(selectText);
+  const totalChars = useSelector((state: RootState) => state.stats.totalChars);
   const currentCharPosition = useSelector(
     (state: RootState) => state.session.currentCharPosition
   );
@@ -123,33 +128,36 @@ const TypingBox: React.FC = () => {
   const isFirstChar = useSelector(
     (state: RootState) => state.stats.isFirstChar
   );
-
+  const loadingStatus = useSelector((state: RootState) => state.texts.status);
   const typingStats = useSelector((state: RootState) => state.stats);
 
+  //LOCAL STATES
   const [isDeadKey, setIsDeadKey] = useState<boolean>(false);
   const [deadKeyChar, setDeadKeyChar] = useState<string>("");
   const [containerWidth, setContainerWidth] = useState(0);
   const [lines, setLines] = useState<LineType[]>([]);
 
-  const loadingStatus = useSelector((state: RootState) => state.texts.status);
-  const dispatch = useAppDispatch();
-  const text = useSelector(selectText);
+  //REFS
   const typingBoxRef = useRef<HTMLDivElement>(null);
+  const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
+  //CONSTANTS
   const words = text.split(" ");
   const charMargin = 1;
   const charWidth = 18 + 2 * charMargin;
-  const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const lineHeight = 49;
   const endTime = typingStats.endingTime ?? (isFirstChar ? null : Date.now());
   const showTypingResult = isTypingComplete && endTime !== null;
-  const totalChars = useSelector((state: RootState) => state.stats.totalChars);
 
+  //MEMOS
   const numberOfCharsPossibleInLine = useMemo(() => {
     const paddingRem = 1.2 * 16;
     const usableTypingBoxWidth = containerWidth - 2 * paddingRem;
     return Math.floor(usableTypingBoxWidth / charWidth);
   }, [containerWidth, charWidth]);
 
+
+  //EFFECTS
   useEffect(() => {
     if (loadingStatus === "succeeded" && typingBoxRef.current) {
       typingBoxRef.current.focus();
@@ -190,6 +198,8 @@ const TypingBox: React.FC = () => {
     }
   }
 
+
+  //CALLBACKS
   const createLinesAndStartIndices = useCallback(
     (words: string[], numberOfCharsPossibleInLine: number) => {
       const newLines: LineType[] = [];
@@ -248,6 +258,8 @@ const TypingBox: React.FC = () => {
     );
   };
 
+
+  //HANDLERS
   const handleKeyPress = (event: React.KeyboardEvent) => {
     event.preventDefault();
 
@@ -291,7 +303,6 @@ const TypingBox: React.FC = () => {
     }
 
     if (isCorrectChar) {
-      // Mettre à jour le nombre de caractères corrects
       dispatch(updateCorrectChars(1));
     }
 
@@ -320,6 +331,7 @@ const TypingBox: React.FC = () => {
     return charStatuses[charIndex] || null;
   };
 
+  //RENDER
   const wordSplitter = (
     word: string,
     startIndex: number,
@@ -411,7 +423,8 @@ const TypingBox: React.FC = () => {
           currentCharPosition={currentCharPosition}
         />
       </TypingBoxContainer>
-      <StartTypingSignal />
+      <StartTypingSignal shouldExit={typingStats.startTime != null} />
+     
     </TypingBoxWrapper>
   );
 };
