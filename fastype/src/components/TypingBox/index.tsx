@@ -423,7 +423,7 @@ const TypingBox: React.FC = () => {
           currentCharPosition={currentCharPosition}
         />
       </TypingBoxContainer>
-      <StartTypingSignal shouldExit={typingStats.startTime != null} />
+      <StartTypingSignal $shouldExit={typingStats.startTime != null} />
      
     </TypingBoxWrapper>
   );

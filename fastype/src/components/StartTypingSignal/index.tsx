@@ -1,7 +1,7 @@
 import styled, { keyframes, css } from "styled-components";
 
 interface StartTypingSignalProps {
-  shouldExit: boolean;
+  $shouldExit: boolean;
 }
 //animation keyframes infinie qui fait bouger le signal de haut en bas
 
@@ -45,9 +45,9 @@ const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
   background-color: var(--dark-violet-color);
   border-radius: 0.5rem 0 0.5rem 0.5rem;
   animation: ${(props) =>
-    props.shouldExit
-      ? css`${slideOut} 1s ${slideOutTimingFunction} forwards`
-      : css`${slideInFadeIn} 1s  ${slideInTimingFunction}   , ${bounce} 2s ease-in-out 1s infinite`};
+    props.$shouldExit
+      ? css`${slideOut} 0.4s ${slideOutTimingFunction} forwards`
+      : css`${slideInFadeIn} 0.8s  ${slideInTimingFunction}   , ${bounce} 2s ease-in-out 1s infinite`};
 `;
 
 const StartTypingSignalBody = styled.div`
@@ -70,9 +70,9 @@ const StartTypingSignalPointer = styled.div`
   clip-path: polygon(24% 45%, 11% 68%, 0 100%, 0 1%, 100% 0, 67% 11%, 43% 26%);
 `;
 
-const StartTypingSignal: React.FC<StartTypingSignalProps> = ({ shouldExit }) => {
+const StartTypingSignal: React.FC<StartTypingSignalProps> = ({ $shouldExit }) => {
   return (
-    <StartTypingSignalContainer shouldExit={shouldExit}>
+    <StartTypingSignalContainer $shouldExit={$shouldExit}>
       <StartTypingSignalBody>
         <p>Commence à taper !</p>
       </StartTypingSignalBody>
