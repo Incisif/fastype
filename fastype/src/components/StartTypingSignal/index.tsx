@@ -3,7 +3,7 @@ import styled, { keyframes, css } from "styled-components";
 interface StartTypingSignalProps {
   $shouldExit: boolean;
 }
-//animation keyframes infinie qui fait bouger le signal de haut en bas
+
 
 const slideInTimingFunction = "ease";
 const slideOutTimingFunction = "cubic-bezier(0.6, 0.04, 0.98, 0.34)";
@@ -20,12 +20,12 @@ const slideInFadeIn = keyframes`
     opacity: 1;
   }
 `;
-const bounce = keyframes`
+const shake = keyframes`
   0%, 100% {
-    transform: translateY(0);
+    transform: translatex(0);
   }
   50% {
-    transform: translateY(-0.5rem);
+    transform: translatex(-0.5rem);
   }
 `;
 const slideOut = keyframes`
@@ -47,7 +47,7 @@ const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
   animation: ${(props) =>
     props.$shouldExit
       ? css`${slideOut} 0.4s ${slideOutTimingFunction} forwards`
-      : css`${slideInFadeIn} 0.8s  ${slideInTimingFunction}   , ${bounce} 2s ease-in-out 1s infinite`};
+      : css`${slideInFadeIn} 0.8s  ${slideInTimingFunction}   , ${shake} 1.5s ease-in-out 1s infinite`};
 `;
 
 const StartTypingSignalBody = styled.div`

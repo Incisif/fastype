@@ -21,7 +21,29 @@ export const loginUserThunk = createAsyncThunk(
       }
     } catch (error) {
       if (error instanceof Error) {
-        // Notez le changement ici
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
+export const googleSignInThunk = createAsyncThunk(
+  "auth/googleSignIn",
+  async (_, { rejectWithValue }) => {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const result = await firebase.auth().signInWithPopup(provider);
+      const user = result.user;
+      console.log(user);
+      
+      if (user) {
+        return { uid: user.uid, email: user.email };
+      } else {
+        return rejectWithValue("No user found");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
         return rejectWithValue(error.message);
       }
       return rejectWithValue("An unknown error occurred");
