@@ -4,13 +4,15 @@ import { loginUserThunk, googleSignInThunk } from "./userThunks";
 interface LoginState {
   username: string |null;
   isLoggedIn: boolean;
+  rememberMe: boolean;
   message: string | null;
 }
 
 const initialState: LoginState = {
-  username: "",
+  username: null,
   isLoggedIn: false,
   message: null,
+  rememberMe: false,
 };
 
 export const loginSlice = createSlice({
@@ -23,9 +25,12 @@ export const loginSlice = createSlice({
       
     },
     logout: (state) => {
-      state.username = "";
+      state.username = null;
       state.isLoggedIn = false;
     },
+    rememberMe: (state, action: PayloadAction<boolean>) => {
+      state.rememberMe = action.payload;
+    }
   },
   extraReducers: (builder) => {
   builder
@@ -51,5 +56,5 @@ export const loginSlice = createSlice({
 
 });
 
-export const { login, logout } = loginSlice.actions;
+export const { login, logout, rememberMe } = loginSlice.actions;
 export default loginSlice.reducer;
