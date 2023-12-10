@@ -101,7 +101,7 @@ const Header: React.FC = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const isLoggedIn = useSelector((state: RootState) => state.login.isLoggedIn);
+  const user = useSelector((state: RootState) => state.login.user);
 
   return (
     <HeaderContent>
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
             $backgroundColor={"var(--connexion-button)"}
             $shadowColor={"var(--shadow-connexion-button)"}
           >
-            {!isLoggedIn ? "Se connecter" : "Déconnexion"}
+            {!user ? "Se connecter" :user?.firstName}
           </ThreeDButton>
         </RightContainer>
       </HeaderWrapper>

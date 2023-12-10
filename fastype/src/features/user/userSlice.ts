@@ -13,7 +13,6 @@ interface User {
 
 interface LoginState {
   user: User | null;
-  isLoggedIn: boolean;
   rememberMe: boolean;
   message: string | null;
 }
@@ -22,7 +21,6 @@ const initialState: LoginState = {
   user: JSON.parse(
     localStorage.getItem("user") ?? sessionStorage.getItem("user") ?? "null"
   ),
-  isLoggedIn: false,
   message: null,
   rememberMe: false,
 };
@@ -33,11 +31,10 @@ export const loginSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
-      state.isLoggedIn = !!action.payload;
+
     },
     logout: (state) => {
       state.user = null;
-      state.isLoggedIn = false;
       localStorage.removeItem("user");
       sessionStorage.removeItem("user");
     },
@@ -49,17 +46,16 @@ export const loginSlice = createSlice({
     builder
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.isLoggedIn = true;
+
         state.message = "Connexion réussie !";
       })
       .addCase(googleSignInThunk.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.isLoggedIn = true;
         state.message = "Connexion Google réussie !";
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.user = null;
-        state.isLoggedIn = false;
+
         state.message =
           typeof action.payload === "string"
             ? action.payload
@@ -67,7 +63,7 @@ export const loginSlice = createSlice({
       })
       .addCase(googleSignInThunk.rejected, (state, action) => {
         state.user = null;
-        state.isLoggedIn = false;
+
         state.message =
           typeof action.payload === "string"
             ? action.payload

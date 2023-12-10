@@ -49,7 +49,6 @@ const Content = styled.div`
     width: 100%;
     font-size: 16px;
   }
-  
 `;
 
 const CloseButton = styled.a`
@@ -97,7 +96,6 @@ const StyledForm = styled.form`
   #rememberme {
     margin-right: 0.5rem;
     cursor: pointer;
-    ;
   }
 `;
 
@@ -150,7 +148,8 @@ const RememberMeWrapper = styled.div`
   }
 `;
 const RemberberMeCheckbox = styled.input`
-cursor: pointer;`;
+  cursor: pointer;
+`;
 
 const MessageContainer = styled.div`
   position: absolute;
@@ -198,8 +197,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
       }, 2000);
     }
   };
-  const handleGoogleSignIn = () => {
-    dispatch(googleSignInThunk());
+  const handleGoogleSignIn = async () => {
+    const action = await dispatch(googleSignInThunk());
+    if (googleSignInThunk.fulfilled.match(action)) {
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    }
   };
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -274,7 +278,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             >
               Connexion
             </ThreeDButton>
-            <RememberMeWrapper >
+            <RememberMeWrapper>
               <RemberberMeCheckbox
                 type="checkbox"
                 name="rememberme"
