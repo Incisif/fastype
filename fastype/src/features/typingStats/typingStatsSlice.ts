@@ -32,7 +32,6 @@ export const TypingStatsSlice = createSlice({
   reducers: {
     updateWpm: (state, action: PayloadAction<number>) => {
       state.wpm = action.payload;
-      console.log("wpm", state.wpm);
     },
     updateCpm: (state, action: PayloadAction<number>) => {
       state.cpm = action.payload;
@@ -44,24 +43,19 @@ export const TypingStatsSlice = createSlice({
       state.progressPercentage = action.payload;
     },
     setTotalChars: (state, action: PayloadAction<number>) => {
-        state.totalChars = action.payload;
-        console.log("totalChars", state.totalChars);
+      state.totalChars = action.payload;
     },
     updateCorrectChars: (state, action: PayloadAction<number>) => {
-        state.correctChars += action.payload;
-        console.log("correctChars", state.correctChars);
+      state.correctChars += action.payload;
     },
     updateCharsTyped: (state, action: PayloadAction<number>) => {
       state.charsTyped = action.payload;
-      console.log("charsTyped", state.charsTyped);
     },
     setStartTime: (state, action: PayloadAction<number>) => {
-        state.startTime = action.payload;
-        console.log("startTime", state.startTime);
+      state.startTime = action.payload;
     },
     setEndingTime: (state, action: PayloadAction<number>) => {
-        state.endingTime = action.payload;
-        console.log("endingTime", state.endingTime);
+      state.endingTime = action.payload;
     },
     updateTypingStats: (
       state,
@@ -92,7 +86,7 @@ export const TypingStatsSlice = createSlice({
     },
     setIsFirstChar: (state, action: PayloadAction<boolean>) => {
       state.isFirstChar = action.payload;
-    }
+    },
   },
 });
 
@@ -108,6 +102,6 @@ export const {
   setStartTime,
   setEndingTime,
   resetTypingStats,
-  setIsFirstChar
+  setIsFirstChar,
 } = TypingStatsSlice.actions;
 export default TypingStatsSlice.reducer;

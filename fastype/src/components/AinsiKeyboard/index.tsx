@@ -177,11 +177,11 @@ const Keyboard: React.FC = () => {
   const currentChar = text.charAt(
     useSelector((state: RootState) => state.session.currentCharPosition)
   );
-  console.log(currentChar);
+
 
   const shouldHighlightKey = (keyChar: string) => {
     const currentKeyInfo = keyMap[currentChar];
-    console.log(currentKeyInfo);
+
     return (
       keyChar === currentChar ||
       (currentKeyInfo && keyChar === currentKeyInfo.mod)
