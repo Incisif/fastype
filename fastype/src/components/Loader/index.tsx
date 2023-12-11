@@ -1,143 +1,52 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
-const size = 60; 
-const ligthtBluePastel = '#B6D8F2';
-const animationDuration = '1.8s'; 
-const yellowPastel = '#F7F6CF';
-const pinkPastel = '#F4CFDF';
-const darkBluePastel = '#5784BA';
-const greenPastel = '#BED3C3';
-
-const rotation = keyframes`
+const shadowRolling = keyframes`
   0% {
-    transform: rotateX(45deg) rotateY(0) rotateZ(45deg);
-    animation-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
+    box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+  12% {
+    box-shadow: 100px 0 var(--first-ball-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+  25% {
+    box-shadow: 120px 0 var(--first-ball-color), 100px 0 var(--second-ball-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+  36% {
+    box-shadow: 140px 0 var(--first-ball-color), 120px 0 var(--second-ball-color), 100px 0 var(--third-ball-color), 0px 0 rgba(255, 255, 255, 0);
   }
   50% {
-    transform: rotateX(45deg) rotateY(0) rotateZ(225deg);
-    animation-timing-function: cubic-bezier(0.76, 0.05, 0.86, 0.06);
+    box-shadow: 160px 0 var(--first-ball-color), 140px 0 var(--second-ball-color), 120px 0 var(--third-ball-color), 100px 0 red;
+  }
+  62% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 160px 0 var(--second-ball-color), 140px 0 var(--third-ball-color), 120px 0 red;
+  }
+  75% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 160px 0 var(--third-ball-color), 140px 0 red;
+  }
+  87% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 160px 0 red;
   }
   100% {
-    transform: rotateX(45deg) rotateY(0) rotateZ(405deg);
-    animation-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
   }
 `;
 
-const bouncing = keyframes`
-  0% {
-    transform: translateY(-${size * 0.5}px);
-    animation-timing-function: cubic-bezier(0.76, 0.05, 0.86, 0.06);
-  }
-  45% {
-    transform: translateY(${size * 0.5}px);
-    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-  }
-  100% {
-    transform: translateY(-${size * 0.5}px);
-    animation-timing-function: cubic-bezier(0.76, 0.05, 0.86, 0.06);
-  }
-`;
-
-const bouncingShadow = keyframes`
-  0% {
-    transform: translateZ(-${size}px) scale(1.3);
-    animation-timing-function: cubic-bezier(0.76, 0.05, 0.86, 0.06);
-    opacity: 0.1;
-  }
-  45% {
-    transform: translateZ(0);
-    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateZ(-${size}px) scale(1.3);
-    animation-timing-function: cubic-bezier(0.76, 0.05, 0.86, 0.06);
-    opacity: 0.1;
-  }
-`;
-
-
-const Scene = styled.div`
-  position: relative;
-  z-index: 2;
-  height: ${size * 2.75}px;
-  width: ${size * 2.75}px;
-  display: grid;
-  place-items: center;
-`;
-
-const CubeWrapper = styled.div`
-  transform-style: preserve-3d;
-  animation: ${bouncing} ${animationDuration} infinite;
-`;
-
-const Cube = styled.div`
-  transform-style: preserve-3d;
-  transform: rotateX(45deg) rotateZ(45deg);
-  animation: ${rotation} ${animationDuration} 0.2s infinite;
-`;
-
-const CubeFaces = styled.div`
-  transform-style: preserve-3d;
-  height: ${size}px;
-  width: ${size}px;
-  position: relative;
-  transform-origin: 0 0;
-  transform: translateX(0) translateY(0) translateZ(-${size / 2}px);
-`;
-
-const CubeFace = styled.div`
+const StyledLoader = styled.span`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
   position: absolute;
-  inset: 0;
-
-  &.shadow {
-    transform: translateZ(-${size}px);
-    animation: ${bouncingShadow} ${animationDuration} infinite;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  &.top {
-    transform: translateZ(${size}px);
-    background-color: ${yellowPastel};
-  }
-  &.front {
-    transform-origin: 0 50%;
-    transform: rotateY(-90deg);
-    background-color: ${ligthtBluePastel};
-  }
-  &.back {
-    transform-origin: 0 50%;
-    transform: rotateY(-90deg) translateZ(-${size}px);
-    background-color: ${pinkPastel};
-  }
-  &.right {
-    transform-origin: 50% 0;
-    transform: rotateX(-90deg) translateY(-${size}px);
-    background-color: ${darkBluePastel};
-  }
-  &.left {
-    transform-origin: 50% 0;
-    transform: rotateX(-90deg) translateY(-${size}px) translateZ(${size}px);
-    background-color: ${greenPastel};
-  }
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  box-sizing: border-box;
+  animation: ${shadowRolling} 2s linear infinite;
 `;
 
-
-const Loader = () => (
-  
-    <Scene>
-      <CubeWrapper>
-        <Cube>
-          <CubeFaces>
-            <CubeFace className="shadow" />
-            <CubeFace className="top" />
-            <CubeFace className="front" />
-            <CubeFace className="back" />
-            <CubeFace className="right" />
-            <CubeFace className="left" />
-          </CubeFaces>
-        </Cube>
-      </CubeWrapper>
-    </Scene>
-);
+const Loader: React.FC = () => {
+  return <StyledLoader />;
+};
 
 export default Loader;

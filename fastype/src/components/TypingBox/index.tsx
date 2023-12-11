@@ -28,6 +28,7 @@ import {
 import TypingResultDisplay from "../TypingResultDisplay";
 import ProgressBar from "../ProgressBar";
 import StartTypingSignal from "../StartTypingSignal";
+import Loader from "../Loader";
 
 interface CharBoxProps {
   $status: string | null;
@@ -156,7 +157,6 @@ const TypingBox: React.FC = () => {
     return Math.floor(usableTypingBoxWidth / charWidth);
   }, [containerWidth, charWidth]);
 
-
   //EFFECTS
   useEffect(() => {
     if (loadingStatus === "succeeded" && typingBoxRef.current) {
@@ -197,7 +197,6 @@ const TypingBox: React.FC = () => {
       newLines.push({ line: currentLine, lineIndex: newLines.length });
     }
   }
-
 
   //CALLBACKS
   const createLinesAndStartIndices = useCallback(
@@ -257,7 +256,6 @@ const TypingBox: React.FC = () => {
       key === "Control"
     );
   };
-
 
   //HANDLERS
   const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -379,13 +377,16 @@ const TypingBox: React.FC = () => {
     return chars;
   };
 
+ 
+
   return (
     <TypingBoxWrapper>
       <TypingBoxContainer
         ref={typingBoxRef}
         onKeyDown={handleKeyPress}
         tabIndex={0}
-      >
+        >
+        {loadingStatus === "loading" && <Loader />}
         {showTypingResult ? (
           <TypingResultDisplay
             totalChars={typingStats.totalChars}
@@ -424,7 +425,6 @@ const TypingBox: React.FC = () => {
         />
       </TypingBoxContainer>
       <StartTypingSignal $shouldExit={typingStats.startTime != null} />
-     
     </TypingBoxWrapper>
   );
 };

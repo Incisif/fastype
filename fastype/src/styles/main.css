@@ -23,4 +23,10 @@
   /*Drop down colors*/
 
   --option-hover-color: #f5f5f5;
+
+  /*Loader colors*/
+  --first-ball-color: #a661ff;
+  --second-ball-color: hsl(167, 78%, 47%);
+  --third-ball-color: hsl(35, 100%, 50%);
+  --fourth-ball-color: #0f5bff;
 }
