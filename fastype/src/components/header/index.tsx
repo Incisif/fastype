@@ -5,9 +5,11 @@ import LoginModal from "../LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
+import DropDown from "../Dropdown";
 import ThreeDButton from "../ThreeDButton/index";
 
 const HeaderContent = styled.div`
+font-family: "Roboto", sans-serif;
   width: 100vw;
   height: 80px;
   background-color: var(--white-color));
@@ -32,7 +34,6 @@ const Logo = styled.img`
 `;
 
 const HeaderTitle = styled.h1`
-  font-family: "Roboto", sans-serif;
   font-size: 2rem;
   font-weight: 700;
   font-style: italic;
@@ -89,16 +90,28 @@ const LeftContainer = styled.div`
 `;
 const MiddleContainer = styled.div``;
 const RightContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 `;
 
+const StyledImg = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+`;
+
 const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleModalToggle = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   const user = useSelector((state: RootState) => state.login.user);
@@ -121,14 +134,29 @@ const Header: React.FC = () => {
           </NavBar>
         </MiddleContainer>
         <RightContainer>
-          <ThreeDButton
-            onClick={handleModalToggle}
-            color={"white"}
-            $backgroundColor={"var(--connexion-button)"}
-            $shadowColor={"var(--shadow-connexion-button)"}
-          >
-            {!user ? "Se connecter" :user?.firstName}
-          </ThreeDButton>
+          {!user ? (
+            <ThreeDButton
+              onClick={handleModalToggle}
+              color={"white"}
+              $backgroundColor={"var(--connexion-button)"}
+              $shadowColor={"var(--shadow-connexion-button)"}
+            >
+              Se connecter
+            </ThreeDButton>
+          ) : (
+            <ThreeDButton
+              onClick={handleDropdownToggle}
+              color={"white"}
+              $backgroundColor={"var(--connexion-button)"}
+              $shadowColor={"var(--shadow-connexion-button)"}
+            >
+              {user?.firstName}
+              {user?.profilePictureUrl && (
+                <StyledImg src={user?.profilePictureUrl} alt="avatar" />
+              )}
+            </ThreeDButton>
+          )}
+          {isDropdownOpen && <DropDown />}
         </RightContainer>
       </HeaderWrapper>
     </HeaderContent>
