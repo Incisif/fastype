@@ -30,7 +30,6 @@ const Logo = styled.img`
   width: 60px;
   height: 49px;
   align-self: flex-end;
-  margin-bottom: 15px;
 `;
 
 const HeaderTitle = styled.h1`

@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FooterContent = styled.div`
-  width: 100vw;
+  width: 100VW;
   height: 150px;
   display: flex;
   align-items: center;
   background-color: #4f5458;
 `;
 const ContentWrapper = styled.div`
-  padding: 0 20px;
   width: 1228px;
   margin: 0 auto;
   display: flex;

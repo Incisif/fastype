@@ -5,6 +5,7 @@ import Contact from "../pages/Contact";
 import Results from "../pages/Results";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Profile from "../pages/Profile";
 
 const Router: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Router: React.FC = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/results" element={<Results />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </BrowserRouter>
