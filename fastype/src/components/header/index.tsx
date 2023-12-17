@@ -100,6 +100,7 @@ const StyledImg = styled.img`
   height: 1.5rem;
   border-radius: 50%;
 `;
+const Flex ={"display": "flex", "alignItems": "center", "justifyContent": "center"}
 
 const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -119,8 +120,10 @@ const Header: React.FC = () => {
     <HeaderContent>
       <HeaderWrapper className="HeadWrapper">
         <LeftContainer>
-          <Logo src={logo} alt="Fastype logo" />
-          <HeaderTitle>Fastype</HeaderTitle>
+          <Link to="/" style={Flex}>
+            <Logo src={logo} alt="Fastype logo" />
+            <HeaderTitle>Fastype</HeaderTitle>
+          </Link>
         </LeftContainer>
         <MiddleContainer>
           <NavBar>

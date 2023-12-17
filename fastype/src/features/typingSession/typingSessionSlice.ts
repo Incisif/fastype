@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CharStatuses {
-  [charIndex: number]: string; 
+  [charIndex: number]: string;
 }
 
-// État initial
 const initialState = {
   isExiting: false,
   charStatuses: {} as CharStatuses,
   currentCharPosition: 0,
   isTypingComplete: false,
   translateY: 0,
+  selectedLevel: localStorage.getItem("selectedLevel") ?? null,
 };
 
 export const typingSessionSlice = createSlice({
@@ -36,17 +36,21 @@ export const typingSessionSlice = createSlice({
     },
     setTranslateY: (state, action: PayloadAction<number>) => {
       state.translateY = action.payload;
-    }
+    },
+    setSelectedLevel: (state, action: PayloadAction<string>) => {
+      state.selectedLevel = action.payload;
+    },
   },
 });
 
-export const { 
-  setExiting, 
-  resetSession, 
-  setCharStatus, 
-  setCurrentCharPosition, 
+export const {
+  setExiting,
+  resetSession,
+  setCharStatus,
+  setCurrentCharPosition,
   setIsTypingComplete,
-  setTranslateY
+  setTranslateY,
+  setSelectedLevel,
 } = typingSessionSlice.actions;
 
 export default typingSessionSlice.reducer;

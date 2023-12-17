@@ -16,7 +16,10 @@ import {
   setExiting,
   setTranslateY,
 } from "../../features/typingSession/typingSessionSlice";
-import { resetTypingStats, setIsFirstChar } from "../../features/typingStats/typingStatsSlice";
+import {
+  resetTypingStats,
+  setIsFirstChar,
+} from "../../features/typingStats/typingStatsSlice";
 import { useSelector } from "react-redux";
 import { fetchTexts } from "../../features/text/textThunk";
 
@@ -215,6 +218,9 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
   const [wpmAnimated, setWpmAnimated] = useState(0);
   const [accuracyAnimated, setAccuracyAnimated] = useState(0);
   const $isExiting = useSelector((state: RootState) => state.session.isExiting);
+  const selectedLevel = useSelector(
+    (state: RootState) => state.session.selectedLevel
+  );
   const dispatch = useAppDispatch();
 
   const handleReset = () => {
@@ -235,7 +241,7 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
       dispatch(resetSession());
       dispatch(resetTypingStats());
       dispatch(setTranslateY(0));
-      dispatch(fetchTexts());
+      dispatch(fetchTexts(selectedLevel));
       dispatch(setExiting(false));
       dispatch(setIsFirstChar(true));
       typingBoxRef.current?.focus();

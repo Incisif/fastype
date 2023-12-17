@@ -9,7 +9,6 @@ import React, {
 } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/store";
-import { fetchTexts } from "../../features/text/textThunk";
 import { selectText } from "../../features/text/textSlice";
 import {
   setTotalChars,
@@ -29,6 +28,8 @@ import TypingResultDisplay from "../TypingResultDisplay";
 import ProgressBar from "../ProgressBar";
 import StartTypingSignal from "../StartTypingSignal";
 import Loader from "../Loader";
+import { fetchTexts } from "../../features/text/textThunk";
+import CardLevelSelect from "../../components/CardLevelSelect";
 
 interface CharBoxProps {
   $status: string | null;
@@ -131,6 +132,9 @@ const TypingBox: React.FC = () => {
   );
   const loadingStatus = useSelector((state: RootState) => state.texts.status);
   const typingStats = useSelector((state: RootState) => state.stats);
+  const selectedLevel = useSelector(
+    (state: RootState) => state.session.selectedLevel
+  );
 
   //LOCAL STATES
   const [isDeadKey, setIsDeadKey] = useState<boolean>(false);
@@ -165,8 +169,8 @@ const TypingBox: React.FC = () => {
   }, [loadingStatus]);
 
   useEffect(() => {
-    dispatch(fetchTexts());
-  }, [dispatch]);
+    dispatch(fetchTexts(selectedLevel));
+  }, [dispatch, selectedLevel]);
 
   useEffect(() => {
     if (text) {
@@ -377,16 +381,18 @@ const TypingBox: React.FC = () => {
     return chars;
   };
 
- 
-
   return (
     <TypingBoxWrapper>
       <TypingBoxContainer
         ref={typingBoxRef}
         onKeyDown={handleKeyPress}
         tabIndex={0}
-        >
-        {loadingStatus === "loading" && <Loader />}
+      >
+        {selectedLevel === null ? (
+          <CardLevelSelect />
+        ) : (
+          loadingStatus === "loading" && <Loader />
+        )}
         {showTypingResult ? (
           <TypingResultDisplay
             totalChars={typingStats.totalChars}

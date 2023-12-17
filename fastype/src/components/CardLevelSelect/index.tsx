@@ -5,6 +5,9 @@ import hard from "../../assets/hard_icon- 1.svg";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import { useAppDispatch } from "../../store/store";
+import { setSelectedLevel } from "../../features/typingSession/typingSessionSlice";
+import { fetchTexts } from "../../features/text/textThunk";
 
 interface CardContentProps {
   $isEasyInfoIsHovered?: boolean;
@@ -16,6 +19,7 @@ const CardsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
 `;
@@ -26,12 +30,8 @@ const CardWrapper = styled.div`
   gap: 3rem;
   width: 100%;
   flex-shrink: 0;
-  margin-top: 1.4rem;
 `;
-const SelectorTitle = styled.h2`
-  font-size: 1.5rem;
-  margin-top: 1.5rem;
-`;
+
 const CardContent = styled.div<CardContentProps>`
   position: relative;
   display: flex;
@@ -40,7 +40,7 @@ const CardContent = styled.div<CardContentProps>`
   align-items: center;
   width: 23%;
   background-color: var(--white-color);
-  border-radius: 25px;
+  border-radius: 10px;
   box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   transition: all 0.3s ease-in-out;
@@ -148,19 +148,26 @@ const XIcon = styled(FontAwesomeIcon)`
   margin-right: 0.5rem;
 `;
 
-const handleOnClick = (e: React.MouseEvent) => {
-  e.preventDefault();
-  console.log(e.currentTarget.id);
-};
+
 
 const CardLevelSelect: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [easyInfoIsHovered, setEasyInfoIsHovered] = useState(false);
   const [mediumInfoIsHovered, setMediumInfoIsHovered] = useState(false);
   const [hardInfoIsHovered, setHardInfoIsHovered] = useState(false);
+  
+  const handleOnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const selectedLevel = e.currentTarget.id;
+    dispatch(setSelectedLevel(selectedLevel));
+    localStorage.setItem('selectedLevel', selectedLevel)
+    dispatch(fetchTexts(selectedLevel));
+
+  };
 
   return (
     <CardsContainer>
-      <SelectorTitle>Prêt à Taper ? Sélectionnes ton Niveau !</SelectorTitle>
+      
       <CardWrapper>
         <CardContent
           $isEasyInfoIsHovered={easyInfoIsHovered}

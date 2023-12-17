@@ -14,6 +14,7 @@ const KeyboardContainer = styled.div`
   position: relative;
   width: 80%;
   margin-bottom: 2rem;
+  margin-top: 1.8rem;
 `;
 const LineContainer = styled.div`
   display: flex;

@@ -1,6 +1,5 @@
 import Main from "../../layouts/MainContent";
 import styled from "styled-components";
-import CardLevelSelect from "../../components/CardLevelSelect";
 
 
 const StyledProfile = styled.div`
@@ -22,8 +21,7 @@ const Profile: React.FC = () => {
   return (
     <Main>
       <StyledProfile>
-        <CardLevelSelect/>
-        
+ 
       </StyledProfile>
     </Main>
   );
