@@ -13,7 +13,7 @@ interface KeyStyle {
 const KeyboardContainer = styled.div`
   position: relative;
   width: 80%;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   margin-top: 1.8rem;
 `;
 const LineContainer = styled.div`

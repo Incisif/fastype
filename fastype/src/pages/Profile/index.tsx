@@ -1,7 +1,6 @@
 import Main from "../../layouts/MainContent";
 import styled from "styled-components";
 
-
 const StyledProfile = styled.div`
   position: relative;
   font-family: "Roboto", sans-serif;
@@ -20,9 +19,7 @@ const StyledProfile = styled.div`
 const Profile: React.FC = () => {
   return (
     <Main>
-      <StyledProfile>
- 
-      </StyledProfile>
+      <StyledProfile></StyledProfile>
     </Main>
   );
 };

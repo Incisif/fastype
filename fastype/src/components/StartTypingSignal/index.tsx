@@ -1,5 +1,6 @@
 import styled, { keyframes, css } from "styled-components";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 interface StartTypingSignalProps {
   $shouldExit: boolean;
 }
@@ -14,6 +15,7 @@ const slideInFadeIn = keyframes`
   from {
     transform: translateX(-50%);
     opacity: 0;
+    visibility: visible;
   }
   to {
     transform: translateX(0);
@@ -22,6 +24,7 @@ const slideInFadeIn = keyframes`
 `;
 const shake = keyframes`
   0%, 100% {
+    visibility: visible;
     transform: translatex(0);
   }
   50% {
@@ -44,12 +47,17 @@ const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
   z-index: 2;
   background-color: var(--dark-violet-color);
   border-radius: 0.5rem 0 0.5rem 0.5rem;
+  visibility: hidden; // Le composant est initialement invisible
   animation: ${(props) =>
     props.$shouldExit
       ? css`${slideOut} 0.4s ${slideOutTimingFunction} forwards`
-      : css`${slideInFadeIn} 0.8s  ${slideInTimingFunction}   , ${shake} 1.5s ease-in-out 1s infinite`};
+      : css`
+          ${slideInFadeIn} 0.8s ${slideInTimingFunction} 1s forwards, 
+          ${shake} 1.5s ease-in-out 2s infinite`
+      };
+  animation-fill-mode: forwards; // Gardez le composant dans l'état final de l'animation
+  animation-delay: 2s; // Délai avant que l'animation ne commence
 `;
-
 const StartTypingSignalBody = styled.div`
   position: relative;
   display: flex;
@@ -71,13 +79,19 @@ const StartTypingSignalPointer = styled.div`
 `;
 
 const StartTypingSignal: React.FC<StartTypingSignalProps> = ({ $shouldExit }) => {
+  const selectedLevel = useSelector(
+    (state: RootState) => state.session.selectedLevel);
   return (
+    <>
+    {selectedLevel?
     <StartTypingSignalContainer $shouldExit={$shouldExit}>
       <StartTypingSignalBody>
         <p>Commence à taper !</p>
       </StartTypingSignalBody>
       <StartTypingSignalPointer />
     </StartTypingSignalContainer>
+    :null}
+    </>
   );
 };
 

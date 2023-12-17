@@ -176,7 +176,7 @@ const CardLevelSelect: React.FC = () => {
         >
           <div className="content">
             <CardTitle>Débutant</CardTitle>
-            <CardImage src={easy} />
+            <CardImage src={easy} alt="easy mode selector" />
             <CardCaption>23% du clavier</CardCaption>
           </div>
           <EasyLevelDetails $isEasyInfoIsHovered={easyInfoIsHovered}>
@@ -210,7 +210,7 @@ const CardLevelSelect: React.FC = () => {
         >
           <div className="content">
             <CardTitle>Intémediaire </CardTitle>
-            <CardImage src={medium} />
+            <CardImage src={medium} alt="medium mode selector" />
             <CardCaption>55% du clavier</CardCaption>
           </div>
           <MediumLevelDetails $isMediumInfoIsHovered={mediumInfoIsHovered}>
@@ -244,7 +244,7 @@ const CardLevelSelect: React.FC = () => {
         >
           <div className="content">
             <CardTitle>Expert </CardTitle>
-            <CardImage src={hard} />
+            <CardImage src={hard} alt="hard mode selector"/>
             <CardCaption>100% du clavier</CardCaption>
           </div>
           <HardLevelDetails $isHardInfoIsHovered={hardInfoIsHovered}>

@@ -29,7 +29,7 @@ import ProgressBar from "../ProgressBar";
 import StartTypingSignal from "../StartTypingSignal";
 import Loader from "../Loader";
 import { fetchTexts } from "../../features/text/textThunk";
-import CardLevelSelect from "../../components/CardLevelSelect";
+import CardLevelSelect from "../LevelSelector";
 
 interface CharBoxProps {
   $status: string | null;
