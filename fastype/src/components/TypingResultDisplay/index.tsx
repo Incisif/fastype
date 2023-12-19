@@ -19,6 +19,8 @@ import {
 import {
   resetTypingStats,
   setIsFirstChar,
+  updateAccuracy,
+  updateWpm,
 } from "../../features/typingStats/typingStatsSlice";
 import { useSelector } from "react-redux";
 import { fetchTexts } from "../../features/text/textThunk";
@@ -232,7 +234,7 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
       dispatch(setExiting(false));
       dispatch(setIsFirstChar(true));
       typingBoxRef.current?.focus();
-    }, 1000); // délai de 1 seconde
+    }, 1000);
   };
 
   const handleNext = () => {
@@ -245,11 +247,10 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
       dispatch(setExiting(false));
       dispatch(setIsFirstChar(true));
       typingBoxRef.current?.focus();
-    }, 1000); // délai de 1 seconde
+    }, 1000);
   };
 
   useEffect(() => {
-    // Délai avant de commencer l'animation
     const animationDelay = 1000;
 
     const startAnimation = () => {
@@ -282,6 +283,12 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
       clearInterval(animationTimer);
     };
   }, [accuracy, wpm]);
+
+  useEffect(() => {
+    console.log(accuracy, wpm);
+    dispatch(updateAccuracy(accuracy));
+    dispatch(updateWpm(wpm));
+  }, [accuracy, wpm, dispatch]);
 
   return (
     <DisplayContainer $isExiting={$isExiting}>

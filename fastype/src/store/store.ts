@@ -1,4 +1,4 @@
-// Dans app/store.ts
+
 import { configureStore } from "@reduxjs/toolkit";
 import loginReducer from "../features/user/userSlice";
 import textReducer from "../features/text/textSlice";

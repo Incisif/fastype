@@ -17,6 +17,7 @@ import {
   setStartTime,
   setEndingTime,
   setIsFirstChar,
+  setStatsUpdated,
 } from "../../features/typingStats/typingStatsSlice";
 import {
   setCharStatus,
@@ -30,6 +31,8 @@ import StartTypingSignal from "../StartTypingSignal";
 import Loader from "../Loader";
 import { fetchTexts } from "../../features/text/textThunk";
 import CardLevelSelect from "../LevelSelector";
+import { updateSessionStatsThunk } from "../../features/typingStats/statsThunk";
+import { calculateDurationInSeconds } from "../../features/typingStats/calculateTypingStats";
 
 interface CharBoxProps {
   $status: string | null;
@@ -135,6 +138,9 @@ const TypingBox: React.FC = () => {
   const selectedLevel = useSelector(
     (state: RootState) => state.session.selectedLevel
   );
+  const statsUpdated = useSelector(
+    (state: RootState) => state.stats.statsUpdated
+  );
 
   //LOCAL STATES
   const [isDeadKey, setIsDeadKey] = useState<boolean>(false);
@@ -152,7 +158,26 @@ const TypingBox: React.FC = () => {
   const charWidth = 18 + 2 * charMargin;
   const lineHeight = 49;
   const endTime = typingStats.endingTime ?? (isFirstChar ? null : Date.now());
+  const uid = useSelector((state: RootState) => state.login.user?.uid) ?? "";
+  const timeInSecond = calculateDurationInSeconds(
+    typingStats.startTime,
+    endTime
+  );
+
   const showTypingResult = isTypingComplete && endTime !== null;
+  const sessionStats = useMemo(
+    () => ({
+      totalChars: typingStats.totalChars,
+      correctChars: typingStats.correctChars,
+      date: new Date().toISOString(),
+      timeInSecond: timeInSecond,
+      wpm: typingStats.wpm,
+      accuracy: typingStats.accuracy,
+
+      level: selectedLevel ?? undefined,
+    }),
+    [typingStats, selectedLevel, timeInSecond]
+  );
 
   //MEMOS
   const numberOfCharsPossibleInLine = useMemo(() => {
@@ -201,6 +226,26 @@ const TypingBox: React.FC = () => {
       newLines.push({ line: currentLine, lineIndex: newLines.length });
     }
   }
+
+  useEffect(() => {
+    if (
+      isTypingComplete &&
+      typingStats.wpm !== 0 &&
+      typingStats.accuracy !== 0 &&
+      !statsUpdated
+    ) {
+      dispatch(updateSessionStatsThunk({ userId: uid, sessionStats }));
+      dispatch(setStatsUpdated(true));
+    }
+  }, [
+    isTypingComplete,
+    typingStats.wpm,
+    typingStats.accuracy,
+    statsUpdated,
+    uid,
+    dispatch,
+    sessionStats,
+  ]);
 
   //CALLBACKS
   const createLinesAndStartIndices = useCallback(

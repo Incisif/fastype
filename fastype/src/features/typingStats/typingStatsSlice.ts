@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { updateSessionStatsThunk } from "./statsThunk";
 
 interface TypingStatsState {
   wpm: number;
@@ -11,6 +12,9 @@ interface TypingStatsState {
   startTime: number | null;
   endingTime?: number;
   isFirstChar: boolean;
+  isLoading: boolean;
+  error: string | null;
+  statsUpdated: boolean;
 }
 
 const initialState: TypingStatsState = {
@@ -24,6 +28,9 @@ const initialState: TypingStatsState = {
   startTime: null,
   endingTime: undefined,
   isFirstChar: true,
+  isLoading: false,
+  error: null,
+  statsUpdated: false,
 };
 
 export const TypingStatsSlice = createSlice({
@@ -57,6 +64,9 @@ export const TypingStatsSlice = createSlice({
     setEndingTime: (state, action: PayloadAction<number>) => {
       state.endingTime = action.payload;
     },
+    setStatsUpdated: (state, action: PayloadAction<boolean>) => {
+      state.statsUpdated = action.payload;
+    },
     updateTypingStats: (
       state,
       action: PayloadAction<Partial<TypingStatsState>>
@@ -83,10 +93,25 @@ export const TypingStatsSlice = createSlice({
       state.charsTyped = 0;
       state.startTime = null;
       state.endingTime = undefined;
+      state.statsUpdated = false;
     },
     setIsFirstChar: (state, action: PayloadAction<boolean>) => {
       state.isFirstChar = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateSessionStatsThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateSessionStatsThunk.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updateSessionStatsThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error?.message ?? null;
+      });
   },
 });
 
@@ -103,5 +128,6 @@ export const {
   setEndingTime,
   resetTypingStats,
   setIsFirstChar,
+  setStatsUpdated
 } = TypingStatsSlice.actions;
 export default TypingStatsSlice.reducer;
