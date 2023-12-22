@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { updateSessionStatsThunk } from "./statsThunk";
+import { updateSessionStatsThunk, fetchSessionStatsThunk } from "./statsThunk";
 
 interface TypingStatsState {
   wpm: number;
@@ -111,6 +111,17 @@ export const TypingStatsSlice = createSlice({
       .addCase(updateSessionStatsThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message ?? null;
+      })
+      .addCase(fetchSessionStatsThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchSessionStatsThunk.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchSessionStatsThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error?.message ?? null;
       });
   },
 });
@@ -128,6 +139,6 @@ export const {
   setEndingTime,
   resetTypingStats,
   setIsFirstChar,
-  setStatsUpdated
+  setStatsUpdated,
 } = TypingStatsSlice.actions;
 export default TypingStatsSlice.reducer;

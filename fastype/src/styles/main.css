@@ -4,10 +4,12 @@
   --violet-color: #a661ff;
   --dark-violet-color: #5914b1;
   --typing-box-background-color: #faf8f8;
+  --light-green-color:hsl(167, 78%, 47%);
 
   /*Fonts colors*/
   --white-color: #ffffff;
   --grey-color: #505050;
+  --light-grey-color: #929292;
   --dark-blue-color: #0A335C;
 
   /*Buttons colors*/
@@ -27,7 +29,10 @@
 
   /*Loader colors*/
   --first-ball-color: #a661ff;
-  --second-ball-color: hsl(167, 78%, 47%);
+  --second-ball-color: var(--light-green-color);
   --third-ball-color: hsl(35, 100%, 50%);
   --fourth-ball-color: #0f5bff;
+
+  /*Average Cards*/
+  --avevrage-card-background-color: #faf8f8;
 }

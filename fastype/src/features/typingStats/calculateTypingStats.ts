@@ -36,3 +36,11 @@ export const calculateWPM = (
   if (durationInSeconds === 0) return 0;
   return Math.round(totalChars / 5 / (durationInSeconds / 60));
 };
+
+export const calculateAverage = (
+  total: number,
+  number: number
+): number => {
+  if (number === 0) return 0;
+  return Math.round(total / number);
+}

@@ -49,3 +49,26 @@ export const updateSessionStatsThunk = createAsyncThunk(
     }
   }
 );
+
+export const fetchSessionStatsThunk = createAsyncThunk(
+  "stats/fetchSessionStats",
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://us-central1-text-hub-api.cloudfunctions.net/api/user/getSessionStats/${userId}`
+      );
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorData}`
+        );
+      }
+      return await response.json();
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Error:", error.message);
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);

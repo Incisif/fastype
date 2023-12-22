@@ -3,7 +3,7 @@ import styled from "styled-components";
 const MainContent = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   width: 100vw;
   max-width: 1228px;
   font-family: "Roboto", sans-serif;
