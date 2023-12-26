@@ -3,7 +3,7 @@ import {
   calculateWPM,
   calculateDurationInSeconds,
   calculateDurationInMinutesAndSeconds,
-} from "../../features/typingStats/calculateTypingStats";
+} from "../../utils/calculateTypingStats";
 import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForward } from "@fortawesome/free-solid-svg-icons";

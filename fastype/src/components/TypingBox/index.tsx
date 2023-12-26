@@ -32,7 +32,7 @@ import Loader from "../Loader";
 import { fetchTexts } from "../../features/text/textThunk";
 import CardLevelSelect from "../LevelSelector";
 import { updateSessionStatsThunk } from "../../features/typingStats/statsThunk";
-import { calculateDurationInSeconds } from "../../features/typingStats/calculateTypingStats";
+import { calculateDurationInSeconds } from "../../utils/calculateTypingStats";
 
 interface CharBoxProps {
   $status: string | null;

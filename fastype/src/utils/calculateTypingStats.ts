@@ -44,3 +44,45 @@ export const calculateAverage = (
   if (number === 0) return 0;
   return Math.round(total / number);
 }
+
+//Sort data by date
+
+interface DataTypes{
+  date: string;
+  wpm: number;
+  accuracy: number;
+}
+
+export const calculateLast7DaysAverage = (data:DataTypes[]) => {
+  const sortedData = [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const last7DaysData = sortedData.slice(0, 7);
+
+  const totalWpm = last7DaysData.reduce((acc, curr) => acc + curr.wpm, 0);
+  const totalAccuracy = last7DaysData.reduce((acc, curr) => acc + curr.accuracy, 0);
+
+  const averageWpm = calculateAverage(totalWpm, last7DaysData.length);
+  const averageAccuracy = calculateAverage(totalAccuracy, last7DaysData.length);
+
+  return { averageWpm, averageAccuracy };
+};
+
+export const calculateOverallPreviousAverage = (data:DataTypes[]) => {
+
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const previousData = data.filter(d => new Date(d.date) < sevenDaysAgo);
+
+  if (previousData.length === 0) {
+    return { averageWpm: 0, averageAccuracy: 0 };
+  }
+
+  const totalWpm = previousData.reduce((acc, curr) => acc + curr.wpm, 0);
+  const totalAccuracy = previousData.reduce((acc, curr) => acc + curr.accuracy, 0);
+
+  const averageWpm = calculateAverage(totalWpm, previousData.length);
+  const averageAccuracy = calculateAverage(totalAccuracy, previousData.length);
+
+  return { averageWpm, averageAccuracy };
+};
+

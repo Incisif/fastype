@@ -27,13 +27,13 @@ const HeaderWrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 60px;
-  height: 49px;
+  width: 50px;
+  aspect-ratio: auto;
   align-self: flex-end;
 `;
 
 const HeaderTitle = styled.h1`
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   font-style: italic;
   background: -webkit-linear-gradient(#6c95ff, #0e50fa);

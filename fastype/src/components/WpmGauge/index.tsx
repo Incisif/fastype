@@ -32,15 +32,15 @@ export const WpmGauge:React.FC<WpmGaugeProps> = ({ value, num} ) => {
   }, [num]);
 
   return (
-    <svg height="300" width="300">
+    <svg height="100%" width="100%"  viewBox="0 0 280 280">
       <VictoryPie
         standalone={false} 
         data={[
           { x: 1, y: wpmAnimated },
           { x: 2, y: 100 - wpmAnimated },
         ]}
-        height={300}
-        width={300}
+        height={280}
+        width={280}
         innerRadius={75}
         colorScale={["var(--light-green-color)", "var( --light-grey-color)"]}
         labels={() => null}
@@ -53,16 +53,16 @@ export const WpmGauge:React.FC<WpmGaugeProps> = ({ value, num} ) => {
         <VictoryLabel
         textAnchor="middle"
         verticalAnchor="middle"
-        x={150}
-        y={140} 
+        x={140}
+        y={130} 
         text={`${wpmAnimated}`}
         style={{ fontSize: 60 , fontWeight: "bold",fill: "var(--light-green-color)"}}
       />
       <VictoryLabel
         textAnchor="middle"
         verticalAnchor="middle"
-        x={150}
-        y={180} 
+        x={140}
+        y={165} 
         text={value}
         style={{ fontSize: 19, fontWeight: "bold",fill: "var(--light-green-color)" }}
       />

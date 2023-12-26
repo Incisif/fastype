@@ -35,4 +35,9 @@
 
   /*Average Cards*/
   --avevrage-card-background-color: #faf8f8;
+  --negative-progress-color: #FF3060;
+
+  /* Sessions history */
+  --session-history-background-color: #faf8f8;
+  --styled-history-line-color: #e2e2e2;
 }
