@@ -30,7 +30,7 @@
   /*Loader colors*/
   --first-ball-color: #a661ff;
   --second-ball-color: var(--light-green-color);
-  --third-ball-color: hsl(35, 100%, 50%);
+  --third-ball-color: var(--orange-color);
   --fourth-ball-color: #0f5bff;
 
   /*Average Cards*/

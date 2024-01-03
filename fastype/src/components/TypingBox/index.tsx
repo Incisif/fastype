@@ -117,6 +117,8 @@ const TypingBox: React.FC = () => {
 
   //GLOBAL STATES
   const text = useSelector(selectText);
+  const textTitle = useSelector((state: RootState) => state.texts.title);
+ 
   const totalChars = useSelector((state: RootState) => state.stats.totalChars);
   const currentCharPosition = useSelector(
     (state: RootState) => state.session.currentCharPosition
@@ -135,6 +137,7 @@ const TypingBox: React.FC = () => {
   );
   const loadingStatus = useSelector((state: RootState) => state.texts.status);
   const typingStats = useSelector((state: RootState) => state.stats);
+  
   const selectedLevel = useSelector(
     (state: RootState) => state.session.selectedLevel
   );
@@ -173,10 +176,10 @@ const TypingBox: React.FC = () => {
       timeInSecond: timeInSecond,
       wpm: typingStats.wpm,
       accuracy: typingStats.accuracy,
-
       level: selectedLevel ?? undefined,
+      textTitle: textTitle ?? undefined,
     }),
-    [typingStats, selectedLevel, timeInSecond]
+    [typingStats, selectedLevel, timeInSecond ,textTitle]
   );
 
   //MEMOS

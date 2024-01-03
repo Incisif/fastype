@@ -11,9 +11,13 @@ interface Text {
   language: string;
   title: string;
 }
+interface TextContent {
+  content: string;
+  title: string;
+}
 
 export const fetchTexts = createAsyncThunk<
-  string,
+  TextContent,
   string | null,
   { rejectValue: FetchError }
 >("texts/fetch", async (selectedLevel, { rejectWithValue }) => {
@@ -30,11 +34,16 @@ export const fetchTexts = createAsyncThunk<
       );
     }
 
-    const randomText =
-      filteredTexts.length > 0
-        ? filteredTexts[Math.floor(Math.random() * filteredTexts.length)]
-            .content
-        : null;
+    if (filteredTexts.length === 0) {
+      return rejectWithValue({ message: "No texts found" });
+    }
+
+    const randomText = {
+      content:
+        filteredTexts[Math.floor(Math.random() * filteredTexts.length)].content,
+      title:
+        filteredTexts[Math.floor(Math.random() * filteredTexts.length)].title,
+    };
 
     return randomText;
   } catch (error) {
