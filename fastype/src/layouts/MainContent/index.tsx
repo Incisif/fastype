@@ -8,6 +8,7 @@ const MainContent = styled.div`
   max-width: 1228px;
   font-family: "Roboto", sans-serif;
   margin: 0 auto;
+ 
 `;
 interface Props {
   children: React.ReactNode;

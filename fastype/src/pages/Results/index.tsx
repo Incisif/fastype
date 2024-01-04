@@ -48,10 +48,17 @@ interface ChartData {
   accuracy: number;
 }
 
+const ResultsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 5rem;
+`;
+
 const Title = styled.h1`
   font-size: 2rem;
   color: var(--grey-color);
-  margin-top: 2rem;
+  margin: 2rem 0;
   text-align: left;
 `;
 
@@ -59,7 +66,7 @@ const AverageSectionsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 1rem;
+
 `;
 const AverageSection = styled.section`
   position: relative;
@@ -145,7 +152,6 @@ const SessionsHistory = styled.div`
   border-radius: 10px;
   padding: 2rem;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
-  margin-bottom: 2rem;
   width: 60%;
   height: 50rem;
   overflow-y: scroll;
@@ -211,10 +217,11 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-
+margin-bottom: 4rem;
   justify-content: space-between;
 `;
 const ProgressGraphicsContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 36%;
@@ -223,17 +230,42 @@ const ProgressGraphicsContainer = styled.div`
   border-radius: 10px;
   padding: 2rem;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
-  margin-bottom: 2rem;
+
 `;
 const GraphicsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   width: 100%;
   height: 100%;
 `;
-
-
+const Legend = styled.div`
+  position: absolute;
+  right: 2rem;
+  top: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-bottom: 2rem;
+  color: var(--light-grey-color);
+`;
+const LegendCircle = styled.div`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+`;
+const AccuracyLegendCircle = styled(LegendCircle)`
+  background-color: var(--violet-color);
+`;
+const SpeedLegendCircle = styled(LegendCircle)`
+  background-color: var(--orange-color);
+`;
+const AccuracyLegendWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
 
 const Results: React.FC = () => {
   const [averageSpeed, setAverageSpeed] = useState(0);
@@ -346,12 +378,12 @@ const Results: React.FC = () => {
             return sessionDate >= thirtyDaysAgo && sessionDate <= today;
           })
           .map(transformSessionData);
-          console.log(last7DaysAverageAccuracy)
+        console.log(last7DaysAverageAccuracy);
 
         const initialWeeklyData = Array.from({ length: 7 }, (_, index) => ({
           day: index + 1,
           wpm: last7DaysAverageWPM,
-          accuracy: last7DaysAverageAccuracy, 
+          accuracy: last7DaysAverageAccuracy,
         }));
 
         initialWeeklyData.forEach((data, index) => {
@@ -405,6 +437,7 @@ const Results: React.FC = () => {
   };
   return (
     <Main>
+      <ResultsContainer>
       <Title>Mes statistiques</Title>
       <AverageSectionsContainer>
         <AverageSpeed>
@@ -466,6 +499,16 @@ const Results: React.FC = () => {
           {renderSessions()}
         </SessionsHistory>
         <ProgressGraphicsContainer>
+          <Legend>
+            <AccuracyLegendWrapper>
+              <AccuracyLegendCircle />
+              <div>Vitesse</div>
+            </AccuracyLegendWrapper>
+            <AccuracyLegendWrapper>
+              <SpeedLegendCircle />
+              <div>Précision</div>
+            </AccuracyLegendWrapper>
+          </Legend>
           <SectionSubTitle>Progression</SectionSubTitle>
           <GraphicsWrapper>
             <MyChart interval="week" data={weeklyData} />
@@ -474,6 +517,7 @@ const Results: React.FC = () => {
           </GraphicsWrapper>
         </ProgressGraphicsContainer>
       </Container>
+      </ResultsContainer>
     </Main>
   );
 };
