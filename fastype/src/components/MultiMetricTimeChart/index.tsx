@@ -17,7 +17,7 @@ const Caption = styled.p`
 `;
 
 interface MyChartProps {
-  data: Array<{ day: number; precision: number; accuracy: number }>;
+  data: Array<{ day: number; wpm: number; accuracy: number }>;
   interval: "week" | "month";
 }
 
@@ -33,6 +33,7 @@ const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
       <VictoryChart
         domainPadding={20}
         padding={{ top: 20, bottom: 50, left: 50, right: 50 }}
+       
       >
         <VictoryAxis tickValues={xValues} tickFormat={xTickFormat} />
         <VictoryAxis
@@ -42,14 +43,14 @@ const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
         <VictoryLine
           data={data}
           x="day"
-          y="precision"
+          y="wpm"
           style={{ data: { stroke: "var(--orange-color)" } }}
         />
         {interval === "week" && (
           <VictoryScatter
             data={data}
             x="day"
-            y="precision"
+            y="wpm"
             size={5}
             style={{ data: { fill: "var(--orange-color)" } }}
           />

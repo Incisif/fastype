@@ -42,6 +42,12 @@ interface StyledHistoryLineProps {
   $isEven: boolean;
 }
 
+interface ChartData {
+  day: number;
+  wpm: number;
+  accuracy: number;
+}
+
 const Title = styled.h1`
   font-size: 2rem;
   color: var(--grey-color);
@@ -227,6 +233,8 @@ const GraphicsWrapper = styled.div`
   height: 100%;
 `;
 
+
+
 const Results: React.FC = () => {
   const [averageSpeed, setAverageSpeed] = useState(0);
   const [averageAccuracy, setAverageAccuracy] = useState(0);
@@ -235,6 +243,8 @@ const Results: React.FC = () => {
   const [groupedSessions, setGroupedSessions] = useState<{
     [key: string]: SessionStat[];
   }>({});
+  const [weeklyData, setWeeklyData] = useState<ChartData[]>([]);
+  const [monthlyData, setMonthlyData] = useState<ChartData[]>([]);
 
   const uid = useSelector((state: RootState) => state.login.user?.uid);
   const dispatch: AppDispatch = useDispatch();
@@ -244,15 +254,6 @@ const Results: React.FC = () => {
     medium: mediumLevelIcon,
     hard: hardLevelIcon,
   };
-
-  const weeklyData = [
-    { day: 1, precision: 70, accuracy: 60 },
-    { day: 2, precision: 60, accuracy: 78 },
-  ];
-  const monthlyData = [
-    { day: 1, precision: 70, accuracy: 60 },
-    { day: 2, precision: 60, accuracy: 78 },
-  ];
 
   function sortedSessionsByDate(sessions: SessionStat[]) {
     return sessions.sort((a, b) => {
@@ -315,6 +316,54 @@ const Results: React.FC = () => {
 
         setAccuracyProgress(accuracyProgress);
         setSpeedProgress(speedProgress);
+
+        const today = new Date();
+        const sevenDaysAgo = new Date(today);
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        const thirtyDaysAgo = new Date(today);
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        // Fonction pour transformer les données de session
+        const transformSessionData = (session: SessionStat) => {
+          return {
+            day: new Date(session.date).getDate(),
+            wpm: session.wpm, // Remplacez par la logique appropriée
+            accuracy: session.accuracy,
+          };
+        };
+
+        const filteredWeeklyData = sessions
+          .filter((session) => {
+            const sessionDate = new Date(session.date);
+            return sessionDate >= sevenDaysAgo && sessionDate <= today;
+          })
+          .map(transformSessionData);
+
+        const filteredMonthlyData = sessions
+          .filter((session) => {
+            const sessionDate = new Date(session.date);
+            return sessionDate >= thirtyDaysAgo && sessionDate <= today;
+          })
+          .map(transformSessionData);
+          console.log(last7DaysAverageAccuracy)
+
+        const initialWeeklyData = Array.from({ length: 7 }, (_, index) => ({
+          day: index + 1,
+          wpm: last7DaysAverageWPM,
+          accuracy: last7DaysAverageAccuracy, 
+        }));
+
+        initialWeeklyData.forEach((data, index) => {
+          const realData = filteredWeeklyData.find((d) => d.day === data.day);
+          if (realData) {
+            initialWeeklyData[index] = realData;
+          } else if (index > 0) {
+            initialWeeklyData[index] = initialWeeklyData[index - 1];
+          }
+        });
+        setWeeklyData(initialWeeklyData);
+        setMonthlyData(filteredMonthlyData);
       }
     };
 
