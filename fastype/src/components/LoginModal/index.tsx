@@ -15,6 +15,7 @@ import PasswordInput from "../PasswordInput/index.tsx";
 
 type LoginModalProps = {
   onClose: () => void;
+  initialMode: "login" | "signup";
 };
 
 const Content = styled.div`
@@ -26,7 +27,7 @@ const Content = styled.div`
   left: 50%;
   width: 500px;
   height: 590px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: white;
   backdrop-filter: blur(18px);
   transform: translate(-50%, -50%);
   border-radius: 10px;
@@ -153,7 +154,7 @@ const RemberberMeCheckbox = styled.input`
 
 const MessageContainer = styled.div`
   position: absolute;
-  bottom: 1.2rem;
+  bottom: 5rem;
   color: #19d4ac;
   background-color: white;
   border-radius: 5px;
@@ -161,7 +162,7 @@ const MessageContainer = styled.div`
   margin-top: 1rem;
 `;
 
-const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
   const loginState = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
@@ -169,7 +170,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   const [signUpPassword, setSignUpPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [isRegistering, setIsRegistering] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(initialMode === "signup");
 
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -246,6 +247,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             $backgroundColor="white"
             $shadowColor="#215EFB"
             color="#0A335C"
+            type="button"
           >
             {" "}
             <img src={googleGLogo} alt="Google sign-in" />
@@ -305,6 +307,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             $backgroundColor="white"
             $shadowColor="#215EFB"
             color="#0A335C"
+            type="button"
           >
             {" "}
             <img src={googleGLogo} alt="Google sign-in" />

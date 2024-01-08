@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FooterContent = styled.div`
-  width: 100VW;
-  height: 150px;
+  width: 100vw;
+  height: 12.5rem;
   display: flex;
   align-items: center;
   background-color: #4f5458;
@@ -13,13 +13,14 @@ const ContentWrapper = styled.div`
   width: 1228px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-around;
+  
 `;
 const LinksWrapper = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
   width: max-content;
+  margin-right: 10rem;
 `;
 const FooterLinks = styled(Link)`
   font-family: "Roboto", sans-serif;
@@ -41,18 +42,27 @@ const Icon = styled(FontAwesomeIcon)`
   margin-right: 20px;
   cursor: pointer;
 `;
+const Title = styled.h2`
+  font-family: "Roboto", sans-serif;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+`;
 const Footer: React.FC = () => {
   return (
     <FooterContent>
       <ContentWrapper>
         <LinksWrapper>
-          <FooterLinks to="/about">About</FooterLinks>
-          <FooterLinks to="/contact">Contact</FooterLinks>
+          <Title>À porpos</Title>
+          <FooterLinks to="/about">À porpos de Fastype</FooterLinks>
+          <FooterLinks to="/contact">Me contacter</FooterLinks>
           <ExternalLink href="https://portfolio.desem.dev/">
             Portfolio
           </ExternalLink>
         </LinksWrapper>
         <IconWrapper>
+          <Title>Suivez-moi en ligne</Title>
           <ExternalLink href="https://github.com/Incisif/fastype">
             <Icon icon={["fab", "github"]} />
             Github

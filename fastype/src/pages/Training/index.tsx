@@ -31,9 +31,15 @@ const trnaslateUp = keyframes`
     }
     `;
 
+    const TrainingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    `;
 const TitleContainer = styled.div<Props>`
   width: 100%;
- overflow: hidden;
+  overflow: hidden;
   height: 100px;
   text-align: center;
 
@@ -76,13 +82,19 @@ const Training: React.FC = () => {
 
   return (
     <Main>
+      <TrainingContainer>
       <TitleContainer $hide={isLevelSelected}>
-        <Title $hide={isLevelSelected}>Prêt pour l'entraînement {userName} ?</Title>
-        <SubTitle $hide={isLevelSelected}>Commence par sélectionner ton niveau !</SubTitle>
+        <Title $hide={isLevelSelected}>
+          Prêt pour l'entraînement {userName} ?
+        </Title>
+        <SubTitle $hide={isLevelSelected}>
+          Commence par sélectionner ton niveau !
+        </SubTitle>
       </TitleContainer>
 
       <TypingBox />
       <AinsiKeyboard />
+      </TrainingContainer>
     </Main>
   );
 };

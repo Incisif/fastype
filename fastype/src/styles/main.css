@@ -3,8 +3,10 @@
   --orange-color: hsl(35, 100%, 50%);
   --violet-color: #a661ff;
   --dark-violet-color: #5914b1;
+  --blue-color:#0f5bff;
   --typing-box-background-color: #faf8f8;
   --light-green-color:hsl(167, 78%, 47%);
+  --red-color:#FF3060;
 
   /*Fonts colors*/
   --white-color: #ffffff;
@@ -28,14 +30,14 @@
   --option-hover-color: #f5f5f5;
 
   /*Loader colors*/
-  --first-ball-color: #a661ff;
+  --first-ball-color: var(--violet-color);
   --second-ball-color: var(--light-green-color);
   --third-ball-color: var(--orange-color);
-  --fourth-ball-color: #0f5bff;
+  --fourth-ball-color: var(--blue-color);
 
   /*Average Cards*/
   --avevrage-card-background-color: #faf8f8;
-  --negative-progress-color: #FF3060;
+  --negative-progress-color: var(--red-color);
 
   /* Sessions history */
   --session-history-background-color: #faf8f8;

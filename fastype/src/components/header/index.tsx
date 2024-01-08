@@ -132,7 +132,7 @@ const Header: React.FC = () => {
               <StyledLinks to="/results">Résultats</StyledLinks>
             </LinksContainer>
             <NavBarRight></NavBarRight>
-            {isModalOpen && <LoginModal onClose={handleModalToggle} />}
+            {isModalOpen && <LoginModal onClose={handleModalToggle} initialMode="signup" />}
           </NavBar>
         </MiddleContainer>
         <RightContainer>
@@ -142,6 +142,7 @@ const Header: React.FC = () => {
               color={"white"}
               $backgroundColor={"var(--connexion-button)"}
               $shadowColor={"var(--shadow-connexion-button)"}
+              type="button"
             >
               Se connecter
             </ThreeDButton>
@@ -151,6 +152,7 @@ const Header: React.FC = () => {
               color={"white"}
               $backgroundColor={"var(--connexion-button)"}
               $shadowColor={"var(--shadow-connexion-button)"}
+              type="button"
             >
               {user?.firstName}
               {user?.profilePictureUrl && (

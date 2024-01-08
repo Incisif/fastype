@@ -7,7 +7,7 @@ interface ThreeDButtonProps {
   children: React.ReactNode;
   fontSize?: string;
   onClick?: () => void;
-  type?: "button" | "submit" | "reset" | undefined;
+  type: "button" | "submit" | "reset" | undefined;
 }
 
 
