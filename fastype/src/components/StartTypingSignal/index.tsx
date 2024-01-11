@@ -55,8 +55,8 @@ const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
           ${slideInFadeIn} 0.8s ${slideInTimingFunction} 1s forwards, 
           ${shake} 1.5s ease-in-out 2s infinite`
       };
-  animation-fill-mode: forwards; // Gardez le composant dans l'état final de l'animation
-  animation-delay: 2s; // Délai avant que l'animation ne commence
+  animation-fill-mode: forwards; 
+  animation-delay: 2s; 
 `;
 const StartTypingSignalBody = styled.div`
   position: relative;

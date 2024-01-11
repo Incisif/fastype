@@ -315,6 +315,7 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
           $shadowColor={"var(--white-color)"}
           fontSize={"1.8rem"}
           onClick={handleReset}
+          type={"button"}
         >
           <FontAwesomeIcon icon="redo" />
         </RetryButton>
@@ -325,6 +326,7 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
           $shadowColor={"var(--white-color)"}
           fontSize={"1.8rem"}
           onClick={handleNext}
+          type={"button"}
         >
           <FontAwesomeIcon icon={faForward} />
         </NextButton>

@@ -18,13 +18,18 @@ import {
   setEndingTime,
   setIsFirstChar,
   setStatsUpdated,
+  resetTypingStats,
 } from "../../features/typingStats/typingStatsSlice";
 import {
   setCharStatus,
   setCurrentCharPosition,
   setIsTypingComplete,
   setTranslateY,
+  resetSession,
+  setExiting,
+  setSelectedLevel
 } from "../../features/typingSession/typingSessionSlice";
+
 import TypingResultDisplay from "../TypingResultDisplay";
 import ProgressBar from "../ProgressBar";
 import StartTypingSignal from "../StartTypingSignal";
@@ -33,6 +38,11 @@ import { fetchTexts } from "../../features/text/textThunk";
 import CardLevelSelect from "../LevelSelector";
 import { updateSessionStatsThunk } from "../../features/typingStats/statsThunk";
 import { calculateDurationInSeconds } from "../../utils/calculateTypingStats";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRedo, faForward } from "@fortawesome/free-solid-svg-icons";
+import EasyLogo from "../../assets/easy_icon- 1.svg";
+import MediumLogo from "../../assets/medium_icon- 1.svg";
+import HardLogo from "../../assets/hard_icon- 1.svg";
 
 interface CharBoxProps {
   $status: string | null;
@@ -60,6 +70,7 @@ const TypingBoxWrapper = styled.div`
 `;
 const TypingBoxContainer = styled.div`
   position: relative;
+  z-index: 2;
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   display: flex;
@@ -71,6 +82,53 @@ const TypingBoxContainer = styled.div`
   overflow: hidden;
   outline: none;
   border-radius: 15px;
+`;
+const SlideButton = styled.button`
+  position: absolute;
+  right: -50px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 0 10px 10px 0;
+  background-color: var(--light-grey-color);
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0px 10px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+
+  transform: translateX(0); // Position initiale
+  transition: transform 0.3s ease, background-color 0.3s ease, width 0.3s ease;
+
+  &:hover {
+    background-color: var(--grey-color);
+    width: 60px;
+    transform: translateX(10px); // Déplacez le bouton sur le côté au survol
+  }
+`;
+const SlideButtonIconContainer = styled.div`
+  position: absolute;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const NextButton = styled(SlideButton)`
+  top: 60px;
+`;
+const RedoButton = styled(SlideButton)`
+  top: 120px;
+`;
+const SelectedLevelButton = styled(SlideButton)`
+  top: 180px;
+  img {
+    width: 30px;
+    height: 30px;
+  }
 `;
 const TextContainer = styled.div<TextContainerProps>`
   width: 100%;
@@ -118,7 +176,7 @@ const TypingBox: React.FC = () => {
   //GLOBAL STATES
   const text = useSelector(selectText);
   const textTitle = useSelector((state: RootState) => state.texts.title);
- 
+
   const totalChars = useSelector((state: RootState) => state.stats.totalChars);
   const currentCharPosition = useSelector(
     (state: RootState) => state.session.currentCharPosition
@@ -137,13 +195,14 @@ const TypingBox: React.FC = () => {
   );
   const loadingStatus = useSelector((state: RootState) => state.texts.status);
   const typingStats = useSelector((state: RootState) => state.stats);
-  
+
   const selectedLevel = useSelector(
     (state: RootState) => state.session.selectedLevel
   );
   const statsUpdated = useSelector(
     (state: RootState) => state.stats.statsUpdated
   );
+  const uid = useSelector((state: RootState) => state.login.user?.uid) ?? "";
 
   //LOCAL STATES
   const [isDeadKey, setIsDeadKey] = useState<boolean>(false);
@@ -161,13 +220,22 @@ const TypingBox: React.FC = () => {
   const charWidth = 18 + 2 * charMargin;
   const lineHeight = 49;
   const endTime = typingStats.endingTime ?? (isFirstChar ? null : Date.now());
-  const uid = useSelector((state: RootState) => state.login.user?.uid) ?? "";
   const timeInSecond = calculateDurationInSeconds(
     typingStats.startTime,
     endTime
   );
 
   const showTypingResult = isTypingComplete && endTime !== null;
+  let selectedLevelLogo;
+  if (selectedLevel === "easy") {
+    selectedLevelLogo = EasyLogo;
+  } else if (selectedLevel === "medium") {
+    selectedLevelLogo = MediumLogo;
+  } else {
+    selectedLevelLogo = HardLogo;
+  }
+
+  //MEMOS
   const sessionStats = useMemo(
     () => ({
       totalChars: typingStats.totalChars,
@@ -179,10 +247,9 @@ const TypingBox: React.FC = () => {
       level: selectedLevel ?? undefined,
       textTitle: textTitle ?? undefined,
     }),
-    [typingStats, selectedLevel, timeInSecond ,textTitle]
+    [typingStats, selectedLevel, timeInSecond, textTitle]
   );
 
-  //MEMOS
   const numberOfCharsPossibleInLine = useMemo(() => {
     const paddingRem = 1.2 * 16;
     const usableTypingBoxWidth = containerWidth - 2 * paddingRem;
@@ -381,6 +448,36 @@ const TypingBox: React.FC = () => {
     return charStatuses[charIndex] || null;
   };
 
+  const handleReset = () => {
+    dispatch(setExiting(true));
+    setTimeout(() => {
+      dispatch(resetSession());
+      dispatch(resetTypingStats());
+      dispatch(setTranslateY(0));
+      dispatch(setExiting(false));
+      dispatch(setIsFirstChar(true));
+      typingBoxRef.current?.focus();
+    }, 1000);
+  };
+
+  const handleNext = () => {
+    dispatch(setExiting(true));
+    setTimeout(() => {
+      dispatch(resetSession());
+      dispatch(resetTypingStats());
+      dispatch(setTranslateY(0));
+      dispatch(fetchTexts(selectedLevel));
+      dispatch(setExiting(false));
+      dispatch(setIsFirstChar(true));
+      typingBoxRef.current?.focus();
+    }, 1000);
+  };
+
+  const handleOnClickSettings = () => {
+    // Réinitialisation du niveau sélectionné
+    dispatch(setSelectedLevel(null));
+  };
+
   //RENDER
   const wordSplitter = (
     word: string,
@@ -479,6 +576,23 @@ const TypingBox: React.FC = () => {
         />
       </TypingBoxContainer>
       <StartTypingSignal $shouldExit={typingStats.startTime != null} />
+      <RedoButton onClick={handleReset}>
+        <SlideButtonIconContainer >
+          <FontAwesomeIcon icon={faRedo} />
+        </SlideButtonIconContainer>
+      </RedoButton>
+      <NextButton onClick={handleNext}>
+        <SlideButtonIconContainer>
+          <FontAwesomeIcon icon={faForward} />
+        </SlideButtonIconContainer>
+      </NextButton>
+      <SelectedLevelButton onClick={handleOnClickSettings}>
+        <SlideButtonIconContainer>
+          {selectedLevelLogo && (
+            <img src={selectedLevelLogo} alt="Selected Level" />
+          )}
+        </SlideButtonIconContainer>
+      </SelectedLevelButton>
     </TypingBoxWrapper>
   );
 };

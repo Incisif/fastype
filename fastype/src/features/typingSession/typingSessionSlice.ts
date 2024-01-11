@@ -4,7 +4,16 @@ interface CharStatuses {
   [charIndex: number]: string;
 }
 
-const initialState = {
+interface TypingSessionState {
+  isExiting: boolean;
+  charStatuses: CharStatuses;
+  currentCharPosition: number;
+  isTypingComplete: boolean;
+  translateY: number;
+  selectedLevel: string | null; 
+}
+
+const initialState: TypingSessionState = {
   isExiting: false,
   charStatuses: {} as CharStatuses,
   currentCharPosition: 0,
@@ -37,7 +46,7 @@ export const typingSessionSlice = createSlice({
     setTranslateY: (state, action: PayloadAction<number>) => {
       state.translateY = action.payload;
     },
-    setSelectedLevel: (state, action: PayloadAction<string>) => {
+    setSelectedLevel: (state, action: PayloadAction<string | null>) => {
       state.selectedLevel = action.payload;
     },
   },

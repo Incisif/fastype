@@ -9,7 +9,7 @@ const DropDownContent = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  z-index: 1;
+  z-index: 3;
   gap: 5px;
   background-color: var(--white-color);
   border-radius: 10px;
