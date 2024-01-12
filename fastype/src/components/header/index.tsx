@@ -52,37 +52,6 @@ const NavBar = styled.nav`
   font-size: 1.2rem;
 `;
 
-const LinksContainer = styled.div`
-  display: flex;
-  gap: 3rem;
-  height: 100%;
-  align-items: center;
-  flex-grow: 1;
-  justify-content: center;
-`;
-
-const StyledLinks = styled(Link)`
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 1.2rem;
-  transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 0 var(--shadow-connexion-button),
-      0 0 0 1px var(--shadow-connexion-button);
-  }
-
-  &:active {
-    transform: translateY(0px);
-    box-shadow: none;
-  }
-`;
-const NavBarRight = styled.div`
-  display: flex;
-  align-items: center;
-`;
 const LeftContainer = styled.div`
   display: flex;
   align-items: center;
@@ -100,7 +69,11 @@ const StyledImg = styled.img`
   height: 1.5rem;
   border-radius: 50%;
 `;
-const Flex ={"display": "flex", "alignItems": "center", "justifyContent": "center"}
+const Flex = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
 const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -127,12 +100,9 @@ const Header: React.FC = () => {
         </LeftContainer>
         <MiddleContainer>
           <NavBar>
-            <LinksContainer className="linksContainer">
-              <StyledLinks to="/">Accueil</StyledLinks>
-              <StyledLinks to="/results">Résultats</StyledLinks>
-            </LinksContainer>
-            <NavBarRight></NavBarRight>
-            {isModalOpen && <LoginModal onClose={handleModalToggle} initialMode="login" />}
+            {isModalOpen && (
+              <LoginModal onClose={handleModalToggle} initialMode="login" />
+            )}
           </NavBar>
         </MiddleContainer>
         <RightContainer>
@@ -160,7 +130,8 @@ const Header: React.FC = () => {
               )}
             </ThreeDButton>
           )}
-          {isDropdownOpen && <DropDown />}
+         {isDropdownOpen && <DropDown isOpen={isDropdownOpen} toggleDropdown={handleDropdownToggle} />}
+
         </RightContainer>
       </HeaderWrapper>
     </HeaderContent>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { logoutUserThunk } from "../../features/user/userThunks";
@@ -10,12 +10,12 @@ const DropDownContent = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 3;
-  gap: 5px;
+  gap: 10px;
   background-color: var(--white-color);
   border-radius: 10px;
-  bottom: -90px;
+  bottom: -180px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 1rem 1rem;
 `;
 
 const StyledOptions = styled.div`
@@ -41,26 +41,58 @@ const StyledLink = styled(Link)`
     background-color: var(--option-hover-color);
   }
 `;
-const DropDown: React.FC = () => {
+const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
+  isOpen,
+  toggleDropdown,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.login.user);
-  const [hideDropdown, setHideDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!user) {
-      setHideDropdown(true);
+      toggleDropdown();
     }
-  }, [user]);
+
+    // Fonction pour gérer le clic en dehors du menu déroulant
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        toggleDropdown();
+      }
+    };
+
+    // Ajout de l'écouteur d'événements
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Nettoyage de l'écouteur
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [user, dropdownRef, toggleDropdown]);
 
   const handleLogout = () => {
     dispatch(logoutUserThunk());
+    toggleDropdown();
   };
+
+
 
   return (
     <>
-      {!hideDropdown && (
-        <DropDownContent>
-          <StyledLink to="/profile">Profil</StyledLink>
+      {isOpen && (
+        <DropDownContent ref={dropdownRef}>
+          <StyledLink to="/profile" onClick={toggleDropdown}>
+            Profil
+          </StyledLink>
+          <StyledLink to="/training" onClick={toggleDropdown}>
+            Entraînement
+          </StyledLink>
+          <StyledLink to="/results" onClick={toggleDropdown}>
+            Statistiques
+          </StyledLink>
           <StyledOptions onClick={handleLogout}>Déconnexion</StyledOptions>
         </DropDownContent>
       )}
