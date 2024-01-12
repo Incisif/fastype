@@ -67,6 +67,7 @@ interface TextContainerProps {
 const TypingBoxWrapper = styled.div`
   position: relative;
   width: 80%;
+  margin-top: 2rem;
 `;
 const TypingBoxContainer = styled.div`
   position: relative;
@@ -474,7 +475,6 @@ const TypingBox: React.FC = () => {
   };
 
   const handleOnClickSettings = () => {
-    // Réinitialisation du niveau sélectionné
     dispatch(setSelectedLevel(null));
   };
 

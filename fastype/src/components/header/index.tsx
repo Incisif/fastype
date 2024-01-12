@@ -132,7 +132,7 @@ const Header: React.FC = () => {
               <StyledLinks to="/results">Résultats</StyledLinks>
             </LinksContainer>
             <NavBarRight></NavBarRight>
-            {isModalOpen && <LoginModal onClose={handleModalToggle} initialMode="signup" />}
+            {isModalOpen && <LoginModal onClose={handleModalToggle} initialMode="login" />}
           </NavBar>
         </MiddleContainer>
         <RightContainer>

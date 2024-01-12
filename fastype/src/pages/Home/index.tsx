@@ -17,7 +17,7 @@ const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: 5rem;
   transform: translateX(-4rem);
 `;
 const TitleTextContainer = styled.div`
@@ -25,10 +25,10 @@ const TitleTextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 70%;
+  width: 85%;
 `;
 const Title = styled.h2`
-  font-size: 4rem;
+  font-size: 5rem;
   font-weight: 700;
   color: var(--dark-blue-color);
   text-align: center;
@@ -47,68 +47,68 @@ const TitleText = styled.p`
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   line-height: 1.5;
 `;
 
 const SubTitle = styled.h3`
   margin-top: 3rem;
-  font-size: 2rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: var(--dark-blue-color);
+  text-align: center;
 `;
 const HowItWorksContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 40%;
-  background-color: var(--light-green-color);
+  width: 38%;
   border-radius: 1rem;
-  color: white;
-  padding: 1rem 0 1rem 4rem;
-  margin-top: 4rem;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  h3 {
-    color: white;
-    margin-top: 1rem;
-  }
+  padding: 1rem 0 1rem 0;
 `;
 const StyledList = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  line-height: 4;
   font-size: 1.4rem;
   margin-top: 1rem;
 `;
-const LiWrapper = styled.div`
+const NumberedCard = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  margin-top: 2.5rem;
+  padding: 0 1rem 0 0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  height: 5rem;
+  border-radius: 0.8rem;
+  p{
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
 `;
-const NumberedCircle = styled.span`
+const CardsNumber = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
+  width: 4rem;
+  height: 100%;
   color: var(--white-color);
   font-size: 1.2rem;
   font-weight: 700;
   text-align: center;
   margin-right: 1rem;
+  border-radius: 0.8rem 0 0 0.8rem;
 `;
-const FirstStyledCircle = styled(NumberedCircle)`
+const FirstStyledCircle = styled(CardsNumber)`
   background-color: var(--orange-color);
 `;
-const SecondStyledCircle = styled(NumberedCircle)`
+const SecondStyledCircle = styled(CardsNumber)`
   background-color: var(--violet-color);
 `;
-const ThirdStyledCircle = styled(NumberedCircle)`
+const ThirdStyledCircle = styled(CardsNumber)`
   background-color: var(--red-color);
 `;
-const FourthStyledCircle = styled(NumberedCircle)`
+const FourthStyledCircle = styled(CardsNumber)`
   background-color: var(--blue-color);
 `;
 const SignInSignUpCallToAction = styled.div`
@@ -127,7 +127,7 @@ const SignInSignUpCallToAction = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     line-height: 1.5;
   }
 `;
@@ -184,19 +184,22 @@ const Home: React.FC = () => {
         <HowItWorksContainer>
           <SubTitle>Comment ça marche ?</SubTitle>
           <StyledList>
-            <LiWrapper>
-              <FirstStyledCircle>1</FirstStyledCircle>Créez votre compte
-            </LiWrapper>
-            <LiWrapper>
-              <SecondStyledCircle>2</SecondStyledCircle>Choisissez votre niveau
-            </LiWrapper>
-            <LiWrapper>
-              <ThirdStyledCircle>3</ThirdStyledCircle>Commencez votre
-              entraînement
-            </LiWrapper>
-            <LiWrapper>
-              <FourthStyledCircle>4</FourthStyledCircle>Observez vos progrès
-            </LiWrapper>
+            <NumberedCard>
+              <FirstStyledCircle>1</FirstStyledCircle>
+              <p>Créez votre compte</p>
+            </NumberedCard>
+            <NumberedCard>
+              <SecondStyledCircle>2</SecondStyledCircle>
+              <p>Choisissez votre niveau</p>
+            </NumberedCard>
+            <NumberedCard>
+              <ThirdStyledCircle>3</ThirdStyledCircle>
+              <p>Commencez votre entraînement</p>
+            </NumberedCard>
+            <NumberedCard>
+              <FourthStyledCircle>4</FourthStyledCircle>
+              <p>Observez vos progrès</p>
+            </NumberedCard>
           </StyledList>
         </HowItWorksContainer>
         <SignInSignUpCallToAction>
@@ -210,7 +213,9 @@ const Home: React.FC = () => {
             commencer votre voyage vers la maîtrise de la frappe au clavier.
           </p>
         </SignInSignUpCallToAction>
-        {isModalOpen && <LoginModal onClose={handleModalToggle} initialMode="signup" />}
+        {isModalOpen && (
+          <LoginModal onClose={handleModalToggle} initialMode="signup" />
+        )}
       </HomeContainer>
     </Main>
   );

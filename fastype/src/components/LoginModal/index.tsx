@@ -26,7 +26,7 @@ const Content = styled.div`
   top: 50%;
   left: 50%;
   width: 500px;
-  height: 590px;
+  height: 620px;
   background-color: white;
   backdrop-filter: blur(18px);
   transform: translate(-50%, -50%);
