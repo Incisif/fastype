@@ -54,7 +54,6 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
       toggleDropdown();
     }
 
-    // Fonction pour gérer le clic en dehors du menu déroulant
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -64,10 +63,8 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
       }
     };
 
-    // Ajout de l'écouteur d'événements
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Nettoyage de l'écouteur
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -77,8 +74,6 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
     dispatch(logoutUserThunk());
     toggleDropdown();
   };
-
-
 
   return (
     <>

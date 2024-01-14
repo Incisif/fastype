@@ -25,10 +25,10 @@ const TitleTextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 85%;
+  width: 70%;
 `;
 const Title = styled.h2`
-  font-size: 5rem;
+  font-size: 4rem;
   font-weight: 700;
   color: var(--dark-blue-color);
   text-align: center;
@@ -37,6 +37,7 @@ const Title = styled.h2`
 const Image = styled.img`
   width: 100%;
   max-width: 10rem;
+  margin-right: 1rem;
 `;
 const TitleText = styled.p`
   width: 100%;

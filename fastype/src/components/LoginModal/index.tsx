@@ -19,7 +19,7 @@ type LoginModalProps = {
 };
 
 const Content = styled.div`
-  z-index: 2;
+  z-index: 99;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -203,7 +203,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
     if (googleSignInThunk.fulfilled.match(action)) {
       setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 1000);
     }
   };
   const handleSignupSubmit = async (e: React.FormEvent) => {
@@ -226,7 +226,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
     if (loginUserThunk.fulfilled.match(action)) {
       setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 1000);
     }
   };
   const handleShowRegisterForm = () => {

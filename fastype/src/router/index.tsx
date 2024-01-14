@@ -7,6 +7,7 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Results from "../pages/Results";
 import Profile from "../pages/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 const Router: React.FC = () => {
   return (
@@ -14,11 +15,20 @@ const Router: React.FC = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/training" element={<Training />} />
+        <Route
+          path="/training"
+          element={<ProtectedRoute component={Training} />}
+        />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/results" element={<Results />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/results"
+          element={<ProtectedRoute component={Results} />}
+        />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute component={Profile} />}
+        />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -7,6 +7,8 @@ import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
 import DropDown from "../Dropdown";
 import ThreeDButton from "../ThreeDButton/index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderContent = styled.div`
 font-family: "Roboto", sans-serif;
@@ -124,6 +126,7 @@ const Header: React.FC = () => {
               $shadowColor={"var(--shadow-connexion-button)"}
               type="button"
             >
+              <FontAwesomeIcon icon={faCaretDown} />
               {user?.firstName}
               {user?.profilePictureUrl && (
                 <StyledImg src={user?.profilePictureUrl} alt="avatar" />

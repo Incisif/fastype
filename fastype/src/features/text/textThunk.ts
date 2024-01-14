@@ -26,6 +26,7 @@ export const fetchTexts = createAsyncThunk<
       "https://us-central1-text-hub-api.cloudfunctions.net/api/texte/getAllTexts"
     );
     const texts = response.data;
+    console.log(texts);
 
     let filteredTexts = texts;
     if (selectedLevel) {
@@ -38,13 +39,13 @@ export const fetchTexts = createAsyncThunk<
       return rejectWithValue({ message: "No texts found" });
     }
 
+    const randomIndex = Math.floor(Math.random() * filteredTexts.length);
     const randomText = {
-      content:
-        filteredTexts[Math.floor(Math.random() * filteredTexts.length)].content,
-      title:
-        filteredTexts[Math.floor(Math.random() * filteredTexts.length)].title,
+      content: filteredTexts[randomIndex].content,
+      title: filteredTexts[randomIndex].title,
     };
 
+    console.log(randomText);
     return randomText;
   } catch (error) {
     return rejectWithValue({ message: (error as Error).message });
