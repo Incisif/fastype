@@ -13,8 +13,7 @@ interface KeyStyle {
 const KeyboardContainer = styled.div`
   position: relative;
   width: 80%;
-  margin-bottom: 2.5rem;
-  margin-top: 1.8rem;
+  margin-bottom: 3rem;
 `;
 const LineContainer = styled.div`
   display: flex;
@@ -178,7 +177,6 @@ const Keyboard: React.FC = () => {
   const currentChar = text.charAt(
     useSelector((state: RootState) => state.session.currentCharPosition)
   );
-
 
   const shouldHighlightKey = (keyChar: string) => {
     const currentKeyInfo = keyMap[currentChar];
@@ -615,8 +613,10 @@ const Keyboard: React.FC = () => {
           <StyledSymbol>§</StyledSymbol>
           <StyledSymbol>!</StyledSymbol>
         </DoubleSymbolKey>
-        <RightMajorKey $highlight={shouldHighlightKey("right-shift")}
-        $finger="right-pinky">
+        <RightMajorKey
+          $highlight={shouldHighlightKey("right-shift")}
+          $finger="right-pinky"
+        >
           SHIFT
         </RightMajorKey>
       </FourthLineContainer>

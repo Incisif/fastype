@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks";
 import { useEffect, useState } from "react";
-import FastypeLogo from "../../assets/fastype_Logo.png";
+import FastypeLogo from "../../assets/fastype_Logo.webp";
 import LoginModal from "../../components/LoginModal";
 
 const HomeContainer = styled.div`
@@ -207,7 +207,7 @@ const Home: React.FC = () => {
           <SubTitle>
             Prêt à commencer ? Rejoignez-nous dès aujourd'hui !
           </SubTitle>
-          <StyledButton onClick={handleModalToggle}>Inscritpion</StyledButton>
+          <StyledButton onClick={handleModalToggle}>Inscription</StyledButton>
 
           <p>
             Connectez-vous pour accéder à votre tableau de bord personnalisé et

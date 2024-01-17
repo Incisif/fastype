@@ -171,6 +171,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [isRegistering, setIsRegistering] = useState(initialMode === "signup");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+  });
 
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -179,18 +185,28 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
 
   const handleConnectionSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors = { email: "", password: "", firstName: "", lastName: "" };
+    let isValid = true;
+
     if (!validateEmail(email)) {
-      alert("Email invalide");
-      return;
+      newErrors.email = "Email invalide";
+      isValid = false;
     }
     if (password.length < 6) {
-      alert("Mot de passe trop court");
-      return;
+      newErrors.password = "Mot de passe trop court";
+      isValid = false;
     }
     if (!password || !email) {
-      alert("Veuillez remplir tous les champs");
+      newErrors.email = "Veuillez remplir tous les champs";
+      newErrors.password = "Veuillez remplir tous les champs";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    if (!isValid) {
       return;
     }
+
     const action = await dispatch(loginUserThunk({ email, password }));
     if (loginUserThunk.fulfilled.match(action)) {
       setTimeout(() => {
@@ -198,6 +214,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
       }, 2000);
     }
   };
+
   const handleGoogleSignIn = async () => {
     const action = await dispatch(googleSignInThunk());
     if (googleSignInThunk.fulfilled.match(action)) {
@@ -206,29 +223,60 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
       }, 1000);
     }
   };
+
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors = { email: "", password: "", firstName: "", lastName: "" };
+    let isValid = true;
+
     if (!validateEmail(email)) {
-      alert("Email invalide");
+      newErrors.email = "Email invalide";
+      isValid = false;
+    }
+
+    if (signUpPassword.length < 6) {
+      newErrors.password = "Mot de passe trop court";
+      isValid = false;
+    } else if (!signUpPassword) {
+      newErrors.password = "Champs requis";
+      isValid = false;
+    }
+
+    if (!email) {
+      newErrors.email = "Champs requis";
+      isValid = false;
+    }
+
+    if (!firstName) {
+      newErrors.firstName = "Champs requis";
+      isValid = false;
+    }
+
+    if (!lastName) {
+      newErrors.lastName = "Champs requis";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    if (!isValid) {
       return;
     }
-    if (password.length < 6) {
-      alert("Mot de passe trop court");
-      return;
-    }
-    if (!password || !email) {
-      alert("Veuillez remplir tous les champs");
-      return;
-    }
-    const action = await dispatch(
-      createUserThunk({ email, password, firstName, lastName })
+
+    const signUpAction = await dispatch(
+      createUserThunk({ email, password: signUpPassword, firstName, lastName })
     );
-    if (loginUserThunk.fulfilled.match(action)) {
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+    if (createUserThunk.fulfilled.match(signUpAction)) {
+      
+      const loginAction = await dispatch(loginUserThunk({ email, password: signUpPassword }));
+      if (loginUserThunk.fulfilled.match(loginAction)) {
+        
+        setTimeout(() => {
+          onClose(); 
+        }, 1000);
+      }
     }
   };
+
   const handleShowRegisterForm = () => {
     setIsRegistering(!isRegistering);
   };
@@ -254,21 +302,28 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
             Connecte-toi avec Google !
           </ThreeDButton>
           <p>ou</p>
-          <StyledForm onSubmit={handleConnectionSubmit}>
+          <StyledForm onSubmit={handleConnectionSubmit} noValidate>
             <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors({ ...errors, email: "" }); // Réinitialiser l'erreur pour email
+              }}
               autoComplete="email"
             />
+            {errors.email && <div style={{ color: "red" }}>{errors.email}</div>}
 
             <PasswordInput
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
+            {errors.password && (
+              <div style={{ color: "red" }}>{errors.password}</div>
+            )}
             <ForgotPasswordLink href="/forgot-password">
               Mot de passe oublié ?
             </ForgotPasswordLink>
@@ -314,15 +369,20 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
             Inscris-toi avec Google !
           </ThreeDButton>
           <p>ou</p>
-          <SignupForm onSubmit={handleSignupSubmit}>
+          <SignupForm onSubmit={handleSignupSubmit} noValidate>
             <label htmlFor="signUpEmail">Email</label>
             <input
               type="email"
               name="signUpEmail"
               id="signUpEmail"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors({ ...errors, email: "" });
+              }}
+              autoComplete="email"
             />
+            {errors.email && <div style={{ color: "red" }}>{errors.email}</div>}
             <NameWrapper>
               <NameInputWrapper>
                 <label htmlFor="signUpLastName">Nom</label>
@@ -331,9 +391,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
                   name="signUpLastName"
                   id="signUpLastName"
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                    setErrors({ ...errors, lastName: "" });
+                  }}
+                  autoComplete="family-name"
                 />
+                {errors.lastName && (
+                  <div style={{ color: "red" }}>{errors.lastName}</div>
+                )}
               </NameInputWrapper>
+
               <NameInputWrapper>
                 <label htmlFor="signUpFirstName">Prénom</label>
                 <input
@@ -341,15 +409,28 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
                   name="signUpFirstName"
                   id="signUpFirstName"
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    setErrors({ ...errors, firstName: "" });
+                  }}
+                  autoComplete="given-name"
                 />
+                {errors.firstName && (
+                  <div style={{ color: "red" }}>{errors.firstName}</div>
+                )}
               </NameInputWrapper>
             </NameWrapper>
 
             <PasswordInput
-              onChange={(e) => setSignUpPassword(e.target.value)}
+              onChange={(e) => {
+                setSignUpPassword(e.target.value);
+                setErrors({ ...errors, password: "" });
+              }}
               value={signUpPassword}
             />
+            {errors.password && (
+              <div style={{ color: "red" }}>{errors.password}</div>
+            )}
 
             <ThreeDButton
               type="submit"

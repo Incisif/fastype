@@ -67,7 +67,7 @@ interface TextContainerProps {
 const TypingBoxWrapper = styled.div`
   position: relative;
   width: 80%;
-  margin-top: 2rem;
+ ;
 `;
 const TypingBoxContainer = styled.div`
   position: relative;
@@ -79,7 +79,7 @@ const TypingBoxContainer = styled.div`
   height: 310px;
   background-color: var(--typing-box-background-color);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
-  margin: 2rem 0 1rem 0;
+margin: 3rem 0;
   overflow: hidden;
   outline: none;
   border-radius: 15px;

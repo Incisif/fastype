@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import logo from "../../assets/fastype_Logo.png";
+import logo from "../../assets/fastype_Logo.webp";
 import LoginModal from "../LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import DropDown from "../Dropdown";
 import ThreeDButton from "../ThreeDButton/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown} from "@fortawesome/free-solid-svg-icons";
 
 const HeaderContent = styled.div`
 font-family: "Roboto", sans-serif;

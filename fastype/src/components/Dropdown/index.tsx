@@ -5,6 +5,8 @@ import { logoutUserThunk } from "../../features/user/userThunks";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+
+
 const DropDownContent = styled.div`
   position: absolute;
   display: flex;
@@ -13,7 +15,7 @@ const DropDownContent = styled.div`
   gap: 10px;
   background-color: var(--white-color);
   border-radius: 10px;
-  bottom: -180px;
+  bottom: -150px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   padding: 1rem 1rem;
 `;
@@ -59,7 +61,11 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        toggleDropdown();
+        setTimeout(() => {
+          if (isOpen) {
+            toggleDropdown();
+          }
+        }, 100);
       }
     };
 
@@ -68,7 +74,7 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [user, dropdownRef, toggleDropdown]);
+  }, [user, dropdownRef, toggleDropdown, isOpen]);
 
   const handleLogout = () => {
     dispatch(logoutUserThunk());
@@ -79,9 +85,6 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
     <>
       {isOpen && (
         <DropDownContent ref={dropdownRef}>
-          <StyledLink to="/profile" onClick={toggleDropdown}>
-            Profil
-          </StyledLink>
           <StyledLink to="/training" onClick={toggleDropdown}>
             Entraînement
           </StyledLink>

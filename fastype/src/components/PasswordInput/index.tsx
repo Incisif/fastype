@@ -34,13 +34,17 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ onChange, value }) => {
     setShowPassword(!showPassword);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Password input changed", e.target.value);
+    onChange(e);
+  }
   return (
     <Content>
       <label htmlFor="password">Mot de passe</label>
       <input
         type={showPassword ? "text" : "password"}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         id="password"
       />
       <span

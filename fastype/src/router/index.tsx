@@ -6,7 +6,7 @@ import Training from "../pages/Training";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Results from "../pages/Results";
-import Profile from "../pages/Profile";
+
 import ProtectedRoute from "./ProtectedRoute";
 
 const Router: React.FC = () => {
@@ -24,10 +24,6 @@ const Router: React.FC = () => {
         <Route
           path="/results"
           element={<ProtectedRoute component={Results} />}
-        />
-        <Route
-          path="/profile"
-          element={<ProtectedRoute component={Profile} />}
         />
       </Routes>
       <Footer />
