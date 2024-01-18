@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import DropDown from "../Dropdown";
 import ThreeDButton from "../ThreeDButton/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown} from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderContent = styled.div`
 font-family: "Roboto", sans-serif;
@@ -42,6 +42,10 @@ const HeaderTitle = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #ffffff;
+  width:129px;
+  height: 36px;
+  text-align: center;
+  
 `;
 
 const NavBar = styled.nav`
@@ -133,8 +137,12 @@ const Header: React.FC = () => {
               )}
             </ThreeDButton>
           )}
-         {isDropdownOpen && <DropDown isOpen={isDropdownOpen} toggleDropdown={handleDropdownToggle} />}
-
+          {isDropdownOpen && (
+            <DropDown
+              isOpen={isDropdownOpen}
+              toggleDropdown={handleDropdownToggle}
+            />
+          )}
         </RightContainer>
       </HeaderWrapper>
     </HeaderContent>

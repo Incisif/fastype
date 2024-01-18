@@ -82,7 +82,7 @@ const NumberedCard = styled.div`
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   height: 5rem;
   border-radius: 0.8rem;
-  p{
+  p {
     font-size: 1.6rem;
     font-weight: 500;
   }
@@ -185,22 +185,30 @@ const Home: React.FC = () => {
         <HowItWorksContainer>
           <SubTitle>Comment ça marche ?</SubTitle>
           <StyledList>
-            <NumberedCard>
-              <FirstStyledCircle>1</FirstStyledCircle>
-              <p>Créez votre compte</p>
-            </NumberedCard>
-            <NumberedCard>
-              <SecondStyledCircle>2</SecondStyledCircle>
-              <p>Choisissez votre niveau</p>
-            </NumberedCard>
-            <NumberedCard>
-              <ThirdStyledCircle>3</ThirdStyledCircle>
-              <p>Commencez votre entraînement</p>
-            </NumberedCard>
-            <NumberedCard>
-              <FourthStyledCircle>4</FourthStyledCircle>
-              <p>Observez vos progrès</p>
-            </NumberedCard>
+            <li>
+              <NumberedCard>
+                <FirstStyledCircle>1</FirstStyledCircle>
+                <p>Créez votre compte</p>
+              </NumberedCard>
+            </li>
+            <li>
+              <NumberedCard>
+                <SecondStyledCircle>2</SecondStyledCircle>
+                <p>Choisissez votre niveau</p>
+              </NumberedCard>
+            </li>
+            <li>
+              <NumberedCard>
+                <ThirdStyledCircle>3</ThirdStyledCircle>
+                <p>Commencez votre entraînement</p>
+              </NumberedCard>
+            </li>
+            <li>
+              <NumberedCard>
+                <FourthStyledCircle>4</FourthStyledCircle>
+                <p>Observez vos progrès</p>
+              </NumberedCard>
+            </li>
           </StyledList>
         </HowItWorksContainer>
         <SignInSignUpCallToAction>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { initFirebase } from './firebaseConfig';  // Assurez-vous que le chemin est correct
+import { initFirebase } from './firebaseConfig';  
 import Router from "./router";
-import './styles/fontawsome';
+
 
 const App: React.FunctionComponent = () => {
   useEffect(() => {

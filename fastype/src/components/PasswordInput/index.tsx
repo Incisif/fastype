@@ -50,7 +50,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ onChange, value }) => {
       <span
         onClick={togglePasswordVisibility}
         onKeyDown={togglePasswordVisibility}
-        tabIndex={0}
+        
       >
         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
       </span>

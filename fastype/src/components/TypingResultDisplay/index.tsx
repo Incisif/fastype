@@ -6,7 +6,7 @@ import {
 } from "../../utils/calculateTypingStats";
 import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faForward } from "@fortawesome/free-solid-svg-icons";
+import { faForward,faRedo } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useAppDispatch, RootState } from "../../store/store";
 import { Feedback } from "../Feedback";
@@ -317,7 +317,7 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
           onClick={handleReset}
           type={"button"}
         >
-          <FontAwesomeIcon icon="redo" />
+          <FontAwesomeIcon icon={faRedo} />
         </RetryButton>
         <Feedback accuracy={accuracy} wpm={wpm}></Feedback>
         <NextButton

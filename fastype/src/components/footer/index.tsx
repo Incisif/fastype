@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { faGithub, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const FooterContent = styled.div`
   width: 100vw;
@@ -55,7 +57,7 @@ const Footer: React.FC = () => {
       <ContentWrapper>
         <LinksWrapper>
           <Title>À porpos</Title>
-          <FooterLinks to="/about">À porpos de Fastype</FooterLinks>
+          <FooterLinks to="/about">À propos de Fastype</FooterLinks>
           <FooterLinks to="/contact">Me contacter</FooterLinks>
           <ExternalLink href="https://portfolio.desem.dev/">
             Portfolio
@@ -64,15 +66,15 @@ const Footer: React.FC = () => {
         <IconWrapper>
           <Title>Suivez-moi en ligne</Title>
           <ExternalLink href="https://github.com/Incisif/fastype">
-            <Icon icon={["fab", "github"]} />
+            <Icon icon={faGithub} />
             Github
           </ExternalLink>
           <ExternalLink href="https://www.linkedin.com/in/emmanuel-desmortreux-1223a5257/">
-            <Icon icon={["fab", "linkedin"]} />
+            <Icon icon={faLinkedin} />
             Linkedin
           </ExternalLink>
           <ExternalLink href="https://twitter.com/_Emdodj">
-            <Icon icon={["fab", "x-twitter"]} />
+            <Icon icon={faTwitter} />
             Twitter
           </ExternalLink>
         </IconWrapper>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import "../../fonts/font.css"
 
 const MainContent = styled.div`
   display: flex;

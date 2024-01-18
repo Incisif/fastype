@@ -54,7 +54,7 @@ export const keyMap: KeyMap = {
   "T": { id: "r2k6", mod: "right-shift" },
   "U": { id: "r2k8", mod: "left-shift" },
   "V": { id: "r4k6", mod: "right-shift" },
-  "W": { id: "r4k3", mod: "shright-shiftift" },
+  "W": { id: "r4k3", mod: "right-shift" },
   "X": { id: "r4k4", mod: "right-shift" },
   "Y": { id: "r2k7", mod: "left-shift" },
   "Z": { id: "r2k3", mod: "right-shift" },
