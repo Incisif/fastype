@@ -8,6 +8,7 @@ interface ThreeDButtonProps {
   fontSize?: string;
   onClick?: () => void;
   type: "button" | "submit" | "reset" | undefined;
+  className?: string;
 }
 
 
@@ -42,10 +43,11 @@ const ThreeDButton: React.FC<ThreeDButtonProps> = ({
   fontSize,
   type,
   onClick,
+  className
 }) => {
   return (
     <Styled3DButton onClick={onClick} color={color} $backgroundColor={$backgroundColor}
-    $shadowColor={$shadowColor} fontSize={fontSize} type={type}>
+    $shadowColor={$shadowColor} fontSize={fontSize} type={type} className={className}>
       {children}
     </Styled3DButton>
   );

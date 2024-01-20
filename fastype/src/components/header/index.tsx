@@ -9,6 +9,7 @@ import DropDown from "../Dropdown";
 import ThreeDButton from "../ThreeDButton/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { device } from "../../styles/breakpoints";
 
 const HeaderContent = styled.div`
 font-family: "Roboto", sans-serif;
@@ -17,6 +18,11 @@ font-family: "Roboto", sans-serif;
   background-color: var(--white-color));
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   align-items: center;
+  padding: 0 1rem;
+  @media ${device.sm} {
+    height: 60px;
+    
+  }
 `;
 
 const HeaderWrapper = styled.div`
@@ -32,6 +38,9 @@ const Logo = styled.img`
   width: 50px;
   aspect-ratio: auto;
   align-self: flex-end;
+  @media ${device.sm} {
+    display: none;
+  }
 `;
 
 const HeaderTitle = styled.h1`
@@ -42,10 +51,9 @@ const HeaderTitle = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #ffffff;
-  width:129px;
+  width: 129px;
   height: 36px;
   text-align: center;
-  
 `;
 
 const NavBar = styled.nav`
@@ -68,6 +76,13 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  .connexion-button{
+    @media ${device.sm} {
+      font-size: 0.8rem;
+      padding: 0.5rem 0.3rem;
+      width: 100px;
+    }
+  }
 `;
 
 const StyledImg = styled.img`
@@ -100,7 +115,7 @@ const Header: React.FC = () => {
       <HeaderWrapper className="HeadWrapper">
         <LeftContainer>
           <Link to="/" style={Flex}>
-            <Logo src={logo} alt="Fastype logo" />
+            <Logo src={logo} alt="Fastype logo" width="50px" height="42,83px" />
             <HeaderTitle>Fastype</HeaderTitle>
           </Link>
         </LeftContainer>
@@ -119,6 +134,7 @@ const Header: React.FC = () => {
               $backgroundColor={"var(--connexion-button)"}
               $shadowColor={"var(--shadow-connexion-button)"}
               type="button"
+              className="connexion-button"
             >
               Se connecter
             </ThreeDButton>

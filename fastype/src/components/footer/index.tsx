@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { faGithub, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { device } from "../../styles/breakpoints";
 
 
 const FooterContent = styled.div`
@@ -12,9 +13,14 @@ const FooterContent = styled.div`
   background-color: #4f5458;
 `;
 const ContentWrapper = styled.div`
-  width: 1228px;
+max-width: 1228px;
   margin: 0 auto;
   display: flex;
+  
+  @media ${device.sm} {
+    justify-content: center;
+    align-items: center;
+  }
   
 `;
 const LinksWrapper = styled.div`
@@ -23,6 +29,9 @@ const LinksWrapper = styled.div`
   flex-direction: column;
   width: max-content;
   margin-right: 10rem;
+  @media ${device.sm} {
+    margin-right: 3rem;
+  }
 `;
 const FooterLinks = styled(Link)`
   font-family: "Roboto", sans-serif;

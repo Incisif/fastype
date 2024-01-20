@@ -5,6 +5,7 @@ import useAuth from "../../hooks";
 import { useEffect, useState } from "react";
 import FastypeLogo from "../../assets/fastype_Logo.webp";
 import LoginModal from "../../components/LoginModal";
+import { device } from "../../styles/breakpoints";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -18,7 +19,16 @@ const TitleContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 5rem;
+
   transform: translateX(-4rem);
+  @media ${device.sm} {
+    margin-top: 2rem;
+  }
+  @media ${device.md} {
+    flex-direction: column;
+    transform: translateX(0rem);
+    margin-top: 3rem;
+  }
 `;
 const TitleTextContainer = styled.div`
   display: flex;
@@ -26,6 +36,9 @@ const TitleTextContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   width: 70%;
+  @media ${device.lg} {
+    width: 65%;
+  }
 `;
 const Title = styled.h2`
   font-size: 4rem;
@@ -33,11 +46,21 @@ const Title = styled.h2`
   color: var(--dark-blue-color);
   text-align: center;
   margin-bottom: 1rem;
+  @media ${device.sm} {
+    font-size: 3rem;
+  }
+  @media ${device.lg} {
+    font-size: 3rem;
+  }
 `;
 const Image = styled.img`
   width: 100%;
   max-width: 10rem;
   margin-right: 1rem;
+  @media ${device.sm} {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
 `;
 const TitleText = styled.p`
   width: 100%;
@@ -50,6 +73,9 @@ const TitleText = styled.p`
   text-align: center;
   font-size: 1.8rem;
   line-height: 1.5;
+  @media ${device.sm} {
+    font-size: 1.4rem;
+  }
 `;
 
 const SubTitle = styled.h3`
@@ -58,6 +84,12 @@ const SubTitle = styled.h3`
   font-weight: 700;
   color: var(--dark-blue-color);
   text-align: center;
+  @media ${device.sm} {
+    margin-top: 1rem;
+  }
+  @media ${device.lg} {
+    font-size: 2rem;
+  }
 `;
 const HowItWorksContainer = styled.div`
   display: flex;
@@ -65,19 +97,27 @@ const HowItWorksContainer = styled.div`
   justify-content: center;
   width: 38%;
   border-radius: 1rem;
-  padding: 1rem 0 1rem 0;
+  padding: 1rem 0;
+  @media ${device.md} {
+    width: 80%;
+  }
 `;
 const StyledList = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 1.4rem;
   margin-top: 1rem;
+  li {
+    margin-top: 2.5rem;
+  }
+  li:first-child {
+    margin-top: 1rem;
+  }
 `;
 const NumberedCard = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 2.5rem;
+
   padding: 0 1rem 0 0;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   height: 5rem;
@@ -85,6 +125,9 @@ const NumberedCard = styled.div`
   p {
     font-size: 1.6rem;
     font-weight: 500;
+    @media ${device.sm} {
+      font-size: 1.3rem;
+    }
   }
 `;
 const CardsNumber = styled.span`
@@ -117,10 +160,10 @@ const SignInSignUpCallToAction = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem;
   margin-bottom: 7.2rem;
+  width: 90%;
   p {
-    width: 80%;
     max-width: 900px;
     margin: 0 auto;
     display: flex;
@@ -130,6 +173,17 @@ const SignInSignUpCallToAction = styled.div`
     text-align: center;
     font-size: 1.8rem;
     line-height: 1.5;
+    @media ${device.sm} {
+      font-size: 1.4rem;
+    }
+    @media ${device.lg} {
+      font-size: 1.6rem;
+    }
+  }
+  h3 {
+    @media ${device.sm} {
+      font-size: 2rem;
+    }
   }
 `;
 const StyledButton = styled.button`
@@ -137,7 +191,6 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
-  padding: 5px 10px;
   font-size: 1.2rem;
   background-color: var(--dark-violet-color);
   color: white;
