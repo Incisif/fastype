@@ -20,6 +20,7 @@ import hardLevelIcon from "../../assets/hard_icon- 1.svg";
 import mediumLevelIcon from "../../assets/medium_icon- 1.svg";
 import easyLevelIcon from "../../assets/easy_icon- 1.svg";
 import MyChart from "../../components/MultiMetricTimeChart";
+import { device } from "../../styles/breakpoints";
 
 interface SessionStat {
   wpm: number;
@@ -60,13 +61,19 @@ const Title = styled.h1`
   color: var(--grey-color);
   margin: 2rem 0;
   text-align: left;
+  @media ${device.sm} {
+    font-size: 1.5rem;
+  }
 `;
 
 const AverageSectionsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-
+  @media ${device.sm} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const AverageSection = styled.section`
   position: relative;
@@ -78,6 +85,9 @@ const AverageSection = styled.section`
   border-radius: 10px;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
   margin-bottom: 2rem;
+  @media ${device.sm} {
+    width: 100%;
+  }
 `;
 const SectionSubTitle = styled.h2`
   font-size: 1.2rem;
@@ -182,6 +192,15 @@ const SessionsHistory = styled.div`
   /* Styles pour Firefox */
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
+
+  @media ${device.lg} {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  @media ${device.md} {
+    padding: 1rem;
+  }
+ 
 `;
 const HistorySectionSubTitle = styled(SectionSubTitle)`
   margin: 1.2rem 1.2rem 1.2rem 0;
@@ -189,11 +208,18 @@ const HistorySectionSubTitle = styled(SectionSubTitle)`
 const GroupedSessions = styled.div`
   margin-bottom: 2rem;
   color: var(--light-grey-color);
+  @media ${device.md} {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
 `;
 const StyledDate = styled.h3`
   font-size: 1.2rem;
   margin: 1rem 1rem 1rem 0;
   color: var(--grey-color);
+  @media ${device.md} {
+    font-size: 1rem;
+  }
 `;
 const HistoryLine = styled.div`
   display: flex;
@@ -217,8 +243,12 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-margin-bottom: 4rem;
+  margin-bottom: 4rem;
   justify-content: space-between;
+  @media ${device.lg} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const ProgressGraphicsContainer = styled.div`
   position: relative;
@@ -230,7 +260,10 @@ const ProgressGraphicsContainer = styled.div`
   border-radius: 10px;
   padding: 2rem;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
-
+  @media ${device.lg} {
+    width: 100%;
+    height: 100%;
+  }
 `;
 const GraphicsWrapper = styled.div`
   display: flex;
@@ -291,14 +324,14 @@ const Results: React.FC = () => {
     return sessions.sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
-      return dateB.getTime() - dateA.getTime(); // Tri décroissant
+      return dateB.getTime() - dateA.getTime();
     });
   }
   const groupSessionsByDate = useCallback((sessions: SessionStat[]) => {
-    // Tri des sessions par date dans un ordre décroissant
+   
     const sortedSessions = sortedSessionsByDate(sessions);
 
-    // Groupement des sessions par date
+
     return sortedSessions.reduce(
       (acc: { [key: string]: SessionStat[] }, session: SessionStat) => {
         const date = session.date.split("T")[0];
@@ -356,11 +389,11 @@ const Results: React.FC = () => {
         const thirtyDaysAgo = new Date(today);
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-        // Fonction pour transformer les données de session
+   
         const transformSessionData = (session: SessionStat) => {
           return {
             day: new Date(session.date).getDate(),
-            wpm: session.wpm, // Remplacez par la logique appropriée
+            wpm: session.wpm, 
             accuracy: session.accuracy,
           };
         };
@@ -438,85 +471,85 @@ const Results: React.FC = () => {
   return (
     <Main>
       <ResultsContainer>
-      <Title>Mes statistiques</Title>
-      <AverageSectionsContainer>
-        <AverageSpeed>
-          <GlobalAverage>
-            <SectionSubTitle>Vitesse </SectionSubTitle>
-            <GaugeContainer>
-              <WpmGauge num={averageSpeed} value="mpm"></WpmGauge>
-            </GaugeContainer>
-            <Caption>Moyenne générale</Caption>
-          </GlobalAverage>
-          <Progress>
-            <SectionSubTitle>Progression </SectionSubTitle>
-            {speedProgress > 0 ? (
-              <StyledPositiveDialProgress>
-                +{speedProgress}
-                <FontAwesomeIcon icon={faArrowTrendUp} />
-              </StyledPositiveDialProgress>
-            ) : (
-              <StyledNegativeDialProgress>
-                {speedProgress}
-                <FontAwesomeIcon icon={faArrowTrendDown} />
-              </StyledNegativeDialProgress>
-            )}
+        <Title>Mes statistiques</Title>
+        <AverageSectionsContainer>
+          <AverageSpeed>
+            <GlobalAverage>
+              <SectionSubTitle>Vitesse </SectionSubTitle>
+              <GaugeContainer>
+                <WpmGauge num={averageSpeed} value="mpm"></WpmGauge>
+              </GaugeContainer>
+              <Caption>Moyenne générale</Caption>
+            </GlobalAverage>
+            <Progress>
+              <SectionSubTitle>Progression </SectionSubTitle>
+              {speedProgress > 0 ? (
+                <StyledPositiveDialProgress>
+                  +{speedProgress}
+                  <FontAwesomeIcon icon={faArrowTrendUp} />
+                </StyledPositiveDialProgress>
+              ) : (
+                <StyledNegativeDialProgress>
+                  {speedProgress}
+                  <FontAwesomeIcon icon={faArrowTrendDown} />
+                </StyledNegativeDialProgress>
+              )}
 
-            <Caption>7 derniers jours</Caption>
-          </Progress>
-        </AverageSpeed>
-        <AverageAccuracy>
-          <GlobalAverage>
-            <SectionSubTitle>Précision</SectionSubTitle>
-            <GaugeContainer>
-              <WpmGauge num={averageAccuracy} value="%"></WpmGauge>
-            </GaugeContainer>
-            <Caption>Moyenne générale</Caption>
-          </GlobalAverage>
-          <Progress>
-            <SectionSubTitle>Progression </SectionSubTitle>
-            {accuracyProgress > 0 ? (
-              <StyledPositiveDialProgress>
-                +{accuracyProgress}
-                <FontAwesomeIcon icon={faArrowTrendUp} />
-              </StyledPositiveDialProgress>
-            ) : (
-              <StyledNegativeDialProgress>
-                {accuracyProgress}
-                <FontAwesomeIcon icon={faArrowTrendDown} />
-              </StyledNegativeDialProgress>
-            )}
+              <Caption>7 derniers jours</Caption>
+            </Progress>
+          </AverageSpeed>
+          <AverageAccuracy>
+            <GlobalAverage>
+              <SectionSubTitle>Précision</SectionSubTitle>
+              <GaugeContainer>
+                <WpmGauge num={averageAccuracy} value="%"></WpmGauge>
+              </GaugeContainer>
+              <Caption>Moyenne générale</Caption>
+            </GlobalAverage>
+            <Progress>
+              <SectionSubTitle>Progression </SectionSubTitle>
+              {accuracyProgress > 0 ? (
+                <StyledPositiveDialProgress>
+                  +{accuracyProgress}
+                  <FontAwesomeIcon icon={faArrowTrendUp} />
+                </StyledPositiveDialProgress>
+              ) : (
+                <StyledNegativeDialProgress>
+                  {accuracyProgress}
+                  <FontAwesomeIcon icon={faArrowTrendDown} />
+                </StyledNegativeDialProgress>
+              )}
 
-            <Caption>7 derniers jours</Caption>
-          </Progress>
-        </AverageAccuracy>
-      </AverageSectionsContainer>
-      <Container>
-        <SessionsHistory>
-          <HistorySectionSubTitle>
-            Derniers entraînements
-          </HistorySectionSubTitle>
-          {renderSessions()}
-        </SessionsHistory>
-        <ProgressGraphicsContainer>
-          <Legend>
-            <AccuracyLegendWrapper>
-              <AccuracyLegendCircle />
-              <div>Vitesse</div>
-            </AccuracyLegendWrapper>
-            <AccuracyLegendWrapper>
-              <SpeedLegendCircle />
-              <div>Précision</div>
-            </AccuracyLegendWrapper>
-          </Legend>
-          <SectionSubTitle>Progression</SectionSubTitle>
-          <GraphicsWrapper>
-            <MyChart interval="week" data={weeklyData} />
+              <Caption>7 derniers jours</Caption>
+            </Progress>
+          </AverageAccuracy>
+        </AverageSectionsContainer>
+        <Container>
+          <SessionsHistory>
+            <HistorySectionSubTitle>
+              Derniers entraînements
+            </HistorySectionSubTitle>
+            {renderSessions()}
+          </SessionsHistory>
+          <ProgressGraphicsContainer>
+            <Legend>
+              <AccuracyLegendWrapper>
+                <AccuracyLegendCircle />
+                <div>Vitesse</div>
+              </AccuracyLegendWrapper>
+              <AccuracyLegendWrapper>
+                <SpeedLegendCircle />
+                <div>Précision</div>
+              </AccuracyLegendWrapper>
+            </Legend>
+            <SectionSubTitle>Progression</SectionSubTitle>
+            <GraphicsWrapper>
+              <MyChart interval="week" data={weeklyData} />
 
-            <MyChart interval="month" data={monthlyData} />
-          </GraphicsWrapper>
-        </ProgressGraphicsContainer>
-      </Container>
+              <MyChart interval="month" data={monthlyData} />
+            </GraphicsWrapper>
+          </ProgressGraphicsContainer>
+        </Container>
       </ResultsContainer>
     </Main>
   );

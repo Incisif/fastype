@@ -44,6 +44,7 @@ import EasyLogo from "../../assets/easy_icon- 1.svg";
 import MediumLogo from "../../assets/medium_icon- 1.svg";
 import HardLogo from "../../assets/hard_icon- 1.svg";
 
+
 interface CharBoxProps {
   $status: string | null;
   $lineIndex: number;
@@ -170,6 +171,8 @@ const CharBox = styled.div<CharBoxProps>`
     }
   }};
 `;
+
+
 
 const TypingBox: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -1,7 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 import Main from "../../layouts/MainContent";
 import TypingBox from "../../components/TypingBox";
-import AinsiKeyboard from "../../components/AinsiKeyboard";
+import AinsiKeyboard from "../../components/IsoKeyboard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
@@ -71,6 +71,7 @@ const SubTitle = styled.h3<Props>`
       animation: ${trnaslateUp} 2s ease forwards;
     `}
 `;
+
 const Training: React.FC = () => {
   const selectedLevel = useSelector(
     (state: RootState) => state.session.selectedLevel
