@@ -12,9 +12,6 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
   ...props
 }) => {
   const getFillStyle = (id: string) => {
-    console.log(
-      `Checking fill style for id: ${id}, highlightedId: ${highlightedId}, mod: ${mod}, finger: ${finger}`
-    );
     return highlightedId === id || mod === id
       ? getColorForFinger(finger)
       : "#e9e9e9";

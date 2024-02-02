@@ -18,7 +18,6 @@ const Keyboard = () => {
   const currentChar = text.charAt(
     useSelector((state: RootState) => state.session.currentCharPosition)
   );
-  console.log("currentchar", currentChar);
 
   const [highlightedId, setHighlightedId] = useState("");
   const [mod, setMod] = useState("");

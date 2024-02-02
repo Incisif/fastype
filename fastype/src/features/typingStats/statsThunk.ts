@@ -32,14 +32,14 @@ export const updateSessionStatsThunk = createAsyncThunk(
           body: JSON.stringify({ sessionStats }),
         }
       );
-      console.log("sessionStats:", sessionStats);
+
       if (!response.ok) {
         const errorData = await response.text();
         throw new Error(
           `HTTP error! status: ${response.status}, message: ${errorData}`
         );
       }
-      console.log("response:", response);
+
       return await response.json();
     } catch (error) {
       if (error instanceof Error) {

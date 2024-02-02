@@ -285,7 +285,6 @@ const TypingResultDisplay: React.FC<DisplayProps> = ({
   }, [accuracy, wpm]);
 
   useEffect(() => {
-    console.log(accuracy, wpm);
     dispatch(updateAccuracy(accuracy));
     dispatch(updateWpm(wpm));
   }, [accuracy, wpm, dispatch]);

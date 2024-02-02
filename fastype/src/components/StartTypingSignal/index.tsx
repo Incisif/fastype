@@ -5,58 +5,50 @@ interface StartTypingSignalProps {
   $shouldExit: boolean;
 }
 
-
-const slideInTimingFunction = "ease";
-const slideOutTimingFunction = "cubic-bezier(0.6, 0.04, 0.98, 0.34)";
-
-
+const slideInTimingFunction = "cubic-bezier(0.6, 0.04, 0.98, 0.34)";
+const slideOutTimingFunction = "ease";
 
 const slideInFadeIn = keyframes`
   from {
-    transform: translateX(-50%);
+    transform: translateY(50%);
     opacity: 0;
-    visibility: visible;
+    visibility: hidden;
   }
   to {
     transform: translateX(0);
     opacity: 1;
-  }
-`;
-const shake = keyframes`
-  0%, 100% {
     visibility: visible;
-    transform: translatex(0);
-  }
-  50% {
-    transform: translatex(-0.5rem);
   }
 `;
+
 const slideOut = keyframes`
   0% {
-    transform: translateX(0);
+    transform: translatey(0);
     opacity: 1;
+    visibility: visible;
   }
   100% {
     opacity: 0;
-    transform: translateX(-50%); 
+    transform: translatey(50%); 
+    visibility: hidden;
 `;
 const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
   position: absolute;
-  left: -11rem;
-  top: 4rem;
-  z-index: 2;
+  transform: translateY(100%);
+  top: 1.5rem;
+  left: 1rem;
+  z-index: 1;
   background-color: var(--dark-violet-color);
-  border-radius: 0.5rem 0 0.5rem 0.5rem;
-  visibility: hidden; // Le composant est initialement invisible
+  border-radius: 0.5rem;
   animation: ${(props) =>
     props.$shouldExit
-      ? css`${slideOut} 0.4s ${slideOutTimingFunction} forwards`
+      ? css`
+          ${slideOut} 0.4s ${slideOutTimingFunction} forwards
+        `
       : css`
-          ${slideInFadeIn} 0.8s ${slideInTimingFunction} 1s forwards, 
-          ${shake} 1.5s ease-in-out 2s infinite`
-      };
-  animation-fill-mode: forwards; 
-  animation-delay: 2s; 
+          ${slideInFadeIn} 0.4s ${slideInTimingFunction} 0.4s forwards
+        `};
+  animation-fill-mode: forwards;
 `;
 const StartTypingSignalBody = styled.div`
   position: relative;
@@ -68,29 +60,21 @@ const StartTypingSignalBody = styled.div`
   padding: 1rem 1rem;
 `;
 
-const StartTypingSignalPointer = styled.div`
-  position: absolute;
-  right: -0.55rem;
-  top: 0;
-  width: 0.6rem; /* Assez large pour inclure le quart de cercle */
-  height: 0.6rem; /* Assez haut pour inclure le quart de cercle */
-  background-color: var(--dark-violet-color);
-  clip-path: polygon(24% 45%, 11% 68%, 0 100%, 0 1%, 100% 0, 67% 11%, 43% 26%);
-`;
-
-const StartTypingSignal: React.FC<StartTypingSignalProps> = ({ $shouldExit }) => {
+const StartTypingSignal: React.FC<StartTypingSignalProps> = ({
+  $shouldExit,
+}) => {
   const selectedLevel = useSelector(
-    (state: RootState) => state.session.selectedLevel);
+    (state: RootState) => state.session.selectedLevel
+  );
   return (
     <>
-    {selectedLevel?
-    <StartTypingSignalContainer $shouldExit={$shouldExit}>
-      <StartTypingSignalBody>
-        <p>Commence à taper !</p>
-      </StartTypingSignalBody>
-      <StartTypingSignalPointer />
-    </StartTypingSignalContainer>
-    :null}
+      {selectedLevel ? (
+        <StartTypingSignalContainer $shouldExit={$shouldExit}>
+          <StartTypingSignalBody>
+            <p>Commence à taper !</p>
+          </StartTypingSignalBody>
+        </StartTypingSignalContainer>
+      ) : null}
     </>
   );
 };

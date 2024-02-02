@@ -35,7 +35,6 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ onChange, value }) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Password input changed", e.target.value);
     onChange(e);
   }
   return (

@@ -27,7 +27,7 @@ import {
   setTranslateY,
   resetSession,
   setExiting,
-  setSelectedLevel
+  setSelectedLevel,
 } from "../../features/typingSession/typingSessionSlice";
 
 import TypingResultDisplay from "../TypingResultDisplay";
@@ -43,7 +43,6 @@ import { faRedo, faForward } from "@fortawesome/free-solid-svg-icons";
 import EasyLogo from "../../assets/easy_icon- 1.svg";
 import MediumLogo from "../../assets/medium_icon- 1.svg";
 import HardLogo from "../../assets/hard_icon- 1.svg";
-
 
 interface CharBoxProps {
   $status: string | null;
@@ -68,7 +67,6 @@ interface TextContainerProps {
 const TypingBoxWrapper = styled.div`
   position: relative;
   width: 80%;
- ;
 `;
 const TypingBoxContainer = styled.div`
   position: relative;
@@ -80,7 +78,7 @@ const TypingBoxContainer = styled.div`
   height: 310px;
   background-color: var(--typing-box-background-color);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
-margin: 3rem 0;
+  margin: 4rem 0 2rem;
   overflow: hidden;
   outline: none;
   border-radius: 15px;
@@ -120,13 +118,13 @@ const SlideButtonIconContainer = styled.div`
   align-items: center;
 `;
 const NextButton = styled(SlideButton)`
-  top: 60px;
+  top: 80px;
 `;
 const RedoButton = styled(SlideButton)`
-  top: 120px;
+  top: 140px;
 `;
 const SelectedLevelButton = styled(SlideButton)`
-  top: 180px;
+  top: 200px;
   img {
     width: 30px;
     height: 30px;
@@ -171,8 +169,6 @@ const CharBox = styled.div<CharBoxProps>`
     }
   }};
 `;
-
-
 
 const TypingBox: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -580,7 +576,7 @@ const TypingBox: React.FC = () => {
       </TypingBoxContainer>
       <StartTypingSignal $shouldExit={typingStats.startTime != null} />
       <RedoButton onClick={handleReset}>
-        <SlideButtonIconContainer >
+        <SlideButtonIconContainer>
           <FontAwesomeIcon icon={faRedo} />
         </SlideButtonIconContainer>
       </RedoButton>

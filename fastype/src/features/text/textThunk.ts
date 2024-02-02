@@ -26,7 +26,6 @@ export const fetchTexts = createAsyncThunk<
       "https://us-central1-text-hub-api.cloudfunctions.net/api/texte/getAllTexts"
     );
     const texts = response.data;
-    console.log(texts);
 
     let filteredTexts = texts;
     if (selectedLevel) {
@@ -45,7 +44,6 @@ export const fetchTexts = createAsyncThunk<
       title: filteredTexts[randomIndex].title,
     };
 
-    console.log(randomText);
     return randomText;
   } catch (error) {
     return rejectWithValue({ message: (error as Error).message });

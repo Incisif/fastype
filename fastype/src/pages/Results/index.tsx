@@ -411,7 +411,6 @@ const Results: React.FC = () => {
             return sessionDate >= thirtyDaysAgo && sessionDate <= today;
           })
           .map(transformSessionData);
-        console.log(last7DaysAverageAccuracy);
 
         const initialWeeklyData = Array.from({ length: 7 }, (_, index) => ({
           day: index + 1,
