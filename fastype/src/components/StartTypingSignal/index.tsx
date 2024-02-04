@@ -35,11 +35,11 @@ const slideOut = keyframes`
 const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
   position: absolute;
   transform: translateY(100%);
-  top: 1.5rem;
+  top: 1rem;
   left: 1rem;
   z-index: 1;
   background-color: var(--dark-violet-color);
-  border-radius: 0.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
   animation: ${(props) =>
     props.$shouldExit
       ? css`

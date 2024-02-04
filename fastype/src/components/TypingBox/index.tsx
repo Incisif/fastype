@@ -40,9 +40,9 @@ import { updateSessionStatsThunk } from "../../features/typingStats/statsThunk";
 import { calculateDurationInSeconds } from "../../utils/calculateTypingStats";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo, faForward } from "@fortawesome/free-solid-svg-icons";
-import EasyLogo from "../../assets/easy_icon- 1.svg";
-import MediumLogo from "../../assets/medium_icon- 1.svg";
-import HardLogo from "../../assets/hard_icon- 1.svg";
+import EasyLogo from "../../assets/easy_icon.webp";
+import MediumLogo from "../../assets/medium_icon.webp";
+import HardLogo from "../../assets/hard_icon.webp";
 
 interface CharBoxProps {
   $status: string | null;
@@ -62,6 +62,9 @@ interface LineType {
 
 interface TextContainerProps {
   $translateY: number;
+}
+interface SideButtonBackgroundProps {
+  $backgroundColor?: string;
 }
 
 const TypingBoxWrapper = styled.div`
@@ -83,17 +86,17 @@ const TypingBoxContainer = styled.div`
   outline: none;
   border-radius: 15px;
 `;
-const SlideButton = styled.button`
+const SlideButton = styled.button<SideButtonBackgroundProps>`
   position: absolute;
-  right: -50px;
+  top: 15px;
   z-index: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 50px;
-  height: 50px;
-  border-radius: 0 10px 10px 0;
-  background-color: var(--light-grey-color);
+  height: 65px;
+  border-radius: 10px 10px 0px 0;
+  background-color: ${(props) =>
+    props.$backgroundColor ?? "var(--light-grey-color)"};
   color: white;
   font-size: 1.5rem;
   box-shadow: 0px 10px 6px rgba(0, 0, 0, 0.15);
@@ -101,40 +104,44 @@ const SlideButton = styled.button`
 
   transform: translateX(0); // Position initiale
   transition: transform 0.3s ease, background-color 0.3s ease, width 0.3s ease;
-
-  &:hover {
-    background-color: var(--grey-color);
-    width: 60px;
-    transform: translateX(10px); // Déplacez le bouton sur le côté au survol
-  }
 `;
 const SlideButtonIconContainer = styled.div`
-  position: absolute;
   right: 0;
+  top: 0;
   width: 50px;
-  height: 100%;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 const NextButton = styled(SlideButton)`
-  top: 80px;
+  right: 150px;
+  &:hover {
+    background-color: var(--grey-color);
+ 
+    transform: translatey(-5px); 
 `;
 const RedoButton = styled(SlideButton)`
-  top: 140px;
+ right: 90px;
+  &:hover {
+    background-color: var(--grey-color); 
+    transform: translatey(-5px);
 `;
 const SelectedLevelButton = styled(SlideButton)`
-  top: 200px;
+ right: 30px;
   img {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
+  }
+  &:hover {
+    transform: translatey(-5px);
+    filter: brightness(0.8);
   }
 `;
 const TextContainer = styled.div<TextContainerProps>`
   width: 100%;
   transform: translateY(-${(props) => props.$translateY}px);
   transition: transform 0.3s ease;
-
   padding: 1.2rem;
 `;
 
@@ -234,7 +241,14 @@ const TypingBox: React.FC = () => {
   } else {
     selectedLevelLogo = HardLogo;
   }
-
+  let selectedLevelBackgroundColor;
+  if (selectedLevel === "easy") {
+    selectedLevelBackgroundColor = "#049eff";
+  } else if (selectedLevel === "medium") {
+    selectedLevelBackgroundColor = "#ffa600";
+  } else {
+    selectedLevelBackgroundColor = "#DD1449";
+  }
   //MEMOS
   const sessionStats = useMemo(
     () => ({
@@ -585,7 +599,10 @@ const TypingBox: React.FC = () => {
           <FontAwesomeIcon icon={faForward} />
         </SlideButtonIconContainer>
       </NextButton>
-      <SelectedLevelButton onClick={handleOnClickSettings}>
+      <SelectedLevelButton
+        onClick={handleOnClickSettings}
+        $backgroundColor={selectedLevelBackgroundColor}
+      >
         <SlideButtonIconContainer>
           {selectedLevelLogo && (
             <img src={selectedLevelLogo} alt="Selected Level" />
