@@ -41,6 +41,9 @@ export const loginSlice = createSlice({
     rememberMe: (state, action: PayloadAction<boolean>) => {
       state.rememberMe = action.payload;
     },
+    clearMessage: (state) => {
+      state.message = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -72,6 +75,6 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { setUser, logout, rememberMe } = loginSlice.actions;
+export const { setUser, logout, rememberMe, clearMessage } = loginSlice.actions;
 
 export default loginSlice.reducer;

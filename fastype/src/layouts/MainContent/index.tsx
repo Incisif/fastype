@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import "../../fonts/font.css"
+import "../../fonts/font.css";
 import { device } from "../../styles/breakpoints";
+import LoginStateMessage from "../../components/LoginStateMessage";
 
 const MainContent = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 17.5rem);
@@ -19,7 +21,11 @@ interface Props {
 }
 
 const Main: React.FC<Props> = ({ children }) => {
-  return <MainContent>{children}</MainContent>;
+  return (
+    <MainContent>
+      {children} <LoginStateMessage />
+    </MainContent>
+  );
 };
 
 export default Main;

@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import {
   loginUserThunk,
   googleSignInThunk,
   createUserThunk,
 } from "../../features/user/userThunks.ts";
 import { rememberMe } from "../../features/user/userSlice.ts";
-import { RootState } from "../../store/store.ts";
 import { useState } from "react";
 import { AppDispatch } from "../../store/store";
 import ThreeDButton from "../ThreeDButton/index.tsx";
@@ -19,10 +18,10 @@ type LoginModalProps = {
 };
 
 const Content = styled.div`
+  position: absolute;
   z-index: 99;
   display: flex;
   flex-direction: column;
-  position: absolute;
   top: 50%;
   left: 50%;
   width: 500px;
@@ -152,18 +151,7 @@ const RemberberMeCheckbox = styled.input`
   cursor: pointer;
 `;
 
-const MessageContainer = styled.div`
-  position: absolute;
-  bottom: 5rem;
-  color: #19d4ac;
-  background-color: white;
-  border-radius: 5px;
-  padding: 1rem;
-  margin-top: 1rem;
-`;
-
 const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
-  const loginState = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -266,12 +254,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
       createUserThunk({ email, password: signUpPassword, firstName, lastName })
     );
     if (createUserThunk.fulfilled.match(signUpAction)) {
-      
-      const loginAction = await dispatch(loginUserThunk({ email, password: signUpPassword }));
+      const loginAction = await dispatch(
+        loginUserThunk({ email, password: signUpPassword })
+      );
       if (loginUserThunk.fulfilled.match(loginAction)) {
-        
         setTimeout(() => {
-          onClose(); 
+          onClose();
         }, 1000);
       }
     }
@@ -348,11 +336,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
               Pas encore inscrit ? <span> Inscris-toi</span>
             </StyledSignUpLink>
           </StyledForm>
-          {loginState.message && (
-            <MessageContainer>
-              <div>{loginState.message}</div>
-            </MessageContainer>
-          )}
         </FormWrapper>
       ) : (
         <FormWrapper>
