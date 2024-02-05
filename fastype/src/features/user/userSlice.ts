@@ -11,7 +11,7 @@ interface User {
   signInMethod?: string | null;
 }
 
-interface LoginState {
+export interface LoginState {
   user: User | null;
   rememberMe: boolean;
   message: string | null;
