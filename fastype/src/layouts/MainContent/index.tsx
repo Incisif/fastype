@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import "../../fonts/font.css"
+import { device } from "../../styles/breakpoints";
 
 const MainContent = styled.div`
   display: flex;
@@ -9,6 +10,9 @@ const MainContent = styled.div`
   max-width: 1228px;
   font-family: "Roboto", sans-serif;
   margin: 0 auto;
+  @media ${device.sm} {
+    min-height: calc(100vh - 16.25rem);
+  }
 `;
 interface Props {
   children: React.ReactNode;

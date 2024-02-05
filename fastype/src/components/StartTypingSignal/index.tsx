@@ -1,6 +1,7 @@
 import styled, { keyframes, css } from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import {device} from "../../styles/breakpoints";
 interface StartTypingSignalProps {
   $shouldExit: boolean;
 }
@@ -35,7 +36,7 @@ const slideOut = keyframes`
 const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
   position: absolute;
   transform: translateY(100%);
-  top: 1rem;
+  top: 1.2rem;
   left: 1rem;
   z-index: 1;
   background-color: var(--dark-violet-color);
@@ -49,15 +50,22 @@ const StartTypingSignalContainer = styled.div<StartTypingSignalProps>`
           ${slideInFadeIn} 0.4s ${slideInTimingFunction} 0.4s forwards
         `};
   animation-fill-mode: forwards;
+  @media ${device.sm} {
+    top: 1.4rem;
+    left: 0.8rem;
+  }
 `;
 const StartTypingSignalBody = styled.div`
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   color: var(--white-color);
   padding: 1rem 1rem;
+  font-size: 1rem;
+  @media ${device.sm} {
+    font-size: 0.8rem;
+  }
 `;
 
 const StartTypingSignal: React.FC<StartTypingSignalProps> = ({
@@ -71,7 +79,7 @@ const StartTypingSignal: React.FC<StartTypingSignalProps> = ({
       {selectedLevel ? (
         <StartTypingSignalContainer $shouldExit={$shouldExit}>
           <StartTypingSignalBody>
-            <p>Commence à taper !</p>
+            <p>Commencez à taper !</p>
           </StartTypingSignalBody>
         </StartTypingSignalContainer>
       ) : null}

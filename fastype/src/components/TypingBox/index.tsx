@@ -43,6 +43,7 @@ import { faRedo, faForward } from "@fortawesome/free-solid-svg-icons";
 import EasyLogo from "../../assets/easy_icon.webp";
 import MediumLogo from "../../assets/medium_icon.webp";
 import HardLogo from "../../assets/hard_icon.webp";
+import { device } from "../../styles/breakpoints";
 
 interface CharBoxProps {
   $status: string | null;
@@ -88,7 +89,7 @@ const TypingBoxContainer = styled.div`
 `;
 const SlideButton = styled.button<SideButtonBackgroundProps>`
   position: absolute;
-  top: 15px;
+  top: 1rem;
   z-index: 1;
   display: flex;
   justify-content: center;
@@ -101,9 +102,12 @@ const SlideButton = styled.button<SideButtonBackgroundProps>`
   font-size: 1.5rem;
   box-shadow: 0px 10px 6px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-
-  transform: translateX(0); // Position initiale
+  transform: translateX(0);
   transition: transform 0.3s ease, background-color 0.3s ease, width 0.3s ease;
+  @media ${device.sm} {
+    top: 1.4rem;
+    font-size: 1.2rem;
+  }
 `;
 const SlideButtonIconContainer = styled.div`
   right: 0;
@@ -115,28 +119,38 @@ const SlideButtonIconContainer = styled.div`
   align-items: center;
 `;
 const NextButton = styled(SlideButton)`
-  right: 150px;
+  right: 8rem;
   &:hover {
     background-color: var(--grey-color);
- 
-    transform: translatey(-5px); 
+    transform: translatey(-5px);
+  }
+  @media ${device.sm} {
+    right: 130px;
+  }
 `;
 const RedoButton = styled(SlideButton)`
- right: 90px;
+  right: 4.5rem;
   &:hover {
-    background-color: var(--grey-color); 
+    background-color: var(--grey-color);
     transform: translatey(-5px);
+  }
+  
 `;
 const SelectedLevelButton = styled(SlideButton)`
- right: 30px;
+  right: 1rem;
   img {
     width: 50px;
     height: 50px;
+    @media ${device.sm} {
+      width: 40px;
+      height: 40px;
+    }
   }
   &:hover {
     transform: translatey(-5px);
     filter: brightness(0.8);
   }
+ 
 `;
 const TextContainer = styled.div<TextContainerProps>`
   width: 100%;
