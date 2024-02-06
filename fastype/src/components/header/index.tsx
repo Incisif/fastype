@@ -76,7 +76,7 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  .connexion-button{
+  .connexion-button {
     @media ${device.sm} {
       font-size: 0.8rem;
       padding: 0.5rem 0.3rem;

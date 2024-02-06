@@ -260,7 +260,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
       if (loginUserThunk.fulfilled.match(loginAction)) {
         setTimeout(() => {
           onClose();
-        }, 1000);
+        }, 300);
       }
     }
   };

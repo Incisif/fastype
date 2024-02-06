@@ -16,9 +16,9 @@ import {
 import Main from "../../layouts/MainContent";
 import styled from "styled-components";
 import { WpmGauge } from "../../components/WpmGauge";
-import hardLevelIcon from "../../assets/hard_icon- 1.svg";
-import mediumLevelIcon from "../../assets/medium_icon- 1.svg";
-import easyLevelIcon from "../../assets/easy_icon- 1.svg";
+import hardLevelIcon from "../../assets/hard_icon.webp";
+import mediumLevelIcon from "../../assets/medium_icon.webp";
+import easyLevelIcon from "../../assets/easy_icon.webp";
 import MyChart from "../../components/MultiMetricTimeChart";
 import { device } from "../../styles/breakpoints";
 
@@ -234,8 +234,8 @@ const StyledHistoryLine = styled(HistoryLine)<StyledHistoryLineProps>`
 `;
 
 const DifficultyIcon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   align-self: center;
 `;
 

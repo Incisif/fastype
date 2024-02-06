@@ -9,7 +9,6 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
- 
 `;
 
 const Caption = styled.p`
@@ -29,9 +28,9 @@ const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
       : [...Array(30).keys()].map((k) => k + 1);
   const xTickFormat = xValues.map(() => "");
   const axisStyle = {
-    axis: { stroke: "var(--grey-color)", strokeWidth:2 },
+    axis: { stroke: "var(--grey-color)", strokeWidth: 2 },
     ticks: { size: 9, stroke: "#000" },
-    tickLabels: { fontSize: 10, padding: 5 }
+    tickLabels: { fontSize: 10, padding: 5 },
   };
 
   return (
@@ -39,15 +38,13 @@ const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
       <VictoryChart
         domainPadding={20}
         padding={{ top: 20, bottom: 50, left: 50, right: 50 }}
-       
-       
       >
-        <VictoryAxis tickValues={xValues} tickFormat={xTickFormat} style={axisStyle} />
         <VictoryAxis
-          dependentAxis
-          domain={[0, 100]}
+          tickValues={xValues}
+          tickFormat={xTickFormat}
           style={axisStyle}
         />
+        <VictoryAxis dependentAxis domain={[0, 100]} style={axisStyle} />
         <VictoryLine
           data={data}
           x="day"
@@ -79,7 +76,10 @@ const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
           />
         )}
       </VictoryChart>
-      <Caption> {interval === "week" ? "7 derniers jours" : "30 derniers jours"}</Caption>
+      <Caption>
+        {" "}
+        {interval === "week" ? "7 derniers jours" : "30 derniers jours"}
+      </Caption>
     </Container>
   );
 };

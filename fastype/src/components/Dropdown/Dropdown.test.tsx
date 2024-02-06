@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit";
-import DropDown from "./index"; // Ajustez le chemin d'importation selon votre structure
+import DropDown from "./index"; 
 
 const initialState = {
   login: {

@@ -1,27 +1,24 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { configureStore, PreloadedState } from '@reduxjs/toolkit';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Header from './index';
-import loginReducer,  {LoginState}  from '../../features/user/userSlice'; // Vérifiez le chemin d'accès
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { configureStore, PreloadedState } from "@reduxjs/toolkit";
+import { BrowserRouter as Router } from "react-router-dom";
+import Header from "./index";
+import loginReducer, { LoginState } from "../../features/user/userSlice"; 
 import "@testing-library/jest-dom";
 
-
-// Définition de l'état global de l'application pour les tests
 interface RootState {
   login: LoginState;
 }
 
-// Fonction pour créer un store de test
-const makeTestStore = (initialState: PreloadedState<RootState>) => configureStore({
-  reducer: {
-    login: loginReducer,
-  },
-  preloadedState: initialState,
-});
+const makeTestStore = (initialState: PreloadedState<RootState>) =>
+  configureStore({
+    reducer: {
+      login: loginReducer,
+    },
+    preloadedState: initialState,
+  });
 
-// Fonction utilitaire pour rendre les composants avec Redux et Router
 const renderWithProviders = (
   ui: React.ReactElement,
   initialState: PreloadedState<RootState>
@@ -51,11 +48,11 @@ describe("Header Component", () => {
     const loggedInState = {
       login: {
         user: {
-          uid: '1',
-          email: 'user@example.com',
-          firstName: 'John',
-          lastName: 'Doe',
-          profilePictureUrl: 'https://example.com/profile.jpg',
+          uid: "1",
+          email: "user@example.com",
+          firstName: "John",
+          lastName: "Doe",
+          profilePictureUrl: "https://example.com/profile.jpg",
         },
         rememberMe: true,
         message: null,
@@ -64,6 +61,4 @@ describe("Header Component", () => {
     renderWithProviders(<Header />, loggedInState);
     expect(screen.getByText("John")).toBeInTheDocument();
   });
-
-  // Ajoutez ici d'autres tests comme nécessaire pour couvrir les interactions et les changements d'état
 });
