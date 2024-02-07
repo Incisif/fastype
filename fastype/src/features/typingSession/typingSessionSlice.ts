@@ -4,7 +4,7 @@ interface CharStatuses {
   [charIndex: number]: string;
 }
 
-interface TypingSessionState {
+export interface TypingSessionState {
   isExiting: boolean;
   charStatuses: CharStatuses;
   currentCharPosition: number;

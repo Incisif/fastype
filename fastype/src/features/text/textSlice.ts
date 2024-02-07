@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchTexts } from "./textThunk";
 
-interface TextState {
+export interface TextState {
   text: string;
   title: string;
   status: "idle" | "loading" | "succeeded" | "failed";

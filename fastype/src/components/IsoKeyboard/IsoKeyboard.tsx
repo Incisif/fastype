@@ -497,7 +497,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k2" fill={getFillStyle("r2k2")}>
+      <g id="r2k2" fill={getFillStyle("r2k2")}  data-testid="key-a">
         <rect
           width={19.74}
           height={19.65}
