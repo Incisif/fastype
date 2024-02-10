@@ -198,12 +198,13 @@ const CardLevelSelect: React.FC = () => {
           id="easy"
           onClick={handleOnClick}
           $backgroundColor="#049eff"
+          data-testid="easy"
         >
           <CardTitle>Débutant</CardTitle>
           <div className="content">
             <CardImage src={easy} alt="easy mode selector" />
           </div>
-          <EasyLevelDetails $isEasyInfoIsHovered={easyInfoIsHovered}>
+          <EasyLevelDetails $isEasyInfoIsHovered={easyInfoIsHovered} data-testid="easy-info">
             <li>
               <CheckIcon icon={faCheck}></CheckIcon>Minuscules
             </li>
@@ -232,6 +233,7 @@ const CardLevelSelect: React.FC = () => {
           id="medium"
           onClick={handleOnClick}
           $backgroundColor="#ffa600"
+          data-testid="medium"
         >
           <CardTitle>Intémediaire </CardTitle>
           <div className="content">
@@ -266,6 +268,7 @@ const CardLevelSelect: React.FC = () => {
           id="hard"
           onClick={handleOnClick}
           $backgroundColor="#dd1449"
+          data-testid="hard"
         >
           <CardTitle>Expert </CardTitle>
           <div className="content">

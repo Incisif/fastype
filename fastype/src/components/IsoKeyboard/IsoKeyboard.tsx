@@ -73,7 +73,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k2" fill={getFillStyle("r1k2")}>
+      <g id="r1k2" fill={getFillStyle("r1k2")} data-testid="key-1">
         <rect
           width={19.74}
           height={19.65}
@@ -97,7 +97,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k3" fill={getFillStyle("r1k3")}>
+      <g id="r1k3" fill={getFillStyle("r1k3")} data-testid="key-2">
         <rect
           width={19.74}
           height={19.65}
@@ -128,7 +128,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k4" fill={getFillStyle("r1k4")}>
+      <g id="r1k4" fill={getFillStyle("r1k4")} data-testid="key-3">
         <rect
           width={19.74}
           height={19.65}
@@ -159,7 +159,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k5" fill={getFillStyle("r1k5")}>
+      <g id="r1k5" fill={getFillStyle("r1k5")} data-testid="key-4">
         <rect
           width={19.74}
           height={19.65}
@@ -190,7 +190,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k6" fill={getFillStyle("r1k6")}>
+      <g id="r1k6" fill={getFillStyle("r1k6")} data-testid="key-5">
         <rect
           width={19.74}
           height={19.65}
@@ -221,7 +221,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k7" fill={getFillStyle("r1k7")}>
+      <g id="r1k7" fill={getFillStyle("r1k7")} data-testid="key-6">
         <rect
           width={19.74}
           height={19.65}
@@ -252,7 +252,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k8" fill={getFillStyle("r1k8")}>
+      <g id="r1k8" fill={getFillStyle("r1k8")} data-testid="key-7">
         <rect
           width={19.74}
           height={19.65}
@@ -283,7 +283,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k9" fill={getFillStyle("r1k9")}>
+      <g id="r1k9" fill={getFillStyle("r1k9")} data-testid="key-8">
         <rect
           width={19.74}
           height={19.65}
@@ -314,7 +314,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k10" fill={getFillStyle("r1k10")}>
+      <g id="r1k10" fill={getFillStyle("r1k10")} data-testid="key-9">
         <rect
           width={19.74}
           height={19.65}
@@ -345,7 +345,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k11" fill={getFillStyle("r1k11")}>
+      <g id="r1k11" fill={getFillStyle("r1k11")} data-testid="key-0">
         <rect
           width={19.74}
           height={19.65}
@@ -376,7 +376,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k12" fill={getFillStyle("r1k12")}>
+      <g id="r1k12" fill={getFillStyle("r1k12")} data-testid="key-°">
         <rect
           width={19.74}
           height={19.65}
@@ -407,7 +407,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k13" fill={getFillStyle("r1k13")}>
+      <g id="r1k13" fill={getFillStyle("r1k13")} data-testid="key-+">
         <rect
           width={19.74}
           height={19.65}
@@ -438,7 +438,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r1k14" fill={getFillStyle("r1k14")}>
+      <g id="r1k14" fill={getFillStyle("r1k14")} data-testid="key-return">
         <rect
           width={39.23}
           height={19.65}
@@ -465,7 +465,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k1" fill={getFillStyle("r2k1")}>
+      <g id="r2k1" fill={getFillStyle("r2k1")} data-testid="key-tab">
         <rect
           width={29.6}
           height={19.65}
@@ -497,7 +497,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k2" fill={getFillStyle("r2k2")}  data-testid="key-a">
+      <g id="r2k2" fill={getFillStyle("r2k2")} data-testid="key-a">
         <rect
           width={19.74}
           height={19.65}
@@ -515,7 +515,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k3" fill={getFillStyle("r2k3")}>
+      <g id="r2k3" fill={getFillStyle("r2k3")} data-testid="key-z">
         <rect
           width={19.74}
           height={19.65}
@@ -533,7 +533,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k4" fill={getFillStyle("r2k4")}>
+      <g id="r2k4" fill={getFillStyle("r2k4")} data-testid="key-e">
         <rect
           width={19.74}
           height={19.65}
@@ -551,7 +551,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k5" fill={getFillStyle("r2k5")}>
+      <g id="r2k5" fill={getFillStyle("r2k5")} data-testid="key-r">
         <rect
           width={19.74}
           height={19.65}
@@ -569,7 +569,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k6" fill={getFillStyle("r2k6")}>
+      <g id="r2k6" fill={getFillStyle("r2k6")} data-testid="key-t">
         <rect
           width={19.74}
           height={19.65}
@@ -595,7 +595,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </tspan>
         </text>
       </g>
-      <g id="r2k7" fill={getFillStyle("r2k7")}>
+      <g id="r2k7" fill={getFillStyle("r2k7")} data-testid="key-y">
         <rect
           width={19.74}
           height={19.65}
@@ -613,7 +613,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k8" fill={getFillStyle("r2k8")}>
+      <g id="r2k8" fill={getFillStyle("r2k8")} data-testid="key-u">
         <rect
           width={19.74}
           height={19.65}
@@ -631,7 +631,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k9" fill={getFillStyle("r2k9")}>
+      <g id="r2k9" fill={getFillStyle("r2k9")} data-testid="key-i">
         <rect
           width={19.74}
           height={19.65}
@@ -649,7 +649,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k10" fill={getFillStyle("r2k10")}>
+      <g id="r2k10" fill={getFillStyle("r2k10")} data-testid="key-o">
         <rect
           width={19.74}
           height={19.65}
@@ -667,7 +667,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k11" fill={getFillStyle("r2k11")}>
+      <g id="r2k11" fill={getFillStyle("r2k11")} data-testid="key-p">
         <rect
           width={19.74}
           height={19.65}
@@ -685,7 +685,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k12" fill={getFillStyle("r2k12")}>
+      <g id="r2k12" fill={getFillStyle("r2k12")} data-testid="key-¨">
         <rect
           width={19.74}
           height={19.65}
@@ -710,7 +710,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r2k13" fill={getFillStyle("r2k13")}>
+      <g id="r2k13" fill={getFillStyle("r2k13")} data-testid="key-£">
         <rect
           width={19.74}
           height={19.65}
@@ -742,7 +742,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="enter" fill={getFillStyle("enter")}>
+      <g id="enter" fill={getFillStyle("enter")} data-testid="key-enter">
         <path
           d="M311.98 22.75v-.16c0-.82-.63-1.48-1.44-1.55-.03 0-.06-.01-.09-.01h-25.96c-.86 0-1.56.7-1.56 1.56v16.53c0 .86.7 1.56 1.56 1.56h5.5c1.31 0 2.37 1.06 2.37 2.37V59.3c0 1.2.7 2.17 1.56 2.17h16.53c.86 0 1.56-.97 1.56-2.17V23.2c0-.15-.01-.3-.03-.45Z"
           className="cls-1"
@@ -774,7 +774,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k1" fill={getFillStyle("r3k1")}>
+      <g id="r3k1" fill={getFillStyle("r3k1")} data-testid="key-lock">
         <rect
           width={39.17}
           height={19.65}
@@ -806,7 +806,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k2" fill={getFillStyle("r3k2")}>
+      <g id="r3k2" fill={getFillStyle("r3k2")} data-testid="key-q">
         <rect
           width={19.74}
           height={19.65}
@@ -824,7 +824,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k3" fill={getFillStyle("r3k3")}>
+      <g id="r3k3" fill={getFillStyle("r3k3")} data-testid="key-s">
         <rect
           width={19.74}
           height={19.65}
@@ -842,7 +842,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k4" fill={getFillStyle("r3k4")}>
+      <g id="r3k4" fill={getFillStyle("r3k4")} data-testid="key-d">
         <rect
           width={19.74}
           height={19.65}
@@ -860,7 +860,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k5" fill={getFillStyle("r3k5")}>
+      <g id="r3k5" fill={getFillStyle("r3k5")} data-testid="key-f">
         <rect
           width={19.74}
           height={19.65}
@@ -878,7 +878,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k6" fill={getFillStyle("r3k6")}>
+      <g id="r3k6" fill={getFillStyle("r3k6")} data-testid="key-g">
         <rect
           width={19.74}
           height={19.65}
@@ -896,7 +896,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k7" fill={getFillStyle("r3k7")}>
+      <g id="r3k7" fill={getFillStyle("r3k7")} data-testid="key-h">
         <rect
           width={19.74}
           height={19.65}
@@ -914,7 +914,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k8" fill={getFillStyle("r3k8")}>
+      <g id="r3k8" fill={getFillStyle("r3k8")} data-testid="key-j">
         <rect
           width={19.74}
           height={19.65}
@@ -932,7 +932,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k9" fill={getFillStyle("r3k9")}>
+      <g id="r3k9" fill={getFillStyle("r3k9")} data-testid="key-k">
         <rect
           width={19.74}
           height={19.65}
@@ -950,7 +950,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k10" fill={getFillStyle("r3k10")}>
+      <g id="r3k10" fill={getFillStyle("r3k10")} data-testid="key-l">
         <rect
           width={19.74}
           height={19.65}
@@ -968,7 +968,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k11" fill={getFillStyle("r3k11")}>
+      <g id="r3k11" fill={getFillStyle("r3k11")} data-testid="key-m">
         <rect
           width={19.74}
           height={19.65}
@@ -986,7 +986,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k12" fill={getFillStyle("r3k12")}>
+      <g id="r3k12" fill={getFillStyle("r3k12")} data-testid="key-%">
         <rect
           width={19.74}
           height={19.65}
@@ -1011,7 +1011,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r3k13" fill={getFillStyle("r3k13")}>
+      <g id="r3k13" fill={getFillStyle("r3k13")} data-testid="key-µ">
         <rect
           width={19.74}
           height={19.65}
@@ -1036,7 +1036,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k1" fill={getFillStyle("r4k1")}>
+      <g id="r4k1" fill={getFillStyle("r4k1")} data-testid="key-leftShift">
         <rect
           width={25.29}
           height={19.65}
@@ -1063,7 +1063,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k2" fill={getFillStyle("r4k2")}>
+      <g id="r4k2" fill={getFillStyle("r4k2")} data-testid="key->">
         <rect
           width={19.74}
           height={19.65}
@@ -1088,7 +1088,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k3" fill={getFillStyle("r4k3")}>
+      <g id="r4k3" fill={getFillStyle("r4k3")} data-testid="key-w">
         <rect
           width={19.74}
           height={19.65}
@@ -1106,7 +1106,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k4" fill={getFillStyle("r4k4")}>
+      <g id="r4k4" fill={getFillStyle("r4k4")} data-testid="key-x">
         <rect
           width={19.74}
           height={19.65}
@@ -1124,7 +1124,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k5" fill={getFillStyle("r4k5")}>
+      <g id="r4k5" fill={getFillStyle("r4k5")} data-testid="key-c">
         <rect
           width={19.74}
           height={19.65}
@@ -1142,7 +1142,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k6" fill={getFillStyle("r4k6")}>
+      <g id="r4k6" fill={getFillStyle("r4k6")} data-testid="key-v">
         <rect
           width={19.74}
           height={19.65}
@@ -1160,7 +1160,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4K7" fill={getFillStyle("r4k7")}>
+      <g id="r4K7" fill={getFillStyle("r4k7")} data-testid="key-b">
         <rect
           width={19.74}
           height={19.65}
@@ -1178,7 +1178,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k8" fill={getFillStyle("r4k8")}>
+      <g id="r4k8" fill={getFillStyle("r4k8")} data-testid="key-n">
         <rect
           width={19.74}
           height={19.65}
@@ -1196,7 +1196,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k9" fill={getFillStyle("r4k9")}>
+      <g id="r4k9" fill={getFillStyle("r4k9")} data-testid="key-?">
         <rect
           width={19.74}
           height={19.65}
@@ -1221,7 +1221,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k10" fill={getFillStyle("r4k10")}>
+      <g id="r4k10" fill={getFillStyle("r4k10")} data-testid="key-.">
         <rect
           width={19.74}
           height={19.65}
@@ -1246,7 +1246,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k11" fill={getFillStyle("r4k11")}>
+      <g id="r4k11" fill={getFillStyle("r4k11")} data-testid="key-/">
         <rect
           width={19.74}
           height={19.65}
@@ -1271,7 +1271,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k12" fill={getFillStyle("r4k12")}>
+      <g id="r4k12" fill={getFillStyle("r4k12")} data-testid="key-§">
         <rect
           width={19.74}
           height={19.65}
@@ -1296,7 +1296,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r4k13" fill={getFillStyle("r4k13")}>
+      <g id="r4k13" fill={getFillStyle("r4k13")} data-testid="key-rightShift">
         <rect
           width={54.6}
           height={19.65}
@@ -1324,7 +1324,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
           </text>
         </g>
       </g>
-      <g id="r5k1" fill={getFillStyle("r5k1")}>
+      <g id="r5k1" fill={getFillStyle("r5k1")} data-testid="key-leftCtrl">
         <rect
           width={25.29}
           height={19.65}
@@ -1373,6 +1373,7 @@ const SvgComponent: React.FC<SvgComponentProps> = ({
       <rect
         id="r5k4"
         fill={getFillStyle("r5k4")}
+        data-testid="key-space"
         width={152.12}
         height={19.65}
         x={79.88}
