@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginUserThunk, googleSignInThunk } from "./userThunks";
 
-interface User {
+export interface User {
   uid: string | null;
   email: string | null ;
   firstName?: string | null;

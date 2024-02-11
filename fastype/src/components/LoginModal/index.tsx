@@ -320,6 +320,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
               $backgroundColor="var(--orange-color)"
               $shadowColor="var(--shadow-connexion-button)"
               color="grey"
+              data-testid="connection-button"
             >
               Connexion
             </ThreeDButton>
@@ -333,7 +334,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
               <label htmlFor="rememberme">Rester connecté</label>
             </RememberMeWrapper>
             <StyledSignUpLink onClick={handleShowRegisterForm}>
-              Pas encore inscrit ? <span> Inscris-toi</span>
+              Pas encore inscrit ? <span>Inscris-toi !</span>
             </StyledSignUpLink>
           </StyledForm>
         </FormWrapper>
@@ -346,6 +347,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
             $shadowColor="#215EFB"
             color="#0A335C"
             type="button"
+            data-testid="inscription-button"
           >
             {" "}
             <img src={googleGLogo} alt="Google sign-in" />
