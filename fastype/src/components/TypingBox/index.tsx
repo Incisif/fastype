@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import React, {
   useEffect,
   useState,
@@ -11,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/store";
 import { selectText } from "../../features/text/textSlice";
 import {
+  // Typing stats actions for updating typing performance metrics
   setTotalChars,
   updateCorrectChars,
   updateCharsTyped,
@@ -21,6 +21,7 @@ import {
   resetTypingStats,
 } from "../../features/typingStats/typingStatsSlice";
 import {
+  // Typing session actions for managing the current typing session state
   setCharStatus,
   setCurrentCharPosition,
   setIsTypingComplete,
@@ -30,6 +31,7 @@ import {
   setSelectedLevel,
 } from "../../features/typingSession/typingSessionSlice";
 
+// Importing UI components for displaying typing results, progress, etc.
 import TypingResultDisplay from "../TypingResultDisplay";
 import ProgressBar from "../ProgressBar";
 import StartTypingSignal from "../StartTypingSignal";
@@ -40,11 +42,16 @@ import { updateSessionStatsThunk } from "../../features/typingStats/statsThunk";
 import { calculateDurationInSeconds } from "../../utils/calculateTypingStats";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo, faForward } from "@fortawesome/free-solid-svg-icons";
+
+// Icons for different typing difficulty levels
 import EasyLogo from "../../assets/easy_icon.webp";
 import MediumLogo from "../../assets/medium_icon.webp";
 import HardLogo from "../../assets/hard_icon.webp";
+
+// Responsive design breakpoints
 import { device } from "../../styles/breakpoints";
 
+// Interfaces for props types
 interface CharBoxProps {
   $status: string | null;
   $lineIndex: number;
@@ -134,7 +141,6 @@ const RedoButton = styled(SlideButton)`
     background-color: var(--grey-color);
     transform: translatey(-5px);
   }
-  
 `;
 const SelectedLevelButton = styled(SlideButton)`
   right: 1rem;
@@ -150,7 +156,6 @@ const SelectedLevelButton = styled(SlideButton)`
     transform: translatey(-5px);
     filter: brightness(0.8);
   }
- 
 `;
 const TextContainer = styled.div<TextContainerProps>`
   width: 100%;
@@ -286,23 +291,27 @@ const TypingBox: React.FC = () => {
 
   //EFFECTS
   useEffect(() => {
+    // Sets focus on the typing box when the component loads and text is ready.
     if (loadingStatus === "succeeded" && typingBoxRef.current) {
       typingBoxRef.current.focus();
     }
   }, [loadingStatus]);
 
   useEffect(() => {
+    // Fetches new text when the selected level changes.
     dispatch(fetchTexts(selectedLevel));
   }, [dispatch, selectedLevel]);
 
   useEffect(() => {
     if (text) {
+      // Updates the total character count when the text changes.
       const totalChars = text.length;
       dispatch(setTotalChars(totalChars));
     }
   }, [text, dispatch]);
 
   useEffect(() => {
+    // Adjusts the container width on window resize for responsive layout adjustments.
     const handleResize = () => {
       if (typingBoxRef.current) {
         setContainerWidth(typingBoxRef.current.offsetWidth);
@@ -316,16 +325,19 @@ const TypingBox: React.FC = () => {
   }, [typingBoxRef]);
 
   useEffect(() => {
+    // Trims lineRefs to match the current number of lines.
     lineRefs.current = lineRefs.current.slice(0, lines.length);
   }, [lines]);
 
   function createNewLine(newLines: LineType[], currentLine: WordWithIndex[]) {
+    // Adds a non-empty current line to the newLines array with an updated line index.
     if (currentLine.length > 0) {
       newLines.push({ line: currentLine, lineIndex: newLines.length });
     }
   }
 
   useEffect(() => {
+    // Updates session stats once typing is complete and stats have not yet been updated.
     if (
       isTypingComplete &&
       typingStats.wpm !== 0 &&
@@ -347,6 +359,7 @@ const TypingBox: React.FC = () => {
 
   //CALLBACKS
   const createLinesAndStartIndices = useCallback(
+    // Splits words into lines based on available space, tracking start indices for each word.
     (words: string[], numberOfCharsPossibleInLine: number) => {
       const newLines: LineType[] = [];
       let currentLine: WordWithIndex[] = [];
@@ -375,6 +388,7 @@ const TypingBox: React.FC = () => {
   );
 
   useEffect(() => {
+    // Re-calculates line breaks when text or container width changes and updates if different.
     const newLines = createLinesAndStartIndices(
       words,
       numberOfCharsPossibleInLine
@@ -386,6 +400,7 @@ const TypingBox: React.FC = () => {
   }, [words, numberOfCharsPossibleInLine, lines, createLinesAndStartIndices]);
 
   const handleSpecialKeys = (key: string) => {
+    // Handles dead keys and modifier keys, preventing them from affecting typing stats.
     if (key === "Dead") {
       if (isDeadKey) {
         setDeadKeyChar((prevChar) => prevChar + key);
@@ -406,6 +421,7 @@ const TypingBox: React.FC = () => {
 
   //HANDLERS
   const handleKeyPress = (event: React.KeyboardEvent) => {
+    // Processes each keypress to update typing progress, handling special cases and marking completion.
     event.preventDefault();
 
     if (isFirstChar) {
@@ -470,6 +486,7 @@ const TypingBox: React.FC = () => {
   };
 
   const getCharStatus = (charIndex: number): string | null => {
+    // Determines the status of a character at a given index during typing.
     if (charIndex === currentCharPosition) {
       return "current";
     }
@@ -477,6 +494,7 @@ const TypingBox: React.FC = () => {
   };
 
   const handleReset = () => {
+    // Resets typing session and stats, preparing for a new session after a delay.
     dispatch(setExiting(true));
     setTimeout(() => {
       dispatch(resetSession());
@@ -489,6 +507,7 @@ const TypingBox: React.FC = () => {
   };
 
   const handleNext = () => {
+    // Advances to the next typing session, fetching new text based on the selected level.
     dispatch(setExiting(true));
     setTimeout(() => {
       dispatch(resetSession());
@@ -507,6 +526,7 @@ const TypingBox: React.FC = () => {
 
   //RENDER
   const wordSplitter = (
+    // Splits words into character components for rendering, marking the status and position of each.
     word: string,
     startIndex: number,
     wordIndex: number,
