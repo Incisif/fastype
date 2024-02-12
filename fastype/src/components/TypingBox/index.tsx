@@ -574,7 +574,7 @@ const TypingBox: React.FC = () => {
   };
 
   return (
-    <TypingBoxWrapper>
+    <TypingBoxWrapper data-testid="typing-box">
       <TypingBoxContainer
         ref={typingBoxRef}
         onKeyDown={handleKeyPress}
@@ -583,7 +583,7 @@ const TypingBox: React.FC = () => {
         {selectedLevel === null ? (
           <CardLevelSelect />
         ) : (
-          loadingStatus === "loading" && <Loader />
+          loadingStatus === "loading" && <Loader  data-testid="loader"/>
         )}
         {showTypingResult ? (
           <TypingResultDisplay

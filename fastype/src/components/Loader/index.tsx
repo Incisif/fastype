@@ -44,9 +44,11 @@ const StyledLoader = styled.span`
   box-sizing: border-box;
   animation: ${shadowRolling} 2s linear infinite;
 `;
-
-const Loader: React.FC = () => {
-  return <StyledLoader />;
+interface LoaderProps {
+  'data-testid'?: string;
+}
+const Loader: React.FC<LoaderProps> = ({'data-testid': testId}) => {
+  return <StyledLoader data-testid={testId} />;
 };
 
 export default Loader;
