@@ -5,8 +5,6 @@ import { logoutUserThunk } from "../../features/user/userThunks";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-
-
 const DropDownContent = styled.div`
   position: absolute;
   display: flex;
@@ -53,9 +51,10 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
 
   useEffect(() => {
     if (!user) {
+      // Automatically closes the dropdown if the user logs out.
       toggleDropdown();
     }
-
+    // Handles clicks outside the dropdown to close it
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -76,6 +75,7 @@ const DropDown: React.FC<{ isOpen: boolean; toggleDropdown: () => void }> = ({
     };
   }, [user, dropdownRef, toggleDropdown, isOpen]);
 
+  // Dispatches logout action and closes dropdown
   const handleLogout = () => {
     dispatch(logoutUserThunk());
     toggleDropdown();

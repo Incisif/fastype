@@ -10,7 +10,7 @@ import "@testing-library/jest-dom";
 
 
 
-// Créez un mock store avec le middleware thunk
+
 const middlewares = [thunk];
 const mockStore = createMockStore(middlewares);
 
@@ -18,10 +18,10 @@ describe("LoginModal Component", () => {
   let store: Store;
 
   beforeEach(() => {
-    // Initialisation du store pour chaque test avec un état initial
+
     store = mockStore({});
 
-    // Mock des fonctions thunk avant chaque test
+
     jest
       .spyOn(userThunks, "loginUserThunk")
       .mockImplementation(
@@ -73,5 +73,5 @@ describe("LoginModal Component", () => {
     expect(inscriptionButton).toHaveTextContent("Inscris-toi avec Google !");
   });
 
-  // Vous pouvez ajouter plus de tests ici pour tester la soumission du formulaire, la gestion des erreurs, etc.
+  //TODO: test the rest of the component
 });

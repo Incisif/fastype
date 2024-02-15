@@ -24,19 +24,22 @@ const Keyboard = () => {
   const [finger, setFinger] = useState("");
 
   useEffect(() => {
+    // Determines the key information for the current character.
     let keyInfo;
 
+    // Handles the space character separately from other characters.
     if (currentChar !== " ") {
       keyInfo = keyMap[currentChar];
     } else {
       keyInfo = keyMap["space"];
     }
-
+    // Sets the state based on the current character's key information.
     if (keyInfo?.id) {
       setHighlightedId(keyInfo.id);
       setMod(keyInfo.mod ?? "");
       setFinger(keyInfo.finger ?? "");
     } else {
+      // Resets the state if no key information is found.
       setHighlightedId("");
       setMod("");
       setFinger("");

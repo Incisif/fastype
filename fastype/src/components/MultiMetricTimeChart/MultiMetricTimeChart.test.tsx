@@ -22,8 +22,6 @@ describe("MyChart Component", () => {
     const { getByText } = render(
       <MultiMetricTimeChart data={data} interval="month" />
     );
-
-    // Vérifiez que le composant affiche le bon texte d'intervalle
     expect(getByText("30 derniers jours")).toBeInTheDocument();
   });
 });

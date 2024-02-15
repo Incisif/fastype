@@ -299,7 +299,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, initialMode }) => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setErrors({ ...errors, email: "" }); // Réinitialiser l'erreur pour email
+                setErrors({ ...errors, email: "" }); //Re-initialize the error message
               }}
               autoComplete="email"
             />
