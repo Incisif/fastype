@@ -44,7 +44,7 @@ interface StyledHistoryLineProps {
 }
 
 interface ChartData {
-  day: number;
+  date: Date;
   wpm: number;
   accuracy: number;
 }
@@ -200,7 +200,6 @@ const SessionsHistory = styled.div`
   @media ${device.md} {
     padding: 1rem;
   }
- 
 `;
 const HistorySectionSubTitle = styled(SectionSubTitle)`
   margin: 1.2rem 1.2rem 1.2rem 0;
@@ -328,9 +327,7 @@ const Results: React.FC = () => {
     });
   }
   const groupSessionsByDate = useCallback((sessions: SessionStat[]) => {
-   
     const sortedSessions = sortedSessionsByDate(sessions);
-
 
     return sortedSessions.reduce(
       (acc: { [key: string]: SessionStat[] }, session: SessionStat) => {
@@ -389,44 +386,58 @@ const Results: React.FC = () => {
         const thirtyDaysAgo = new Date(today);
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-   
-        const transformSessionData = (session: SessionStat) => {
-          return {
-            day: new Date(session.date).getDate(),
-            wpm: session.wpm, 
-            accuracy: session.accuracy,
-          };
-        };
+       
 
         const filteredWeeklyData = sessions
           .filter((session) => {
             const sessionDate = new Date(session.date);
             return sessionDate >= sevenDaysAgo && sessionDate <= today;
           })
-          .map(transformSessionData);
+          .map((session) => ({
+            date: new Date(session.date),
+            wpm: session.wpm,
+            accuracy: session.accuracy,
+          }));
 
-        const filteredMonthlyData = sessions
+          const filteredMonthlyData = sessions
           .filter((session) => {
             const sessionDate = new Date(session.date);
             return sessionDate >= thirtyDaysAgo && sessionDate <= today;
           })
-          .map(transformSessionData);
+          .map((session) => ({
+            date: new Date(session.date), // Créez un objet Date pour la propriété date
+            wpm: session.wpm,
+            accuracy: session.accuracy,
+          }));
+        
 
-        const initialWeeklyData = Array.from({ length: 7 }, (_, index) => ({
-          day: index + 1,
-          wpm: last7DaysAverageWPM,
-          accuracy: last7DaysAverageAccuracy,
-        }));
+        const initialWeeklyData = Array.from({ length: 7 }).map((_, index) => {
+          const date = new Date(today);
+          date.setDate(date.getDate() - (6 - index));
+          return {
+            date: new Date(date),
+            wpm: 0,
+            accuracy: 0,
+          };
+        });
 
         initialWeeklyData.forEach((data, index) => {
-          const realData = filteredWeeklyData.find((d) => d.day === data.day);
+          const realData = filteredWeeklyData.find((d) => {
+            return (
+              d.date.toISOString().split("T")[0] ===
+              data.date.toISOString().split("T")[0]
+            );
+          });
           if (realData) {
             initialWeeklyData[index] = realData;
           } else if (index > 0) {
-            initialWeeklyData[index] = initialWeeklyData[index - 1];
+            initialWeeklyData[index].wpm = initialWeeklyData[index - 1].wpm;
+            initialWeeklyData[index].accuracy =
+              initialWeeklyData[index - 1].accuracy;
           }
         });
         setWeeklyData(initialWeeklyData);
+        console.log(initialWeeklyData);
         setMonthlyData(filteredMonthlyData);
       }
     };

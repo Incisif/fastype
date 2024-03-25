@@ -583,7 +583,7 @@ const TypingBox: React.FC = () => {
         {selectedLevel === null ? (
           <CardLevelSelect />
         ) : (
-          loadingStatus === "loading" && <Loader  data-testid="loader"/>
+          loadingStatus === "loading" && <Loader data-testid="loader" />
         )}
         {showTypingResult ? (
           <TypingResultDisplay
@@ -623,12 +623,12 @@ const TypingBox: React.FC = () => {
         />
       </TypingBoxContainer>
       <StartTypingSignal $shouldExit={typingStats.startTime != null} />
-      <RedoButton onClick={handleReset}>
+      <RedoButton onClick={handleReset} aria-label={"Bouton recommencer"}>
         <SlideButtonIconContainer>
           <FontAwesomeIcon icon={faRedo} />
         </SlideButtonIconContainer>
       </RedoButton>
-      <NextButton onClick={handleNext}>
+      <NextButton onClick={handleNext} aria-label={"Bouton prochain texte"}>
         <SlideButtonIconContainer>
           <FontAwesomeIcon icon={faForward} />
         </SlideButtonIconContainer>
@@ -636,6 +636,7 @@ const TypingBox: React.FC = () => {
       <SelectedLevelButton
         onClick={handleOnClickSettings}
         $backgroundColor={selectedLevelBackgroundColor}
+        aria-label={"Bouton selection des niveaux"}
       >
         <SlideButtonIconContainer>
           {selectedLevelLogo && (

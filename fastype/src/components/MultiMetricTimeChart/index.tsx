@@ -17,16 +17,16 @@ const Caption = styled.p`
 `;
 
 interface MyChartProps {
-  data: Array<{ day: number; wpm: number; accuracy: number }>;
+  data: Array<{ date: Date; wpm: number; accuracy: number }>;
   interval: "week" | "month";
 }
 
 const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
-  const xValues =
-    interval === "week"
-      ? [1, 2, 3, 4, 5, 6, 7]
-      : [...Array(30).keys()].map((k) => k + 1);
-  const xTickFormat = xValues.map(() => "");
+  const formattedData = data.map((d) => ({
+    ...d,
+    date: d.date.toISOString(),
+  }));
+  
   const axisStyle = {
     axis: { stroke: "var(--grey-color)", strokeWidth: 2 },
     ticks: { size: 9, stroke: "#000" },
@@ -40,36 +40,35 @@ const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
         padding={{ top: 20, bottom: 50, left: 50, right: 50 }}
       >
         <VictoryAxis
-          tickValues={xValues}
-          tickFormat={xTickFormat}
           style={axisStyle}
+          tickFormat={() => ''}
         />
         <VictoryAxis dependentAxis domain={[0, 100]} style={axisStyle} />
         <VictoryLine
-          data={data}
-          x="day"
+          data={formattedData}
+          x="date"
           y="wpm"
           style={{ data: { stroke: "var(--orange-color)" } }}
         />
         {interval === "week" && (
           <VictoryScatter
-            data={data}
-            x="day"
+            data={formattedData}
+            x="date"
             y="wpm"
             size={5}
             style={{ data: { fill: "var(--orange-color)" } }}
           />
         )}
         <VictoryLine
-          data={data}
-          x="day"
+          data={formattedData}
+          x="date"
           y="accuracy"
           style={{ data: { stroke: "var(--violet-color)" } }}
         />
         {interval === "week" && (
           <VictoryScatter
-            data={data}
-            x="day"
+            data={formattedData}
+            x="date"
             y="accuracy"
             size={5}
             style={{ data: { fill: "var(--violet-color)" } }}
@@ -77,7 +76,6 @@ const MyChart: React.FC<MyChartProps> = ({ data, interval }) => {
         )}
       </VictoryChart>
       <Caption>
-        {" "}
         {interval === "week" ? "7 derniers jours" : "30 derniers jours"}
       </Caption>
     </Container>

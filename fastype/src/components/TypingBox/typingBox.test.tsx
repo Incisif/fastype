@@ -9,14 +9,13 @@ interface CharStatuses {
   [charIndex: number]: string;
 }
 
-// Créez un store de test
 const middlewares = [thunk];
 const mockStore = createMockStore(middlewares);
 
 const getInitialState = (textStatus = "idle", selectedLevel = "easy") => {
   return {
     texts: {
-      text: "Texte de test avec des mots et des phrases.",
+      text: "Texte de test avec des mots.",
       title: " Titre de test",
       status: textStatus,
       error: null,
@@ -52,7 +51,7 @@ const getInitialState = (textStatus = "idle", selectedLevel = "easy") => {
   };
 };
 
-// Test de rendu initial
+
 describe("TypingBox Component", () => {
   let initialState;
   let store;
